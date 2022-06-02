@@ -144,6 +144,18 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.3.tgz#6801033be7ff87a6b7cadaf5b337c9f366a3c4b0"
   integrity sha512-WiBSI6JBIhC6LRIsB2Kwh8DsGTlbBU+mLRxJmAe3LjHTdkDpwIbEOZgoXBbZilk/vlfjK8i6nKRAvIRn1XaIMw==
 
+"@splidejs/react-splide@^0.7.7":
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/@splidejs/react-splide/-/react-splide-0.7.7.tgz#9497fcce7fe8fe0b7814b49f435e34a2aab30313"
+  integrity sha512-dsPqtpzIqHISrqWTqqGfX7rYjg37sALZDmLUDMxajIzshVDgcdj896QV9/tGqJmUWqRWFokotTCrAd7bRpXfLA==
+  dependencies:
+    "@splidejs/splide" "^4.0.6"
+
+"@splidejs/splide@^4.0.6":
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.0.6.tgz#b3db9f0636f789c8a9d61d838a4bfbd692f2cbc1"
+  integrity sha512-JHJJX08qAe5N33p6TKBAs5hRkJHmmG+Kh9LPWkOQgcV07yG+YEiY26lXi/xbH6Rb0UUxbs3Y3Iz/1WYjmfGhjA==
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"

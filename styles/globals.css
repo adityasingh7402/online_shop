@@ -1,8 +1,18 @@
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
 
 .background{
     background: rgb(77,190,0);
-    background: linear-gradient(202deg, rgba(77,190,0,1) 0%, rgba(3,162,15,1) 12%, rgba(81,163,1,1) 41%, rgba(0,164,151,1) 87%);
+    background: linear-gradient(202deg, rgba(97, 216, 17, 0.848) 0%, rgba(0, 138, 9, 0.842) 12%, rgba(11, 86, 4, 0.842) 41%, rgba(26, 89, 43, 0.842) 87%);
+}
+
+.maxH{
+    max-height: 35rem;
+}
+
+.blurC{
+    filter: blur(1px);
 }
