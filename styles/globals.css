@@ -1,8 +1,10 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+.catoBack{
+    background-color: #eaeded;
+}
 
 .background{
     background: rgb(77,190,0);

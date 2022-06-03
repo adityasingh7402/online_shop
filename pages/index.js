@@ -39,7 +39,7 @@ export default function Home() {
         </div>
         
         <div className="service flex justify-center items-center flex-col mx-16">
-          <Image src="/5 (4).png" width="50px" height="50px"/>
+          <Image src="/okk.jpg" width="50px" height="50px"/>
           <h2 className="text-lg font-normal tracking-wider text-gray-700">Freshest Produce</h2>
         </div>
         <div className="service flex justify-center items-center flex-col mx-16">
@@ -50,7 +50,10 @@ export default function Home() {
           <Image src="/5 (2).png" width="50px" height="50px"/>
           <h2 className="text-lg font-normal tracking-wider text-gray-700">Freshest Produce</h2>
         </div>
-
+      </div>
+        <hr className="mt-8 drop-shadow-2xl ..."/>
+        <div className="shop-title w-1/4 text-center p-6 m-auto background text-white text-3xl rounded-sm">Shop by Chatogary</div>
+      <div className="catoBack">
       </div>
     </div>
   )
