@@ -12,9 +12,21 @@
 }
 
 .maxH{
-    max-height: 35rem;
+    max-height: 73vh;
 }
 
 .blurC{
-    filter: blur(1px);
+    filter: blur(2px);
+}
+
+.tranAnima{
+    transition: 1s ease-in-out;
+}
+
+.indexZ{
+    z-index: 9;
+}
+
+.input-bck{
+    background-color: #fafafa;
 }
