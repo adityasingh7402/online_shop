@@ -97,9 +97,11 @@ function Header() {
             <div className="cart mx-4 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
               <RiAccountCircleLine />
             </div>
-            <div className="cart mx-4 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
-              <AiOutlineShoppingCart />
-            </div>
+            <Link href={"../checkout"}>
+              <div className="cart mx-4 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
+                <AiOutlineShoppingCart />
+              </div>
+            </Link>
           </div>
         </div>
       </div>
