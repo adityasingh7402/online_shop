@@ -9,8 +9,9 @@ import { TbPhoneCall } from "react-icons/tb";
 import { BiRupee } from "react-icons/bi";
 import { MdSupervisorAccount } from "react-icons/md";
 import { BsTruck } from "react-icons/bs";
+import { useRef } from "react";
 
-function Header() {
+function Header({ cart, addToCart, removeFromCart, clearCart, subTotal }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -28,6 +29,9 @@ function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+
+
 
   return (
     <header
@@ -105,6 +109,7 @@ function Header() {
           </div>
         </div>
       </div>
+        
     </header>
   );
 }

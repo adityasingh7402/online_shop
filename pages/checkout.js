@@ -37,7 +37,7 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
                 </div>
               </div>
               <div className="product-price w-1/6 flex justify-end">
-                <span className='text-2xl'>{cart[k].price}</span>
+                <span className='text-2xl'>₹{cart[k].price}</span>
               </div>
             </div>})}
             <div className='flex justify-end'>
@@ -47,8 +47,8 @@ const checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
         </div>
         <div className='right-side bg-white w-1/5 ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72'>
           <div className="subtotal text-3xl text-gray-800 flex justify-end pb-2">Subtotal : &nbsp; <span>(1 Item)</span></div>
-          <div className="subtotal text-xl text-gray-800 flex justify-end pt-3  border-b-2 border-gray-200">Delivery Charge : ₹40.00</div>
-          <div className="subtotal text-3xl text-gray-800 flex justify-end pt-10">₹ 440.00</div>
+          <div className="subtotal text-xl text-gray-800 flex justify-end pt-3  border-b-2 border-gray-200">Delivery Charge : ₹40</div>
+          <div className="subtotal text-3xl text-gray-800 flex justify-end pt-10">₹{subTotal===0 ? subTotal: subTotal+40}</div>
           <div className="subtotal text-3xl text-gray-800 flex justify-end pt-3"><button className="flex text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700"><p>Proceed to Buy</p></button></div>
         </div>
       </div>

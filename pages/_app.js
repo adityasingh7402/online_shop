@@ -1,5 +1,4 @@
 import '../styles/globals.css'
-import Navbar from './componenat/Navbar'
 import Footer from './componenat/Footer'
 import Header from './componenat/Header'
 import { useState, useEffect } from 'react'
@@ -12,6 +11,7 @@ function MyApp({ Component, pageProps }) {
     try {
       if(localStorage.getItem("cart")){
         setCart(JSON.parse(localStorage.getItem("cart")))
+        saveCart(JSON.parse(localStorage.getItem("cart")))
       }
     } catch (error) {
       console.error(error);
@@ -55,9 +55,11 @@ function MyApp({ Component, pageProps }) {
     setCart(newCart)
     saveCart(newCart)
   }
+
+
   return<> 
-  <Header cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}  />
-  <Component cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}  {...pageProps} />
+  <Header cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+  <Component cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
   <Footer />
 </>}
 

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useState } from 'react'
 
-const Post = ({addToCart}) => {
+const Post = ({addToCart, toggleCart}) => {
   const router = useRouter()
   const { slug } = router.query
   const [pin, setPin] = useState()
@@ -19,6 +19,7 @@ const Post = ({addToCart}) => {
   const onChangePin = (e) => {
     setPin(e.target.value)
   }
+  
 
   return <>
     <section className="text-gray-600 body-font overflow-hidden">
