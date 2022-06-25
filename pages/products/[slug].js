@@ -87,7 +87,7 @@ const Post = ({addToCart, toggleCart}) => {
             </div>
             <div className="flex items-center">
               <span className="title-font font-medium text-2xl text-gray-900 mr-5">$58.00</span>
-              <button onClick={()=>{addToCart(slug, 1, 400, "Fresh Red Apple (500gm)", "Fruit", "/apple.png")}} className="flex text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700"><p>Add to cart</p></button>
+              <button onClick={()=>{addToCart(slug, 1, 400, "Fresh Red Apple (500gm)", "Fruit", "/apple.png"); toggleCart()}} className="flex text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700"><p>Add to cart</p></button>
               <button className="flex text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700"><p>Buy Now</p></button>
             </div>
 
