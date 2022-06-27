@@ -3,9 +3,11 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import Product from "../modal/Product";
+import mongoose from "mongoose";
+import Link from "next/link";
 
-
-export default function Home() {
+export default function Home({ products }) {
   return (
     <div>
       <Head>
@@ -16,7 +18,8 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Splide className="maxH overflow-hidden"
+      <Splide
+        className="maxH overflow-hidden"
         options={{
           rewind: true,
           autoplay: true,
@@ -87,279 +90,45 @@ export default function Home() {
           Shop by Chatogary
         </div>
         <div className="catogaryes drop-shadow-sm bg-white mx-16 my-6 rounded-sm relative h-72">
-          <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">Fresh Fruits</div>
-          <div className="slider absolute bottom-4 left-0">
-            <Splide
-              options={{
-                perPage: 5,
-                perMove: 1,
-                gap: '-2rem',
-              }}
-            >
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/mango1.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/apple.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/graps.png" width={130} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/orange.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/papaya.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/banana.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/greenGraps.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/pineapple.png" width={120} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/pomegranate.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/strawberry.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/kiwi.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/apricot.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/cherries.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-            </Splide>
+          <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
+            Fresh Fruits
           </div>
-        </div>
-        <div className="catogaryes drop-shadow-sm bg-white mx-16 my-6 rounded-sm relative h-72">
-          <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">Fresh Fruits</div>
           <div className="slider absolute bottom-4 left-0">
             <Splide
               options={{
-                perPage: 5,
+                perPage: 6,
                 perMove: 1,
-                gap: '-2rem',
+                gap: "-2rem",
               }}
             >
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/mango1.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/apple.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/graps.png" width={130} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/orange.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/papaya.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/banana.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/greenGraps.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/pineapple.png" width={120} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/pomegranate.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/strawberry.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/kiwi.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/apricot.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/cherries.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-            </Splide>
-          </div>
-        </div>
-        <div className="catogaryes drop-shadow-sm bg-white mx-16 my-6 rounded-sm relative h-72">
-          <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">Fresh Fruits</div>
-          <div className="slider absolute bottom-4 left-0">
-            <Splide
-              options={{
-                perPage: 5,
-                perMove: 1,
-                gap: '-2rem',
-              }}
-            >
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/mango1.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/apple.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/graps.png" width={130} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/orange.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/papaya.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/banana.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/greenGraps.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/pineapple.png" width={120} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/pomegranate.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/strawberry.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/kiwi.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/apricot.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
-              <SplideSlide>
-                <div className="flex items-center flex-col">
-                  <p className="text-gray-700 text-lg pb-6">Mango</p>
-                  <Image src="/cherries.png" width={200} height={150} />
-                </div>
-              </SplideSlide>
+              {products.map((item) => {
+                return (
+                  <Link passHref={true}
+                    key={item._id}
+                    href={`/products/${item.slug}`}>
+                    <SplideSlide>
+                      <div className="flex items-center flex-col cursor-pointer">
+                        <p className="text-gray-700 text-lg pb-6">{item.title}</p>
+                        <Image src={`/${item.img}`} alt={item.title} width={200} height={150} />
+                      </div>
+                    </SplideSlide>
+                  </Link>
+                );
+              })}
             </Splide>
           </div>
         </div>
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI);
+  }
+  let products = await Product.find();
+  return {
+    props: { products: JSON.parse(JSON.stringify(products)) },
+  };
 }

@@ -24,8 +24,8 @@ const Shop = ({ products }) => {
                   href={`/products/${item.slug}`}
                 >
                   <div className="product-box hover:bg-gray-50 bg-white flex flex-col items-center justify-center border rounded-sm tranAnimaS shadow-sm hover:shadow-xl hover:border-gray-200 border-gray-100 cursor-pointer">
-                    <div className="product-image w-40 h-40 overflow-hidden flex items-center justify-center">
-                      <img src={`/${item.img}`} alt={item.category} />
+                    <div className="product-image w-36 h-40 overflow-hidden flex items-center justify-center">
+                      <img className="scale" src={`/${item.img}`} alt={item.title} />
                     </div>
                     <div className="product-text text-left self-start w-full pl-3">
                       <h2 className="text-base">{item.category}</h2>
@@ -34,7 +34,10 @@ const Shop = ({ products }) => {
                           <h1 className="text-xl text-gray-900 font-medium">
                             {item.title}
                           </h1>
-                          <p className="text-base text-gray-900">
+                          <p className="text-sm text-gray-900">
+                            {item.size}
+                          </p>
+                          <p className="text-base text-gray-900 font-medium pb-1">
                             ₹{item.price}
                           </p>
                         </div>

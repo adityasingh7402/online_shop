@@ -79,9 +79,6 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
                                         <div className="product-text w-2/3 flex justify-start flex-col">
                                             <h1 className="text-2xl font-medium">{cart[k].name}</h1>
                                             <p className="text-lg">{cart[k].variant}</p>
-                                            <p className="text-sm text-green-700 font-medium">
-                                                In stock
-                                            </p>
                                             <div className="impTool mt-4 flex flex-row">
                                                 <div className="qytselet relative flex border-r border-gray-200 px-3 items-center">
                                                     <AiOutlineMinusCircle
@@ -149,9 +146,9 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
                             ₹{subTotal === 0 ? subTotal : subTotal + 40}
                         </div>
                         <div className="subtotal text-3xl text-gray-800 flex justify-end pt-3">
-                            <button className="flex text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
+                            <Link href={'/order'}><button className="flex text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
                                 <p>Proceed to Buy</p>
-                            </button>
+                            </button></Link>
                         </div>
                     </div>
                 </div>
