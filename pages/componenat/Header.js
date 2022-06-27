@@ -99,7 +99,7 @@ function Header({ cart, addToCart, removeFromCart, clearCart, subTotal }) {
               <AiOutlineSearch />
             </div>
             <div className="cart mx-4 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
-              <Link href={"/login"}><RiAccountCircleLine /></Link>
+              <Link href={"/login"}><a><RiAccountCircleLine /></a></Link>
             </div>
             <Link href={"../checkout"}>
               <div className="cart mx-4 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
