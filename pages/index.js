@@ -7,7 +7,8 @@ import Product from "../modal/Product";
 import mongoose from "mongoose";
 import Link from "next/link";
 
-export default function Home({ products }) {
+export default function Home({ fruits, vegitables }) {
+  console.log(fruits, vegitables)
   return (
     <div>
       <Head>
@@ -101,7 +102,36 @@ export default function Home({ products }) {
                 gap: "-2rem",
               }}
             >
-              {products.map((item) => {
+              {fruits.map((item) => {
+                return (
+                  <Link passHref={true}
+                    key={item._id}
+                    href={`/products/${item.slug}`}>
+                    <SplideSlide>
+                      <div className="flex items-center flex-col cursor-pointer">
+                        <p className="text-gray-700 text-lg pb-6">{item.title}</p>
+                        <Image src={`/${item.img}`} alt={item.title} width={200} height={150} />
+                      </div>
+                    </SplideSlide>
+                  </Link>
+                );
+              })}
+            </Splide>
+          </div>
+        </div>
+        <div className="catogaryes drop-shadow-sm bg-white mx-16 my-6 rounded-sm relative h-72">
+          <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
+            Fresh Vegitables
+          </div>
+          <div className="slider absolute bottom-4 left-0">
+            <Splide
+              options={{
+                perPage: 6,
+                perMove: 1,
+                gap: "-2rem",
+              }}
+            >
+              {vegitables.map((item) => {
                 return (
                   <Link passHref={true}
                     key={item._id}
@@ -127,8 +157,9 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  let products = await Product.find();
+  let fruits = await Product.find({category: 'Fruits'});
+  let vegitables = await Product.find({category: 'Vegitable'});
   return {
-    props: { products: JSON.parse(JSON.stringify(products)) },
+    props: { fruits: JSON.parse(JSON.stringify(fruits)), vegitables: JSON.parse(JSON.stringify(vegitables)) },
   };
 }

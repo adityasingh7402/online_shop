@@ -8,11 +8,13 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { TbPhoneCall } from "react-icons/tb";
 import { BiRupee } from "react-icons/bi";
 import { MdSupervisorAccount } from "react-icons/md";
-import { BsTruck } from "react-icons/bs";
+import { CgLogOff } from "react-icons/cg";
+import { BsHandbag, BsTruck } from "react-icons/bs";
 import { useRef } from "react";
 
-function Header({ cart, addToCart, removeFromCart, clearCart, subTotal }) {
+function Header({ logout, user, cart, addToCart, removeFromCart, clearCart, subTotal }) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [dropdown, setdropdown] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,6 +85,11 @@ function Header({ cart, addToCart, removeFromCart, clearCart, subTotal }) {
                 </Link>
               </li>
               <li className="mx-6 text-lg font-normal tracking-widest text-slate-50 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r from-green-200 to-green-300 transition-all">
+                <Link href="/Fruits">
+                  <a>Fruits</a>
+                </Link>
+              </li>
+              <li className="mx-6 text-lg font-normal tracking-widest text-slate-50 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r from-green-200 to-green-300 transition-all">
                 <Link href="/contact">
                   <a>Contact</a>
                 </Link>
@@ -92,24 +99,34 @@ function Header({ cart, addToCart, removeFromCart, clearCart, subTotal }) {
           <div className="impLink flex justify-center items-center">
             <input
               type="text"
-              className="p-2 -mr-10 w-80 rounded-md text-gray-600"
+              className="p-2 -mr-10 w-80 rounded-md text-gray-600 outline-none"
               placeholder="Search"
             />
             <div className="cart mr-4 text-2xl p-2 rounded-l-none rounded-md bg-green-900 cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
               <AiOutlineSearch />
             </div>
-            <div className="cart mx-4 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
-              <Link href={"/login"}><a><RiAccountCircleLine /></a></Link>
-            </div>
-            <Link href={"../checkout"}>
-              <div className="cart mx-4 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
+            <Link href={"../preview"}>
+              <div className="cart mx-2 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
                 <AiOutlineShoppingCart />
               </div>
             </Link>
+            <div className="cart mx-4 text-2xl cursor-pointer relative text-slate-50">
+              {user && user.value && <RiAccountCircleLine onMouseOver={()=>{setdropdown(true)}} onMouseLeave={()=>{setdropdown(false)}} />}
+              {dropdown && <div className="dropdown absolute -right-2 top-8 w-44 px-2  rounded-sm bg-white z-50 shadow-lg" onMouseOver={()=>{setdropdown(true)}} onMouseLeave={()=>{setdropdown(false)}}>
+                <ul>
+                  <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-green-300 text-green-700 py-2 hover:text-green-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
+                  <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-green-300 text-green-700 py-2 hover:text-green-500"><BsHandbag className="mx-2 text-lg" /><span>Orders</span></li></a></Link>
+                  <li onClick={logout} className="text-base border-t flex flex-row items-center  border-green-300 text-green-700 py-2 hover:text-green-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
+                </ul>
+              </div>}
+              {user && !user.value && <Link href={"/login"}><a>
+                <button className="text-base flex items-center p-2 px-4 rounded-md bg-green-900 cursor-pointer text-slate-50 hover:text-green-200 transition-all">Login</button>
+              </a></Link>}
+            </div>
           </div>
         </div>
       </div>
-        
+
     </header>
   );
 }

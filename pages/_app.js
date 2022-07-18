@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import Footer from "./componenat/Footer";
 import Header from "./componenat/Header";
+import LoadingBar from 'react-top-loading-bar'
 import { useState, useEffect } from "react";
 import { useRef } from "react";
 import { CgClose } from "react-icons/cg";
@@ -10,6 +11,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function MyApp({ Component, pageProps }) {
@@ -18,17 +21,27 @@ function MyApp({ Component, pageProps }) {
     if (ref.current.classList.contains("translate-x-full")) {
       ref.current.classList.remove("translate-x-full");
       ref.current.classList.add("translate-x-0");
+      document.body.style.overflowY = 'hidden';
     } else if (!ref.current.classList.contains("translate-x-full")) {
       ref.current.classList.remove("translate-x-0");
       ref.current.classList.add("translate-x-full");
+      document.body.style.overflowY = 'scroll';
     }
   };
   const ref = useRef();
 
   const [cart, setCart] = useState({});
   const [subTotal, setSubTotal] = useState(0);
+  const [user, setuser] = useState({ value: null })
+  const [key, setKey] = useState()
+  const [progress, setProgress] = useState(0)
   useEffect(() => {
-    console.log("hey bro");
+    router.events.on('routeChangeStart', () => {
+      setProgress(40)
+    })
+    router.events.on('routeChangeComplete', () => {
+      setProgress(100)
+    })
     try {
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")));
@@ -38,7 +51,19 @@ function MyApp({ Component, pageProps }) {
       console.error(error);
       localStorage.clear();
     }
-  }, []);
+    const myuser = JSON.parse(localStorage.getItem("myuser"))
+    if (myuser) {
+      setuser({ value: myuser.token, email: myuser.email })
+    }
+    setKey(Math.random())
+  }, [router.query]);
+
+  const logout = () => {
+    localStorage.removeItem('myuser')
+    setuser({ value: null })
+    setKey(Math.random())
+    router.push('/')
+  }
 
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart));
@@ -52,7 +77,7 @@ function MyApp({ Component, pageProps }) {
   const addToCart = (itemCode, qty, price, name, variant, image) => {
     let newCart = cart;
     if (itemCode in cart) {
-      newCart[itemCode].qty = cart[itemCode].qty + qty;
+      newCart[itemCode].qty = cart[itemCode].qty + qty
     } else {
       newCart[itemCode] = { qty: 1, price, name, variant, image };
     }
@@ -60,6 +85,16 @@ function MyApp({ Component, pageProps }) {
     saveCart(newCart);
   };
   const clearCart = () => {
+    document.body.style.overflowY = 'scroll';
+    toast.success('Your cart is cleared', {
+      position: "top-left",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     setCart({});
     saveCart({});
   };
@@ -77,29 +112,32 @@ function MyApp({ Component, pageProps }) {
 
 
 
-const buyNow = (itemCode, qty, price, name, variant, image)=>{
-  let newCart = {itemCode: {qty: 1, price, name, variant, image}}
+  const buyNow = (itemCode, qty, price, name, variant, image) => {
+    let newCart = {}
+    newCart[itemCode] = { qty: 1, price, name, variant, image }
 
-  setCart(newCart)
-  saveCart(newCart)
-  router.push('/checkout')
-}
+    setCart(newCart)
+    saveCart(newCart)
+    router.push('/checkout')
+  }
 
   return (
     <>
-      <Header
+      {key && <Header
+        logout={logout}
+        key={key}
+        user={user}
         cart={cart}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
         clearCart={clearCart}
         subTotal={subTotal}
         toggleCart={toggleCart}
-      />
+      />}
       <div
         ref={ref}
-        className={`cart-sideBar shadow-2xl absolute top-0 right-0 w-2/5 catoBack h-screen z-20 transform transition-transform ${
-          Object.keys(cart).length !== 0 ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`cart-sideBar shadow-2xl overflow-y-scroll fixed top-0 bottom-0 right-0 w-2/5 catoBack indexZMax transform transition-transform ${Object.keys(cart).length !== 0 ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div
           onClick={toggleCart}
@@ -203,6 +241,12 @@ const buyNow = (itemCode, qty, price, name, variant, image)=>{
           </div>
         </div>
       </div>
+      <LoadingBar
+        color='#045c15'
+        progress={progress}
+        waitingTime={400}
+        onLoaderFinished={() => setProgress(0)}
+      />
       <Component
         cart={cart}
         buyNow={buyNow}
