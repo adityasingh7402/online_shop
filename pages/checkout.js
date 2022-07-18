@@ -330,12 +330,11 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                         </div>
                     </div>
                     <div className="right-side bg-white w-1/5 ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72">
-                        <div className="subtotal text-3xl text-gray-800 flex justify-end pb-2">
-                            Subtotal : &nbsp; <span>(1 Item)</span>
+                        <div className='flex justify-end items-center pb-2 text-3xl text-gray-800'>
+                            <div className="subtotal pr-7">Subtotal :</div>
+                            <div className='flex justify-end'>₹{subTotal}</div>
                         </div>
-                        <div className="subtotal text-xl text-gray-800 flex justify-end pt-3  border-b-2 border-gray-200">
-                            Delivery Charge : ₹40
-                        </div>
+                        <div className="subtotal text-xl text-gray-800 flex justify-end pt-3  border-b-2 pb-2 border-gray-200">Delivery Charge : ₹40</div>
                         <div className="subtotal text-3xl text-gray-800 flex justify-end pt-10">
                             ₹{subTotal === 0 ? subTotal : subTotal + 40}
                         </div>

@@ -71,7 +71,7 @@ const footer = () => {
               <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">SIGN UP TO STAY UPDATED</h2>
               <input
                 type="text"
-                className="p-2  w-60 rounded-sm border border-gray-600 text-gray-600"
+                className="p-2  w-60 rounded-sm border outline-none focus:border-green-700 border-gray-600 text-gray-600"
                 placeholder="Enter Your Email Address"
               />
               <button className='font-medium text-xs rounded-full bg-green-700 w-32 px-3 py-3 mt-2 text-white hover:text-gray-800 hover:bg-white border transition-all border-green-700'><p>SEND MESSAGE</p></button>
