@@ -61,7 +61,7 @@ const Login = () => {
       }
       else{
         toast.error(response.error, {
-          position: "bottom-center",
+          position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,

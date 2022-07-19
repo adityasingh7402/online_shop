@@ -1,10 +1,16 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import mongoose from 'mongoose'
 import Order from '../modal/Order'
 import { useRouter } from 'next/router'
+import { useReactToPrint } from 'react-to-print'
+
 
 const MyOrder = ({ order, clearCart }) => {
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   const products = order.products;
   const router = useRouter()
   const [date, setdate] = useState()
@@ -12,25 +18,25 @@ const MyOrder = ({ order, clearCart }) => {
   useEffect(() => {
     const d = new Date(order.createdAt)
     setdate(d)
-    if(router.query.clearCart == 1){
+    if (router.query.clearCart == 1) {
       clearCart()
     }
   }, [])
-  
+
   return (
     <>
       <div className="text-gray-700 body-font catoBack relative flex">
-        <div className="order-page w-9/12 bg-white mx-auto my-8 py-8 px-10 flex flex-col">
+        <div ref={componentRef} className="order-page w-9/12 bg-white mx-auto my-8 py-8 px-10 flex flex-col">
           <div className="order-detail w-full">
             <div className='pb-16'><p className='text-3xl font-medium'>Hii.. {order.name}</p></div>
-            <div className="order-d flex pb-20">
+            <div className="order-d flex pb-16">
               <div className="left w-3/6 border-r-2 border-gray-200">
                 <p className='text-2xl pb-4 font-medium text-green-700'>Order successfully placed.</p>
                 <p className='text-base pb-4'>Order placed on  {date && date.toLocaleDateString("en-US", options)} </p>
                 <p className='text-base pb-16'>Your order will be delivered by Tomorrow</p>
                 <p className='text-base pb-1'>We are pleased to confirm your order no</p>
                 <p className='text-base pb-1 font-medium'>#{order.orderId}</p>
-                <p className='text-base pb-1'>Thank you for shopping with FreshFrveg</p>
+                <p className='text-base pb-1'>Thank you for shopping with <span className='font-medium text-green-700'>FreshFrveg</span></p>
                 <button className='font-medium rounded-full bg-green-700 w-48 px-8 mt-10 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Track Order</h6></button>
               </div>
               <div className="right w-3/6 pl-10">
@@ -62,12 +68,12 @@ const MyOrder = ({ order, clearCart }) => {
                   <span className='text-xl pb-4'>₹{products[key].price}</span>
                 </div>
                 <div className="product-price w-1/6 items-center ml-24 flex flex-col justify-between">
-                  <span className='text-xl pb-4'>₹{parseInt(products[key].price)*parseInt(products[key].qty)}</span>
+                  <span className='text-xl pb-4'>₹{parseInt(products[key].price) * parseInt(products[key].qty)}</span>
                 </div>
               </div>
             </div>
           })}
-          <div className="order-payment flex border-t pt-3 border-gray-200">
+          <div className="order-payment flex border-t border-b py-3 border-gray-200">
             <div className="left w-3/6">
               <p className='text-2xl font-medium'>Payment Details</p>
               <p className='pt-4 text-xl'>{order.status}</p>
@@ -82,6 +88,9 @@ const MyOrder = ({ order, clearCart }) => {
                 <p>₹{parseInt(order.amount) + 40}</p>
               </div>
             </div>
+          </div>
+          <div className=' flex justify-end pt-5 items-center pr-12'>
+            <button onClick={handlePrint} className='font-medium text-base rounded-full bg-green-700 w-32 px-3 py-3 mt-2 text-white hover:text-gray-800 hover:bg-white border transition-all border-green-700'>Print</button>
           </div>
         </div>
       </div>

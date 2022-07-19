@@ -8,7 +8,6 @@ import mongoose from "mongoose";
 import Link from "next/link";
 
 export default function Home({ fruits, vegitables }) {
-  console.log(fruits, vegitables)
   return (
     <div>
       <Head>
@@ -94,7 +93,7 @@ export default function Home({ fruits, vegitables }) {
           <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
             Fresh Fruits
           </div>
-          <div className="slider absolute bottom-4 left-0">
+          <div className="slider absolute bottom-4 left-0 right-0">
             <Splide
               options={{
                 perPage: 6,
@@ -110,7 +109,7 @@ export default function Home({ fruits, vegitables }) {
                     <SplideSlide>
                       <div className="flex items-center flex-col cursor-pointer">
                         <p className="text-gray-700 text-lg pb-6">{item.title}</p>
-                        <Image src={`/${item.img}`} alt={item.title} width={200} height={150} />
+                        <Image src={`/${item.img}`} alt={item.title} width={150} height={130} />
                       </div>
                     </SplideSlide>
                   </Link>
@@ -123,7 +122,7 @@ export default function Home({ fruits, vegitables }) {
           <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
             Fresh Vegitables
           </div>
-          <div className="slider absolute bottom-4 left-0">
+          <div className="slider absolute bottom-4 left-0 right-0">
             <Splide
               options={{
                 perPage: 6,
@@ -139,7 +138,7 @@ export default function Home({ fruits, vegitables }) {
                     <SplideSlide>
                       <div className="flex items-center flex-col cursor-pointer">
                         <p className="text-gray-700 text-lg pb-6">{item.title}</p>
-                        <Image src={`/${item.img}`} alt={item.title} width={200} height={150} />
+                        <Image src={`/${item.img}`} alt={item.title} width={150} height={130} />
                       </div>
                     </SplideSlide>
                   </Link>

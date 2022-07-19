@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Head from "next/head";
 import Script from "next/script"
 import { useRouter } from "next/router";
+import LoadingIcons from 'react-loading-icons'
 
 const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggleCart }) => {
     const [name, setname] = useState("")
@@ -23,6 +24,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
     const [user, setuser] = useState({ value: null })
     const [mobilevalid, setmobilevalid] = useState(true)
     const [validpincode, setvalidpincode] = useState(true)
+    const [lodingS, setlodingS] = useState(true)
 
     const router = useRouter()
     useEffect(() => {
@@ -45,7 +47,6 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
 
     const fetchdata = async (token) => {
         let data = { token: token }
-        console.log(data)
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
             method: 'POST', // or 'PUT'
             headers: {
@@ -54,7 +55,6 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
             body: JSON.stringify(data),
         })
         let res = await a.json()
-        console.log(res)
         setaddress(res.address)
         setphone(res.phone)
         setpincode(res.pincode)
@@ -129,6 +129,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
         }
     }
     const initiatePayment = async () => {
+        setlodingS(false)
         let oid = Math.floor(Math.random() * Date.now());
         let amount = subTotal + 40;
         const data = { cart, subTotal, oid, amount, email: email, name, phone, pincode, address, state, city, landmark };
@@ -339,8 +340,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                             ₹{subTotal === 0 ? subTotal : subTotal + 40}
                         </div>
                         <div className="subtotal text-3xl text-gray-800 flex justify-end pt-3">
-                            <button onClick={initiatePayment} disabled={disabled} className="flex cursor-pointer text-white font-medium text-sm rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
-                                <p>Proceed to Buy</p>
+                            <button onClick={initiatePayment} disabled={disabled} className="relative flex cursor-pointer items-center text-white font-medium text-sm rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
+                                {lodingS === false && <span className="absolute flex justify-start text-lg pl-6 items-center w-full"><LoadingIcons.TailSpin className="h-5 w-5" /></span>} &nbsp; <p>Proceed to Buy</p>
                             </button>
                         </div>
                     </div>

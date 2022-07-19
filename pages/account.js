@@ -41,7 +41,6 @@ const Account = () => {
 
   const fetchdata = async (token) => {
     let data = { token: token }
-    console.log(data)
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -50,7 +49,6 @@ const Account = () => {
       body: JSON.stringify(data),
     })
     let res = await a.json()
-    console.log(res)
     setaddress(res.address)
     setphone(res.phone)
     setpincode(res.pincode)
@@ -68,7 +66,6 @@ const Account = () => {
       body: JSON.stringify(data),
     })
     let res = await a.json()
-    console.log(res)
     toast.success("Successfully Updated Details", {
       position: "top-center",
       autoClose: 2000,
