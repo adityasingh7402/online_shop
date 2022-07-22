@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import { AiOutlineMinusCircle } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
 import { BsHandbag, BsTruck } from "react-icons/bs";
 import { AiOutlineLock } from "react-icons/ai";
 import 'react-toastify/dist/ReactToastify.css';
-import Head from "next/head";
-import Script from "next/script"
 import { useRouter } from "next/router";
 
 const Account = () => {
@@ -190,10 +186,6 @@ const Account = () => {
           draggable
           pauseOnHover
         />
-        <Head>
-          <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
-        </Head>
-        <Script type="application/javascript" crossorigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`} />
         <ToastContainer
           position="top-right"
           autoClose={1000}

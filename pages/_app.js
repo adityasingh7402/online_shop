@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/responsive.css";
 import Footer from "./componenat/Footer";
 import Header from "./componenat/Header";
 import LoadingBar from 'react-top-loading-bar'

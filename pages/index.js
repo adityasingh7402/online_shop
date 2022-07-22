@@ -6,6 +6,8 @@ import "@splidejs/react-splide/css";
 import Product from "../modal/Product";
 import mongoose from "mongoose";
 import Link from "next/link";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home({ fruits, vegitables }) {
   return (
@@ -18,6 +20,17 @@ export default function Home({ fruits, vegitables }) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Splide
         className="maxH overflow-hidden"
         options={{
@@ -57,31 +70,33 @@ export default function Home({ fruits, vegitables }) {
           </div>
         </SplideSlide>
       </Splide>
-      <div className="services flex items-center bg-gray-200 p-2 justify-center">
-        <div className="service flex justify-center items-center flex-col mx-16">
-          <Image src="/5 (3).png" width="55px" height="50px" />
-          <h2 className="text-lg font-normal tracking-wider text-gray-700">
-            Freshest Produce
-          </h2>
-        </div>
+      <div className="bg-gray-200">
+        <div className="services grid lg:grid-cols-4 gap-y-10 md:grid-cols-2 sm:grid-cols-1 md:w-full items-center bg-gray-200 p-2 lg:w-4/5 mx-auto justify-center">
+          <div className="service flex justify-center items-center flex-col mx-16">
+            <Image src="/5 (3).png" width="55px" height="50px" />
+            <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
+              Freshest Produce
+            </h2>
+          </div>
 
-        <div className="service flex justify-center items-center flex-col mx-16">
-          <Image src="/okk.jpg" width="45px" height="50px" />
-          <h2 className="text-lg font-normal tracking-wider text-gray-700">
-            Freshest Produce
-          </h2>
-        </div>
-        <div className="service flex justify-center items-center flex-col mx-16">
-          <Image src="/5 (1).png" width="50px" height="50px" />
-          <h2 className="text-lg font-normal tracking-wider text-gray-700">
-            Freshest Produce
-          </h2>
-        </div>
-        <div className="service flex justify-center items-center flex-col mx-16">
-          <Image src="/5 (2).png" width="40px" height="50px" />
-          <h2 className="text-lg font-normal tracking-wider text-gray-700">
-            Freshest Produce
-          </h2>
+          <div className="service flex justify-center items-center flex-col mx-16">
+            <Image src="/okk.jpg" width="45px" height="50px" />
+            <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
+              Freshest Produce
+            </h2>
+          </div>
+          <div className="service flex justify-center items-center flex-col mx-16">
+            <Image src="/5 (1).png" width="50px" height="50px" />
+            <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
+              Freshest Produce
+            </h2>
+          </div>
+          <div className="service flex justify-center items-center flex-col mx-16">
+            <Image src="/5 (2).png" width="40px" height="50px" />
+            <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
+              Freshest Produce
+            </h2>
+          </div>
         </div>
       </div>
       <div className="catoBack pb-1">
@@ -89,7 +104,7 @@ export default function Home({ fruits, vegitables }) {
         <div className="shop-title w-96 text-center p-3 m-auto background text-white text-3xl rounded-sm">
           Shop by Chatogary
         </div>
-        <div className="catogaryes drop-shadow-sm bg-white mx-16 my-6 rounded-sm relative h-72">
+        <div className="catogaryes drop-shadow-sm bg-white maginIt lg:mx-16 sm:mx-5 my-6 rounded-sm relative h-72">
           <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
             Fresh Fruits
           </div>
@@ -99,6 +114,24 @@ export default function Home({ fruits, vegitables }) {
                 perPage: 6,
                 perMove: 1,
                 gap: "-2rem",
+                breakpoints: {
+                  1212: {
+                    perPage: 4,
+
+                  },
+                  930: {
+                    perPage: 3,
+
+                  },
+                  717: {
+                    perPage: 2,
+
+                  },
+                  550: {
+                    perPage: 1,
+
+                  },
+                },
               }}
             >
               {fruits.map((item) => {
@@ -118,7 +151,7 @@ export default function Home({ fruits, vegitables }) {
             </Splide>
           </div>
         </div>
-        <div className="catogaryes drop-shadow-sm bg-white mx-16 my-6 rounded-sm relative h-72">
+        <div className="catogaryes drop-shadow-sm bg-white maginIt lg:mx-16 sm:mx-5 my-6 rounded-sm relative h-72">
           <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
             Fresh Vegitables
           </div>
@@ -128,6 +161,24 @@ export default function Home({ fruits, vegitables }) {
                 perPage: 6,
                 perMove: 1,
                 gap: "-2rem",
+                breakpoints: {
+                  1212: {
+                    perPage: 4,
+
+                  },
+                  930: {
+                    perPage: 3,
+
+                  },
+                  717: {
+                    perPage: 2,
+
+                  },
+                  550: {
+                    perPage: 1,
+
+                  },
+                },
               }}
             >
               {vegitables.map((item) => {
@@ -156,8 +207,8 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  let fruits = await Product.find({category: 'Fruits'});
-  let vegitables = await Product.find({category: 'Vegitable'});
+  let fruits = await Product.find({ category: 'Fruits' });
+  let vegitables = await Product.find({ category: 'Vegitable' });
   return {
     props: { fruits: JSON.parse(JSON.stringify(fruits)), vegitables: JSON.parse(JSON.stringify(vegitables)) },
   };

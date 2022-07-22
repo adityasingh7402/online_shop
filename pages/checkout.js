@@ -341,7 +341,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                         </div>
                         <div className="subtotal text-3xl text-gray-800 flex justify-end pt-3">
                             <button onClick={initiatePayment} disabled={disabled} className="relative flex cursor-pointer items-center text-white font-medium text-sm rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
-                                {lodingS === false && <span className="absolute flex justify-start text-lg pl-6 items-center w-full"><LoadingIcons.TailSpin className="h-5 w-5" /></span>} &nbsp; <p>Proceed to Buy</p>
+                            {lodingS === false && <span className="absolute flex justify-start text-green-900 text-lg pl-6 items-center w-full"><LoadingIcons.TailSpin className="h-5 w-5 text-green-900" /></span>} &nbsp; <p>Proceed to Buy</p>
                             </button>
                         </div>
                     </div>

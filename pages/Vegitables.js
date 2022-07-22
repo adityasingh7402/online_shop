@@ -9,13 +9,13 @@ const Vegitables = ({products}) => {
   return (
     <div className="text-gray-600 body-font catoBack relative">
       <section className="flex flex-row">
-        <div className="filter-side w-1/5 bg-white m-1">Hello</div>
-        <div className="product-side w-4/5">
+        {/* <div className="filter-side w-1/5 bg-white m-1">Hello</div> */}
+        <div className="product-side w-90 mx-auto">
           <div className="shop-title w-96 my-5 text-center p-3 m-auto background text-white text-3xl rounded-sm">
             Shop Vegitables
           </div>
           {Object.keys(products).length == 0 && <div className="flex justify-center items-center text-xl text-gray-700 font-medium">Sorry, all the item are currently out of stock. New stock coming soon. Stay Tuned!</div>}
-          <div className="product-item grid grid-cols-6 gap-1 pr-1 my-5">
+          <div className="product-item grid grid-cols-6 gap-3 my-5">
             {products.map((item) => {
               return (
                 <Link
