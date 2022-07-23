@@ -137,7 +137,7 @@ function MyApp({ Component, pageProps }) {
       />}
       <div
         ref={ref}
-        className={`cart-sideBar shadow-2xl overflow-y-scroll fixed top-0 bottom-0 right-0 w-2/5 catoBack indexZMax transform transition-transform ${Object.keys(cart).length !== 0 ? "translate-x-0" : "translate-x-full"
+        className={`cart-sideBar shadow-2xl overflow-y-scroll fixed top-0 bottom-0 right-0 w-2/5 cardWidth catoBack indexZMax transform transition-transform ${Object.keys(cart).length !== 0 ? "translate-x-0" : "translate-x-full"
           }`}
       >
         <div
@@ -161,7 +161,7 @@ function MyApp({ Component, pageProps }) {
                 key={k}
                 className="product flex flex-row w-full border-b-2 border-gray-300 p-3"
               >
-                <div className="product-image w-1/5 flex justify-center overflow-hidden">
+                <div className="product-image w-1/5 imageWidt flex justify-center overflow-hidden">
                   <Image
                     alt="ecommerce"
                     className="block"
@@ -207,9 +207,6 @@ function MyApp({ Component, pageProps }) {
                     </div>
                     <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
                       <p>Delete</p>
-                    </div>
-                    <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
-                      <p>See more like this</p>
                     </div>
                   </div>
                 </div>

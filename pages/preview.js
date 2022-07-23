@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link';
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
@@ -20,9 +19,9 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
         draggable
         pauseOnHover
       />
-      <div className="checkout-title my-8 mx-5 w-full flex flex-row">
-        <div className='left-side bg-white w-4/5 text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-5 shadow-sm'>
-          <p>Shopping List</p>
+      <div className="checkout-title PreBox my-8 mx-5 w-full flex flex-row prevewCol">
+        <div className='left-side letfWidth bg-white w-4/5 text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-5 shadow-sm'>
+          <p className='headingPr'>Shopping List</p>
           <div className="products flex flex-col w-full text-sm mt-8">
             <div className="price-text flex justify-end px-4 text-base">Price</div>
             {
@@ -30,11 +29,11 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
             }
             {Object.keys(cart).map((k) => {
               return <div key={k} className="product flex flex-row w-full border-t-2 border-b-2 border-gray-200 p-3">
-                <div className="product-image w-1/6 flex justify-center">
-                  <Image alt="ecommerce" className="block" src={cart[k].image} width={150} height={150} />
+                <div className="product-image w-40 flex justify-center imageProd">
+                  <img alt={cart[k].name} className="block" src={cart[k].image} />
                 </div>
-                <div className="product-text w-2/3 flex justify-start flex-col">
-                  <h1 className='text-2xl font-medium'>{cart[k].name}</h1>
+                <div className="product-text w-2/4 flex justify-start flex-col">
+                  <h1 className='text-2xl headPre font-medium'>{cart[k].name}</h1>
                   <p className='text-lg'>{cart[k].variant}</p>
                   <p className='text-sm text-green-700 font-medium'>In stock</p>
                   <div className="impTool mt-4 flex flex-row">
@@ -45,9 +44,6 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
                     </div>
                     <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
                       <p>Delete</p>
-                    </div>
-                    <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
-                      <p>See more like this</p>
                     </div>
                   </div>
                 </div>
@@ -61,10 +57,10 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
             </div>
           </div>
         </div>
-        <div className='right-side bg-white w-1/5 ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72'>
+        <div className='right-side bg-white w-1/5 rightWidth ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72'>
           <div className='flex justify-end items-center pb-2 text-3xl text-gray-800'>
-            <div className="subtotal pr-7">Subtotal :</div>
-            <div className='flex justify-end'>₹{subTotal}</div>
+            <div className="subtotal pr-7 subJus">Subtotal :</div>
+            <div className='flex justify-start'>₹{subTotal}</div>
           </div>
           <div className="subtotal text-xl text-gray-800 flex justify-end pt-3  border-b-2 pb-2 border-gray-200">Delivery Charge : ₹40</div>
           <div className="subtotal text-3xl text-gray-800 flex justify-end pt-10">₹{subTotal === 0 ? subTotal : subTotal + 40}</div>

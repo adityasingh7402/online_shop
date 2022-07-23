@@ -51,7 +51,7 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
 
   return (
     <>
-      <section className="text-gray-600 body-font overflow-hidden min-h-screen">
+      <section className="text-gray-600 body-font overflow-hidden">
         <ToastContainer
           position="top-right"
           autoClose={1000}
@@ -63,28 +63,29 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
           draggable
           pauseOnHover
         />
-        <div className="container px-5 py-20 mx-auto">
-          <div className="mx-auto flex justify-center items-center">
-            <div className="image w-96 h-96 flex justify-center items-center">
+        <div className="px-5 py-20 productTP mx-auto">
+          <div className="mx-auto flex justify-center items-center productFle">
+            <div className="image w-1/2 pr-10 propad h-96 flex justify-end items-center">
               <img className="w-96" src={`/${product.img}`} alt={product.title} />
             </div>
-            <div className="lg:pl-10 w-2/5 lg:py-6 mt-6 lg:mt-0 relative">
+            <div className="pl-10 w-1/2 flex justify-start producDetail flex-col py-6 propad mt-0 relative">
               <h2 className="text-base title-font text-gray-500 tracking-widest">
                 {product.category}
               </h2>
-              <h1 className="text-gray-900 text-4xl title-font font-medium pb-5 border-b border-gray-200">
+              <h1 className="text-gray-900 text-4xl title-font font-medium pb-5 border-gray-200">
                 {product.title}-{product.size}
               </h1>
-              <p className="leading-relaxed py-2 mb-3 border-b border-gray-200">
+              <p className="leading-relaxed w-3/5 py-2 mb-3 border-b border-t border-gray-200">
                 {product.desc}
               </p>
               <p className="leading-relaxed py-2">
                 {product.availableQty == 0 ? <span className="font-medium text-xl">Out of stock!</span> : <span>Total Stock: {product.availableQty}</span>}
               </p>
-              <div className="flex items-center">
-                <span className="title-font font-medium text-3xl text-gray-900 mr-10">
+              <div className="flex flexButton">
+                <span className="title-font flex flexButtonBP items-center font-medium text-3xl text-gray-900 mr-10">
                   ₹{product.price}
                 </span>
+                <div className="flex flex-row justify-start">
                 <button disabled={product.availableQty == 0}
                   onClick={() => {
                     toast.success('Item added in cart', {
@@ -106,7 +107,7 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
                     );
                     toggleCart();
                   }}
-                  className="flex disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700"
+                  className="flex disabled:bg-green-500 buttonHi hover:disabled:text-white disabled:cursor-default text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700"
                 >
                   <p>Add to cart</p>
                 </button>
@@ -119,9 +120,10 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
                     product.category,
                     `/${product.img}`
                   );
-                }} className="flex disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
+                }} className="flex disabled:bg-green-500 buttonHi hover:disabled:text-white disabled:cursor-default text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
                   <p>Buy Now</p>
                 </button>
+                </div>
               </div>
               <div className=" flex justify-start mt-8">
                 <input
@@ -132,12 +134,12 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
                 />
                 <button
                   onClick={checkServiceablity}
-                  className="font-medium text-base ml-1 rounded-md px-5 bg-green-700 text-white hover:text-gray-800 hover:bg-white border transition-all border-green-700"
+                  className="font-medium text-base  ml-1 rounded-md px-5 bg-green-700 text-white hover:text-gray-800 hover:bg-white border transition-all border-green-700"
                 >
                   <p>Check</p>
                 </button>
               </div>
-              <div className="flex justify-start absolute -bottom-3">
+              <div className="flex justify-start absolute -bottom-3 serviceP">
                 {service && service != null && (
                   <div className="text text-sm text-green-600">
                     Delivery is available in your area

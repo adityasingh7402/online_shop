@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Head from "next/head";
 import Script from "next/script"
 import { useRouter } from "next/router";
-import LoadingIcons from 'react-loading-icons'
 
 const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggleCart }) => {
     const [name, setname] = useState("")
@@ -200,11 +199,12 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                     draggable
                     pauseOnHover
                 />
-                <div className="checkout-title my-8 mx-5 w-full flex flex-row">
-                    <div className="left-side bg-white w-4/5 text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-10 shadow-sm">
-                        <p className="border-b pb-2 border-gray-200">DELIVERY ADDRESS</p>
-                        <div className="delivery-detail pl-16 w-3/5 py-8">
-                            <div className="personal-d grid grid-cols-2 gap-4">
+                <div className="checkout-title relative my-8 mx-5 prevewCol PreBox w-full flex flex-row">
+                    {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+                    <div className="left-side bg-white letfWidth w-4/5 text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-10 shadow-sm">
+                        <p className="border-b headingPr pb-2 border-gray-200">DELIVERY ADDRESS</p>
+                        <div className="delivery-detail pl-16 w-ThreebyF chckoutDe py-8">
+                            <div className="personal-d grid grid-cols-2 userGrid gap-4">
                                 <div className="flex flex-col">
                                     <label htmlFor="name" className="text-base font-normal pl-1">Name</label>
                                     <input value={name} onChange={handleChange} type="text" name='name' id="name" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
@@ -227,7 +227,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                             </div>
                             <label htmlFor="address" className="text-base font-normal pl-1">Address (Area and Street)</label>
                             <textarea value={address} onChange={handleChange} type="text" name='address' id="address" cols="57" required rows="3" className="p-3 w-full focus:border-green-700 resize-none border outline-none input-bck text-gray-600 text-base border-gray-200" />
-                            <div className="personal-d grid grid-cols-2 gap-3">
+                            <div className="personal-d grid grid-cols-2 userGrid gap-4">
                                 <div className="flex flex-col">
                                     <label htmlFor="city" className="text-base font-normal pl-1">City/District/Town</label>
                                     <input value={city} onChange={handleChange} type="text" name='city' id="city" className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
@@ -246,7 +246,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                                 </div>
                             </div>
                         </div>
-                        <p>ORDER SUMMARY</p>
+                        <p className='headingPr paddiTop'>ORDER SUMMARY</p>
                         <div className="products flex flex-col w-full text-sm mt-8">
                             <div className="price-text flex justify-end px-4 text-base">
                                 Price
@@ -262,17 +262,11 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                                         key={k}
                                         className="product flex flex-row w-full border-t-2 border-b-2 border-gray-200 p-3"
                                     >
-                                        <div className="product-image w-1/6 flex justify-center">
-                                            <Image
-                                                alt={cart[k].name}
-                                                className="block"
-                                                src={cart[k].image}
-                                                width={150}
-                                                height={150}
-                                            />
+                                        <div className="product-image w-40 flex justify-center imageProd">
+                                            <img alt={cart[k].name} className="block" src={cart[k].image} />
                                         </div>
                                         <div className="product-text w-2/3 flex justify-start flex-col">
-                                            <h1 className="text-2xl font-medium">{cart[k].name}</h1>
+                                            <h1 className="text-2xl headPre font-medium">{cart[k].name}</h1>
                                             <p className="text-lg">{cart[k].variant}</p>
                                             <div className="impTool mt-4 flex flex-row">
                                                 <div className="qytselet relative flex border-r border-gray-200 px-3 items-center">
@@ -309,9 +303,6 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                                                 <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
                                                     <p>Delete</p>
                                                 </div>
-                                                <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
-                                                    <p>See more like this</p>
-                                                </div>
                                             </div>
                                         </div>
                                         <div className="product-price w-1/6 flex justify-end">
@@ -330,9 +321,9 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                             </div>
                         </div>
                     </div>
-                    <div className="right-side bg-white w-1/5 ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72">
+                    <div className="right-side bg-white w-1/5 rightWidth ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72">
                         <div className='flex justify-end items-center pb-2 text-3xl text-gray-800'>
-                            <div className="subtotal pr-7">Subtotal :</div>
+                            <div className="subtotal subJus pr-7">Subtotal :</div>
                             <div className='flex justify-end'>₹{subTotal}</div>
                         </div>
                         <div className="subtotal text-xl text-gray-800 flex justify-end pt-3  border-b-2 pb-2 border-gray-200">Delivery Charge : ₹40</div>
@@ -341,7 +332,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                         </div>
                         <div className="subtotal text-3xl text-gray-800 flex justify-end pt-3">
                             <button onClick={initiatePayment} disabled={disabled} className="relative flex cursor-pointer items-center text-white font-medium text-sm rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
-                            {lodingS === false && <span className="absolute flex justify-start text-green-900 text-lg pl-6 items-center w-full"><LoadingIcons.TailSpin className="h-5 w-5 text-green-900" /></span>} &nbsp; <p>Proceed to Buy</p>
+                                <p>Proceed to Buy</p>
                             </button>
                         </div>
                     </div>

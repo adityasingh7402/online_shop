@@ -11,11 +11,11 @@ const Vegitables = ({products}) => {
       <section className="flex flex-row">
         {/* <div className="filter-side w-1/5 bg-white m-1">Hello</div> */}
         <div className="product-side w-90 mx-auto">
-          <div className="shop-title w-96 my-5 text-center p-3 m-auto background text-white text-3xl rounded-sm">
+          <div className="shop-title w-96 shopCat my-5 text-center p-3 m-auto background text-white text-3xl rounded-sm">
             Shop Vegitables
           </div>
           {Object.keys(products).length == 0 && <div className="flex justify-center items-center text-xl text-gray-700 font-medium">Sorry, all the item are currently out of stock. New stock coming soon. Stay Tuned!</div>}
-          <div className="product-item grid grid-cols-6 gap-3 my-5">
+          <div className="product-item grid grid-cols-6 productsIt gap-3 my-5 justify-center items-center">
             {products.map((item) => {
               return (
                 <Link
@@ -23,7 +23,7 @@ const Vegitables = ({products}) => {
                   key={item._id}
                   href={`/products/${item.slug}`}
                 >
-                  <div className="product-box relative hover:bg-gray-50 bg-white flex flex-col items-center justify-center border rounded-sm tranAnimaS shadow-sm hover:shadow-xl hover:border-gray-200 border-gray-100 cursor-pointer">
+                  <div className="product-box relative productSize hover:bg-gray-50 bg-white flex flex-col items-center justify-center border rounded-sm tranAnimaS shadow-sm hover:shadow-xl hover:border-gray-200 border-gray-100 cursor-pointer">
                   {item.availableQty == 0 && <div className="absolute flex font-medium text-gray-700 justify-center items-center w-full py-2 tranbackgr z-10 text-2xl mt-6">Out of Stock!</div>}
                     <div className="product-image w-36 h-40 overflow-hidden flex items-center justify-center">
                       <img className="scale" src={`/${item.img}`} alt={item.title} />

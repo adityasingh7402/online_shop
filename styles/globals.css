@@ -155,3 +155,11 @@ input[type=number]::-webkit-outer-spin-button {
 .w-90{
   width: 90%;
 }
+
+.buttonHi{
+  height: 50px;
+}
+
+.w-ThreebyF{
+  width: 576px;
+}

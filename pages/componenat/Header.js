@@ -73,7 +73,7 @@ function Header({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                 <Image src="/logo.png" width={100} height={70} />
               </Link>
             </div>
-            <ul className={menudrop ? "flex justify-center menubar mt-16 overflow-hidden py-2 menuRs w-full" : "flex justify-center menubar overflow-hidden menuR"}>
+            <ul className={menudrop ? "flex justify-center menubar mt-20 overflow-hidden py-2 menuRs w-full" : "flex justify-center menubar overflow-hidden menuR"}>
               <li className="mx-6 text-lg font-normal paddingM tracking-widest text-slate-50 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r from-green-200 to-green-300 transition-all">
                 <Link href="/">
                   <a>Home</a>

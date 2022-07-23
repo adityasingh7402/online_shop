@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.productSize{
+    width: 212.400px;
+}
 
 .hightNav{
-    height: 45vh;
+    height: 50vh;
 }
 
 .transitionn{
@@ -14,7 +17,7 @@
 @media only screen and (max-width: 1105px){
     .logo{
         width: 100px;
-        height: 100px;
+        height: 80px;
         position: absolute;
         top: 0;
         left: 0;
@@ -47,11 +50,17 @@
     .menuRs{
         transition: 0.5s ease-in-out;
     }
+    .prevewCol{
+        flex-direction: column;
+    }
 }
 
 @media only screen and (max-width: 617px){
     .disNone{
         display: none;
+    }
+    .headingT{
+        font-size: 4rem;
     }
 }
 @media only screen and (max-width: 650px){
@@ -71,4 +80,187 @@
         background: none;
         margin-right: 0;
     }
+    .textSma{
+        font-size: 2rem;
+    }
 }
+
+
+
+@media only screen and (max-width: 1448px){
+    .productsIt{
+        grid-template-columns: auto auto auto auto auto;
+        gap: 2rem;
+    }
+    .cardWidth{
+        width: 45%;
+    }
+}
+
+@media only screen and (max-width: 1237px){
+    .productsIt{
+        grid-template-columns: auto auto auto auto;
+        gap: 2.75rem;
+    }
+    .cardWidth{
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 1002px){
+    .productsIt{
+        grid-template-columns: auto auto auto;
+        gap: 2.75rem;
+    }
+    .cardWidth{
+        width: 70%;
+    }
+}
+@media only screen and (max-width: 736px){
+    .productsIt{
+        grid-template-columns: auto auto;
+        gap: 3.25rem;
+    }
+    .cardWidth{
+        width: 100%;
+    }
+    .chckoutDe{
+        padding-left: 0px;
+    }
+}
+@media only screen and (max-width: 495px){
+    .productsIt{
+        grid-template-columns: auto;
+        gap: 0.74rem;
+    }
+    .productSize{
+        width: 300px;
+    }
+    .shopCat{
+        width: 21rem;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+    .flexCol-con{
+        flex-direction: column;
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+    .margin-bot{
+        margin-bottom: 5rem;
+    }
+}
+@media only screen and (max-width: 500px){
+    .flexCol-con{
+        padding: 3rem 2rem;
+    }
+    .imageWidt{
+        width: 40%;
+    }
+}
+@media only screen and (max-width: 831px){
+    .productFle{
+        flex-direction: column;
+    }
+    .propad{
+        padding: 0px;
+        justify-content: center;
+        width: 100%;
+    }
+    .productTP{
+        padding-top: 2rem;
+    }
+    .producDetail{
+        margin-left: 50%;
+    }
+}
+@media only screen and (max-width: 591px){
+    .producDetail{
+        margin-left: 40%;
+    }
+}
+@media only screen and (max-width: 545px){
+    .producDetail{
+        margin-left: 30%;
+    }
+}
+@media only screen and (max-width: 460px){
+    .producDetail{
+        margin-left: 10%;
+    }
+    .serviceP{
+        bottom: -2rem;
+    }
+}
+@media only screen and (max-width: 393px){
+    .flexButton{
+        flex-direction: column;
+    }
+    .flexButtonBP{
+        padding-bottom: 1rem;
+    }
+    .paddiTop{
+        margin-top: 4rem;
+    }
+}
+
+
+@media only screen and (max-width: 1282px){
+    .letfWidth{
+        width: 75%;
+    }
+    .rightWidth{
+        width: 25%;
+    }
+    .imageProd{
+        margin-right: 1rem;
+    }
+}
+@media only screen and (max-width: 1104px){
+    .letfWidth{
+        width: 100%;
+    }
+    
+    .rightWidth{
+        width: 100%;
+        margin-left: 0px;
+    }
+}
+@media only screen and (max-width: 547px){
+    .letfWidth{
+        padding: 20px 0px 20px 0px;
+    }
+    .headingPr{
+        padding-left: 20px;
+    }
+}
+@media only screen and (max-width: 503px){
+    .PreBox{
+        margin: 3px;
+    }
+}
+@media only screen and (max-width: 490px){
+    .imageProd{
+        width: 5rem;
+        height: 5rem;
+    }
+    .headPre{
+        font-size: 1.3rem;
+    }
+}
+@media only screen and (max-width: 1364px){
+    .subJus{
+        padding-right: 10px;
+    }
+}
+@media only screen and (max-width: 696px){
+    .userGrid{
+        grid-template-columns: auto;
+    }
+    .w-ThreebyF{
+        width: 100%;
+        padding: 10px;
+    }
+}
+
