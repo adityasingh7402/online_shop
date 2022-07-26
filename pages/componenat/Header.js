@@ -44,7 +44,7 @@ function Header({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
     <header
       className={`${isScrolled && "tranAnima fixed z-50 top-0 right-0 left-0"}`}
     >
-      <div className="menuBar">
+      <div className="menuBar shadow-lg border-b border-green-800">
         <div className="offer-menu bg-green-700 flex flex-row justify-end p-1 disNone">
           <div className="cart border-r-2 border-gray-200 mx-1 text-2xl cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all flex flex-row items-center">
             <TbPhoneCall className="pr-1" />
@@ -126,13 +126,15 @@ function Header({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                   <button className="text-base flex items-center p-2 px-4 rounded-md bg-green-900 cursor-pointer text-slate-50 hover:text-green-200 transition-all">Login</button>
                 </a></Link>}
               </div>
-              <input
+              <Link href={'/search'}><input
                 type="text"
+                readOnly
                 className="p-2 lg:w-40 widthIn -mr-10 xl:w-80 rounded-md text-gray-600 outline-none"
                 placeholder="Search"
               />
+              </Link>
               <div className="cart mr-4 sertchB text-2xl p-2 rounded-l-none rounded-md bg-green-900 cursor-pointer font-medium text-slate-50 hover:text-green-200 transition-all">
-                <AiOutlineSearch />
+                <Link href={'/search'}><AiOutlineSearch /></Link>
               </div>
               <div className="hidden Nblock">
                 <div className="cart mx-2 text-3xl cursor-pointer font-medium text-slate-50 transitionn hover:text-green-200 transition-all">

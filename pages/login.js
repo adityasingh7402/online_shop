@@ -85,13 +85,13 @@ const Login = () => {
         draggable
         pauseOnHover
       />
-        <div className="login flex justify-center border-2 bg-white border-gray-200 shadow-md rounded-sm w-1/4 my-9 mx-auto">
+        <div className="login flex justify-center border-2 bg-white border-gray-200 shadow-md rounded-sm my-9 mx-auto">
           <div className="client-data flex flex-col w-full px-6 py-4">
           <p className="text-3xl pb-3 font-normal">Sign-In</p>
           <form onSubmit={handleSubmit} method="POST">
             <div className="flex flex-col pb-3">
               <label htmlFor="email" className="text-base font-normal pl-1 pb-1">Email</label>
-              <input value={email} onChange={handleChange} type="email" name='email' id="email" required autoComplete="email" className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-green-700 border-gray-300" />
+              <input value={email} onChange={handleChange} type="text" name='email' id="email" required autoComplete="email" placeholder='Email' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-green-700 border-gray-300" />
             </div>
             <div className="flex flex-col pb-1">
               <label htmlFor="password" className="text-base font-normal pl-1 pb-1">Password</label>

@@ -31,47 +31,55 @@ export default function Home({ fruits, vegitables }) {
         draggable
         pauseOnHover
       />
-      <Splide
-        className="maxH overflow-hidden"
-        options={{
-          rewind: true,
-          autoplay: true,
-          speed: 800,
-        }}
-      >
-        <SplideSlide>
-          <div className="w-auto blurC">
-            <Image src="/V1.jpg" width={1520} height={860} />
+      <div className="relative z-10">
+        <Splide
+          className="maxH overflow-hidden"
+          options={{
+            rewind: true,
+            autoplay: true,
+            speed: 800,
+          }}
+        >
+          <SplideSlide>
+            <div className="w-auto blurC">
+              <Image src="/V1.jpg" width={1520} height={860} />
+            </div>
+          </SplideSlide>
+          <SplideSlide>
+            <div className="w-auto blurC">
+              <Image src="/F3.jpg" width={1520} height={860} />
+            </div>
+          </SplideSlide>
+          <SplideSlide>
+            <div className="w-auto blurC">
+              <Image src="/V3.jpg" width={1520} height={860} />
+            </div>
+          </SplideSlide>
+          <SplideSlide>
+            <div className="w-auto blurC">
+              <Image src="/V2.jpg" width={1520} height={860} />
+            </div>
+          </SplideSlide>
+          <SplideSlide>
+            <div className="w-auto blurC">
+              <Image src="/F2.jpg" width={1520} height={860} />
+            </div>
+          </SplideSlide>
+          <SplideSlide>
+            <div className="w-auto">
+              <Image src="/F1.jpg" width={1520} height={860} />
+            </div>
+          </SplideSlide>
+        </Splide>
+        <div className="absolute px-3 top-1/4 w-full flex justify-center flex-col items-center">
+          <p className="textTitle text-5xl pb-3 text-white">Here We Provide You Fresh Fruit&rsquo;s and Green Vegitable&rsquo;s </p>
+          <div className="logoTitle w-40 h-40 pt-5 blurCOne">
+            <img src="/favicon.png" alt="logo" />
           </div>
-        </SplideSlide>
-        <SplideSlide>
-          <div className="w-auto blurC">
-            <Image src="/F3.jpg" width={1520} height={860} />
-          </div>
-        </SplideSlide>
-        <SplideSlide>
-          <div className="w-auto blurC">
-            <Image src="/V3.jpg" width={1520} height={860} />
-          </div>
-        </SplideSlide>
-        <SplideSlide>
-          <div className="w-auto blurC">
-            <Image src="/V2.jpg" width={1520} height={860} />
-          </div>
-        </SplideSlide>
-        <SplideSlide>
-          <div className="w-auto blurC">
-            <Image src="/F2.jpg" width={1520} height={860} />
-          </div>
-        </SplideSlide>
-        <SplideSlide>
-          <div className="w-auto">
-            <Image src="/F1.jpg" width={1520} height={860} />
-          </div>
-        </SplideSlide>
-      </Splide>
-      <div className="bg-gray-200">
-        <div className="services grid lg:grid-cols-4 gap-y-10 md:grid-cols-2 sm:grid-cols-1 md:w-full items-center bg-gray-200 p-2 lg:w-4/5 mx-auto justify-center">
+        </div>
+      </div>
+      <div className="bg-gray-200 shadow-md">
+        <div className="services grid lg:grid-cols-4 gap-y-10 md:grid-cols-2 md:w-full items-center bg-gray-200 p-2 lg:w-4/5 mx-auto justify-center">
           <div className="service flex justify-center items-center flex-col mx-16">
             <Image src="/5 (3).png" width="55px" height="50px" />
             <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
@@ -82,26 +90,26 @@ export default function Home({ fruits, vegitables }) {
           <div className="service flex justify-center items-center flex-col mx-16">
             <Image src="/okk.jpg" width="45px" height="50px" />
             <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
-              Freshest Produce
+              Good Quality
             </h2>
           </div>
           <div className="service flex justify-center items-center flex-col mx-16">
             <Image src="/5 (1).png" width="50px" height="50px" />
             <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
-              Freshest Produce
+              Fast Delivery
             </h2>
           </div>
           <div className="service flex justify-center items-center flex-col mx-16">
             <Image src="/5 (2).png" width="40px" height="50px" />
             <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
-              Freshest Produce
+              Customer Service
             </h2>
           </div>
         </div>
       </div>
       <div className="catoBack pb-1">
         <hr className="mt-12 drop-shadow-2xl ..." />
-        <div className="shop-title w-96 text-center p-3 m-auto background text-white text-3xl rounded-sm">
+        <div className="shop-title w-96 text-center shadow-md p-3 m-auto background text-white text-3xl rounded-sm">
           Shop by Chatogary
         </div>
         <div className="catogaryes drop-shadow-sm bg-white maginIt lg:mx-16 sm:mx-5 my-6 rounded-sm relative h-72">
@@ -140,7 +148,7 @@ export default function Home({ fruits, vegitables }) {
                     key={item._id}
                     href={`/products/${item.slug}`}>
                     <SplideSlide>
-                      <div className="flex items-center flex-col cursor-pointer">
+                      <div className="imagePro flex items-center flex-col cursor-pointer">
                         <p className="text-gray-700 text-lg pb-6">{item.title}</p>
                         <Image src={`/${item.img}`} alt={item.title} width={150} height={130} />
                       </div>
@@ -187,7 +195,7 @@ export default function Home({ fruits, vegitables }) {
                     key={item._id}
                     href={`/products/${item.slug}`}>
                     <SplideSlide>
-                      <div className="flex items-center flex-col cursor-pointer">
+                      <div className="imagePro flex items-center flex-col cursor-pointer">
                         <p className="text-gray-700 text-lg pb-6">{item.title}</p>
                         <Image src={`/${item.img}`} alt={item.title} width={150} height={130} />
                       </div>

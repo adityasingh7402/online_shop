@@ -41,6 +41,9 @@
 .blurC {
   filter: blur(2px);
 }
+.blurCOne {
+  filter: blur(1px);
+}
 
 .tranAnima {
   transition: 1s ease-in-out;
