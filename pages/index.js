@@ -137,6 +137,9 @@ export default function Home({ fruits, vegitables }) {
                   },
                   550: {
                     perPage: 1,
+                    rewind: true,
+                    autoplay: true,
+                    speed: 800,
 
                   },
                 },
@@ -148,9 +151,9 @@ export default function Home({ fruits, vegitables }) {
                     key={item._id}
                     href={`/products/${item.slug}`}>
                     <SplideSlide>
-                      <div className="imagePro flex items-center flex-col cursor-pointer">
+                      <div className="imagePro flex items-center flex-col cursor-pointer pb-7 mt-2">
                         <p className="text-gray-700 text-lg pb-6">{item.title}</p>
-                        <Image src={`/${item.img}`} alt={item.title} width={150} height={130} />
+                        <img src={`/${item.img}`} className="productImgS" alt={item.title} />
                       </div>
                     </SplideSlide>
                   </Link>
@@ -184,6 +187,9 @@ export default function Home({ fruits, vegitables }) {
                   },
                   550: {
                     perPage: 1,
+                    rewind: true,
+                    autoplay: true,
+                    speed: 800,
 
                   },
                 },
@@ -195,9 +201,9 @@ export default function Home({ fruits, vegitables }) {
                     key={item._id}
                     href={`/products/${item.slug}`}>
                     <SplideSlide>
-                      <div className="imagePro flex items-center flex-col cursor-pointer">
+                      <div className="imagePro flex items-center flex-col cursor-pointer pb-7 mt-2">
                         <p className="text-gray-700 text-lg pb-6">{item.title}</p>
-                        <Image src={`/${item.img}`} alt={item.title} width={150} height={130} />
+                        <img src={`/${item.img}`} className="productImgS" alt={item.title} />
                       </div>
                     </SplideSlide>
                   </Link>
