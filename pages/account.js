@@ -6,6 +6,7 @@ import { BsHandbag, BsTruck } from "react-icons/bs";
 import { AiOutlineLock } from "react-icons/ai";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
+import Head from "next/head"
 
 const Account = () => {
   const router = useRouter()
@@ -113,7 +114,7 @@ const Account = () => {
           progress: undefined,
         });
       }
-    }else{
+    } else {
       toast.error("New Password is not matching with Re-type Password", {
         position: "top-center",
         autoClose: 2000,
@@ -174,6 +175,14 @@ const Account = () => {
 
   return (
     <>
+      <Head>
+        <title>Fresh Frveg - Account</title>
+        <meta
+          name="description"
+          content="Shop fresh Fruits and vegetables online"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="catoBack flex">
         <ToastContainer
           position="top-right"

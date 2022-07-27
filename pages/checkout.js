@@ -186,6 +186,12 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
             <div className="catoBack flex">
                 <Head>
                     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+                    <title>Fresh Frveg - Checkout</title>
+                    <meta
+                        name="description"
+                        content="Shop fresh Fruits and vegetables online"
+                    />
+                    <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <Script type="application/javascript" crossorigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`} />
                 <ToastContainer

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from 'next/head'
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -16,7 +17,7 @@ const Signup = () => {
   const [password, setPassword] = useState('')
 
   useEffect(() => {
-    if(localStorage.getItem('token')){
+    if (localStorage.getItem('token')) {
       router.push('/')
     }
   }, [])
@@ -52,18 +53,40 @@ const Signup = () => {
     setEmail('')
     setPhone('')
     setPassword('')
-    toast.success('Your account have been created', {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+
+    if (response.success) {
+      toast.success('Your account have been created', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
+    }
+    else {
+      toast.error(response.error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   }
   return (
     <div>
+      <Head>
+        <title>Fresh Frveg - Signup</title>
+        <meta
+          name="description"
+          content="Shop fresh Fruits and vegetables online"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -99,7 +122,7 @@ const Signup = () => {
               <p className='text-gray-500 pt-4 text-xs'>We will send you a text to verify your phone.
                 Message and Data rates may apply</p>
               <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className=" relative flex text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700"><p>CONTINUE</p>
-              <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>
+                <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>
               </button></div>
             </form>
             <p className='text-gray-500 pt-2 text-sm'>Already have an account? <span className='text-green-700 font-medium'><Link href={"/login"}>Sign in</Link></span></p>

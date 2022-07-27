@@ -8,6 +8,7 @@ import { AiOutlineMinusCircle } from "react-icons/ai";
 import mongoose from "mongoose";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Head from "next/head";
 
 
 const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
@@ -51,6 +52,14 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
 
   return (
     <>
+      <Head>
+        <title>Fresh Frveg - {product.title}</title>
+        <meta
+          name="description"
+          content="Shop fresh Fruits and vegetables online"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <section className="text-gray-600 body-font overflow-hidden">
         <ToastContainer
           position="top-right"
@@ -86,18 +95,33 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
                   ₹{product.price}
                 </span>
                 <div className="flex flex-row justify-start">
-                <button disabled={product.availableQty == 0}
-                  onClick={() => {
-                    toast.success('Item added in cart', {
-                      position: "top-left",
-                      autoClose: 1000,
-                      hideProgressBar: false,
-                      closeOnClick: true,
-                      pauseOnHover: true,
-                      draggable: true,
-                      progress: undefined,
-                    });
-                    addToCart(
+                  <button disabled={product.availableQty == 0}
+                    onClick={() => {
+                      toast.success('Item added in cart', {
+                        position: "top-left",
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                      });
+                      addToCart(
+                        slug,
+                        1,
+                        product.price,
+                        product.title,
+                        product.category,
+                        `/${product.img}`
+                      );
+                      toggleCart();
+                    }}
+                    className="flex disabled:bg-green-500 buttonHi hover:disabled:text-white disabled:cursor-default text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700"
+                  >
+                    <p>Add to cart</p>
+                  </button>
+                  <button disabled={product.availableQty == 0} onClick={() => {
+                    buyNow(
                       slug,
                       1,
                       product.price,
@@ -105,24 +129,9 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
                       product.category,
                       `/${product.img}`
                     );
-                    toggleCart();
-                  }}
-                  className="flex disabled:bg-green-500 buttonHi hover:disabled:text-white disabled:cursor-default text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700"
-                >
-                  <p>Add to cart</p>
-                </button>
-                <button disabled={product.availableQty == 0} onClick={() => {
-                  buyNow(
-                    slug,
-                    1,
-                    product.price,
-                    product.title,
-                    product.category,
-                    `/${product.img}`
-                  );
-                }} className="flex disabled:bg-green-500 buttonHi hover:disabled:text-white disabled:cursor-default text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
-                  <p>Buy Now</p>
-                </button>
+                  }} className="flex disabled:bg-green-500 buttonHi hover:disabled:text-white disabled:cursor-default text-white font-medium text-base rounded-full mx-2 bg-green-700 px-5 py-3 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
+                    <p>Buy Now</p>
+                  </button>
                 </div>
               </div>
               <div className=" flex justify-start mt-8">

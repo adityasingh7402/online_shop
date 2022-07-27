@@ -7,7 +7,7 @@ const about = () => {
   return (
     <div>
       <Head>
-        <title>Fresh Frveg- About</title>
+        <title>Fresh Frveg - About</title>
         <meta
           name="description"
           content="Shop fresh Fruits and vegetables online"

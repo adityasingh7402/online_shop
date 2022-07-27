@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Head from 'next/head'
 import Image from "next/image";
 import Link from "next/link";
 import Product from "../modal/Product";
@@ -16,6 +17,14 @@ const Search = ({ products }) => {
     // console.log(products);
     return (
         <div className="text-gray-600 body-font catoBack relative">
+            <Head>
+                <title>Fresh Frveg - Search Products</title>
+                <meta
+                    name="description"
+                    content="Shop fresh Fruits and vegetables online"
+                />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <section className="flex flex-row">
                 {/* <div className="filter-side w-1/5 bg-white m-1">Hello</div> */}
                 <div className="product-side w-90 mx-auto mt-5">

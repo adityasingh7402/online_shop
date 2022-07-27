@@ -1,13 +1,22 @@
 import React from 'react'
 import Image from "next/image";
+import Head from 'next/head'
 import Link from "next/link";
 import Product from "../modal/Product";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import mongoose from "mongoose";
 
-const Fruits = ({products}) => {
+const Fruits = ({ products }) => {
   return (
     <div className="text-gray-600 body-font catoBack relative">
+      <Head>
+        <title>Fresh Frveg - Fruits</title>
+        <meta
+          name="description"
+          content="Shop fresh Fruits and vegetables online"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <section className="flex flex-row">
         {/* <div className="filter-side w-1/5 bg-white m-1">Hello</div> */}
         <div className="product-side w-90 mx-auto">
@@ -24,7 +33,7 @@ const Fruits = ({products}) => {
                   href={`/products/${item.slug}`}
                 >
                   <div className="product-box productSize relative hover:bg-gray-50 bg-white flex flex-col items-center justify-center border rounded-sm tranAnimaS shadow-sm hover:shadow-xl hover:border-gray-200 border-gray-100 cursor-pointer">
-                  {item.availableQty == 0 && <div className="absolute flex justify-center items-center w-full py-2 text-gray-700 font-medium tranbackgr z-10 text-2xl mt-6">Out of Stock!</div>}
+                    {item.availableQty == 0 && <div className="absolute flex justify-center items-center w-full py-2 text-gray-700 font-medium tranbackgr z-10 text-2xl mt-6">Out of Stock!</div>}
                     <div className="product-image w-36 h-40 overflow-hidden flex items-center justify-center">
                       <img className="scale" src={`/${item.img}`} alt={item.title} />
                     </div>
@@ -62,7 +71,7 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  let products = await Product.find({category: 'Fruits'});
+  let products = await Product.find({ category: 'Fruits' });
   return {
     props: { products: JSON.parse(JSON.stringify(products)) },
   };

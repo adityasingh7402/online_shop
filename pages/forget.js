@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect } from 'react';
 import { useRouter } from "next/router";
@@ -13,6 +14,14 @@ const Forget = () => {
   }, [])
   return (
     <div>
+      <Head>
+        <title>Fresh Frveg - Forget</title>
+        <meta
+          name="description"
+          content="Shop fresh Fruits and vegetables online"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className='flex'>
         <div className="login flex justify-center border-2 bg-white border-gray-200 shadow-md rounded-sm my-9 mx-auto">
           <div className="client-data flex flex-col w-full px-6 py-4">

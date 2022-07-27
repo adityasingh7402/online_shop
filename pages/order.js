@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
+import Head from 'next/head'
 import mongoose from 'mongoose'
 import Order from '../modal/Order'
 import { useRouter } from 'next/router'
@@ -25,6 +26,14 @@ const MyOrder = ({ order, clearCart }) => {
 
   return (
     <>
+      <Head>
+        <title>Fresh Frveg - Order</title>
+        <meta
+          name="description"
+          content="Shop fresh Fruits and vegetables online"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="text-gray-700 body-font catoBack relative flex">
         <div ref={componentRef} className="order-page w-9/12 bg-white mx-auto my-8 py-8 px-10 flex flex-col">
           <div className="order-detail w-full">

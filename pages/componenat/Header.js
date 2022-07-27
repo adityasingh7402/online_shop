@@ -90,12 +90,12 @@ function Header({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                 </Link>
               </li>
               <li className="mx-6 text-lg font-normal paddingM tracking-widest text-slate-50 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r from-green-200 to-green-300 transition-all">
-                <Link href="/Vegitables">
+                <Link href="/vegitables">
                   <a>Vegitables</a>
                 </Link>
               </li>
               <li className="mx-6 text-lg font-normal paddingM tracking-widest text-slate-50 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r from-green-200 to-green-300 transition-all">
-                <Link href="/Fruits">
+                <Link href="/fruits">
                   <a>Fruits</a>
                 </Link>
               </li>

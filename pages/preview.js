@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
+import Head from 'next/head'
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,6 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   return (<>
+    <Head>
+      <title>Fresh Frveg - Preview</title>
+      <meta
+        name="description"
+        content="Shop fresh Fruits and vegetables online"
+      />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <div className='catoBack flex'>
       <ToastContainer
         position="top-right"
