@@ -44,18 +44,18 @@ const YourOrder = () => {
         {/* <div className='left-side bg-white w-1/5 mr-5 border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-72'>
           <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
         </div> */}
-        <div className='right-side mx-auto bg-white w-4/5 text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-5 shadow-sm'>
+        <div className='right-side mx-auto bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-5 shadow-sm'>
           <p>Your Order List</p>
           <div className="products flex flex-col w-full text-sm mt-8">
             {orders.length == 0 && <div className="flex justify-center text-4xl text-green-700 py-20 items-center border-t border-b border-gray-200">
               Your Order List is Empty....
             </div>}
             {orders.map((item) => {
-              return <div key={item._id} className="product flex flex-row w-full border-t-2 border-b-2 border-gray-200 p-3 hover:bg-gray-100">
-                <div className="product-image w-1/4 flex justify-center items-center">
-                  <Image alt="ecommerce" className="block" src={'/basket.png'} width={200} height={150} />
+              return <div key={item._id} className="product flex yourOrderCol justify-center flex-row w-full border-t-2 border-b-2 border-gray-200 p-3 hover:bg-gray-100">
+                <div className="product-image w-48 flex justify-center items-center pr-8">
+                  <img alt="ecommerce" className="w-48 h-36 orderImage" src={'/basket.png'} />
                 </div>
-                <div className="product-text w-2/6 flex justify-start flex-col">
+                <div className="product-text yourOrderWT flex justify-start flex-col">
                   <h1 className='text-2xl pb-1 font-medium'>{item.name}</h1>
                   <p className='text-lg pb-1'>Order id :  <span>#{item.orderId}</span></p>
                   <p className='text-lg pb-1'>{item.createdAt.substring(0, 10)}</p>
@@ -64,7 +64,7 @@ const YourOrder = () => {
                 <div className="product-price w-1/6 flex justify-start">
                   <span className='text-2xl'>₹{parseInt(item.amount) + 40}</span>
                 </div>
-                <div className="product-price w-3/12">
+                <div className="product-price">
                   <Link href={'/order?id=' + item._id}><button className='font-medium rounded-full bg-green-700 w-40 text-lg px-8 mt-10 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Details</h6></button></Link>
                 </div>
               </div>

@@ -188,6 +188,60 @@
     .textTitle{
         font-size: 1.7rem;
     }
+    .yourOrderCol{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    .product-text > h1{
+        padding-bottom: 10px;
+    }
+    .product-text > p{
+        padding-bottom: 10px;
+    }
+    .yourOrderWT{
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .order-d{
+        flex-direction: column;
+    }
+    .order-d > .leftOrd{
+        width: 100%;
+        border: none;
+        padding-bottom: 5rem;
+    }
+    .order-d > .rightOrd{
+        width: 100%;
+        padding-left: 0px;
+    }
+    .productIten{
+        flex-direction: column;
+    }
+    .productIten > .product-image , .product-text , .product-price{
+        width: 100%;
+        padding-bottom: 5px;
+    }
+
+    .productIten > .product-image{
+        justify-content: flex-start;
+    }
+
+    .product-text{
+        padding-left: 0px;
+    }
+    .order-payment{
+        flex-direction: column;
+    }
+    .order-payment > .left , .right{
+        width: 100%;
+        padding: 0px;
+    }
+    .orderLasPR{
+        width: 100%;
+    }
 }
 @media only screen and (max-width: 591px){
     .producDetail{
@@ -238,6 +292,9 @@
     .imageProd{
         margin-right: 1rem;
     }
+    .yourOrderW{
+        width: 100%;
+      }
 }
 @media only screen and (max-width: 1104px){
     .letfWidth{
@@ -283,6 +340,18 @@
     .w-ThreebyF{
         width: 100%;
         padding: 10px;
+    }
+}
+@media only screen and (max-width: 960px){
+    .orderImage{
+        width: 160px;
+        height: 110px;
+    }
+}
+@media only screen and (max-width: 1174px){
+    .OrderW{
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }
 
