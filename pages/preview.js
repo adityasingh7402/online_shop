@@ -6,7 +6,7 @@ import { AiOutlineMinusCircle } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
+const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal, deleteFromCart }) => {
   return (<>
     <Head>
       <title>Fresh Frveg - Preview</title>
@@ -38,8 +38,8 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
             }
             {Object.keys(cart).map((k) => {
               return <div key={k} className="product flex flex-row w-full border-t-2 border-b-2 border-gray-200 p-3">
-                <div className="product-image w-40 flex justify-center imageProd">
-                  <img alt={cart[k].name} className="block" src={cart[k].image} />
+                <div className="product-image w-36 flex justify-center imageProd mr-4">
+                  <img alt={cart[k].name} src={cart[k].image} />
                 </div>
                 <div className="product-text w-2/4 flex justify-start flex-col">
                   <h1 className='text-2xl headPre font-medium'>{cart[k].name}</h1>
@@ -52,11 +52,11 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
                       <AiOutlinePlusCircle onClick={() => { addToCart(k, 1, cart[k].price, cart[k].name, cart[k].variant, cart[k].image) }} className='text-3xl font-normal cursor-pointer ml-2' />
                     </div>
                     <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
-                      <p>Delete</p>
+                      <p onClick={() => { deleteFromCart(k, 1, cart[k].price, cart[k].name, cart[k].variant, cart[k].image) }}>Delete</p>
                     </div>
                   </div>
                 </div>
-                <div className="product-price w-1/6 flex justify-end">
+                <div className="product-price flex justify-end">
                   <span className='text-2xl'>₹{cart[k].price}</span>
                 </div>
               </div>

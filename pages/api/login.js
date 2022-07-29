@@ -19,7 +19,7 @@ const handler = async (req, res) => {
                     var token = jwt.sign({ email: user.email, name: user.name, phone: user.phone }, process.env.JWD_SECRET, {
                         // expiresIn: "1d"
                     });
-                    res.status(200).json({ success: true, token, email: user.email });
+                    res.status(200).json({ success: true, token, email: user.email, name: user.name });
 
                 }
                 else {

@@ -111,6 +111,18 @@ function MyApp({ Component, pageProps }) {
     saveCart(newCart);
   };
 
+  const deleteFromCart = (itemCode, qty, price, name, variant, image) => {
+    let newCart = cart;
+    if (itemCode in cart) {
+      newCart[itemCode].qty = cart[itemCode].qty - cart[itemCode].qty;
+    }
+    if (newCart[itemCode]["qty"] <= 0) {
+      delete newCart[itemCode];
+    }
+    setCart(newCart);
+    saveCart(newCart);
+  };
+
 
 
   const buyNow = (itemCode, qty, price, name, variant, image) => {
@@ -131,6 +143,7 @@ function MyApp({ Component, pageProps }) {
         cart={cart}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
+        deleteFromCart={deleteFromCart}
         clearCart={clearCart}
         subTotal={subTotal}
         toggleCart={toggleCart}
@@ -206,7 +219,16 @@ function MyApp({ Component, pageProps }) {
                       />
                     </div>
                     <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
-                      <p>Delete</p>
+                      <p onClick={() => {
+                        deleteFromCart(
+                          k,
+                          1,
+                          cart[k].price,
+                          cart[k].name,
+                          cart[k].variant,
+                          cart[k].image
+                        );
+                      }}>Delete</p>
                     </div>
                   </div>
                 </div>
@@ -250,6 +272,7 @@ function MyApp({ Component, pageProps }) {
         buyNow={buyNow}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
+        deleteFromCart={deleteFromCart}
         clearCart={clearCart}
         subTotal={subTotal}
         toggleCart={toggleCart}

@@ -23,6 +23,7 @@ const Account = () => {
   const [currentPass, setcurrentPass] = useState("")
   const [newPass, setnewPass] = useState("")
   const [ReEnter, setReEnter] = useState("")
+  const [dispayName, setdispayName] = useState("")
 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
@@ -33,6 +34,7 @@ const Account = () => {
       setuser(myuser)
       setemail(myuser.email)
       fetchdata(myuser.token)
+      setdispayName(myuser.name)
     }
   }, [])
 
@@ -212,7 +214,7 @@ const Account = () => {
               <div className="image bg-green-500 rounded-full w-16 h-16 overflow-hidden mr-5"><div className="pt-1"><Image src={"/person.png"} width={60} height={60} /></div></div>
               <div className="Account">
                 <div className="text-base text-gray-800 flex">Hello,</div>
-                <div className="text-xl text-gray-800 flex">Aditya Kumar</div>
+                <div className="text-xl text-gray-800 flex">{dispayName}</div>
               </div>
             </div>
             <div className="flex flex-row bg-white justify-start border border-gray-200 rounded-sm mt-5 py-5 px-5 shadow-sm h-min">
