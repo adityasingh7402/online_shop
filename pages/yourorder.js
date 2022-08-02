@@ -8,9 +8,11 @@ import Head from "next/head"
 const YourOrder = () => {
   const router = useRouter()
   const [orders, setorders] = useState([])
+  const [lodingS, setlodingS] = useState(true)
 
   useEffect(() => {
     const fetchOrders = async () => {
+      setlodingS(false)
       let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myorders`, {
         method: 'POST', // or 'PUT'
         headers: {
@@ -20,6 +22,7 @@ const YourOrder = () => {
       })
       let res = await a.json()
       setorders(res.orders)
+      setlodingS(true)
     }
     if (!localStorage.getItem('myuser')) {
       router.push('/')
@@ -31,7 +34,7 @@ const YourOrder = () => {
   }, [])
 
   return (
-    <div className='catoBack flex'>
+    <div className='catoBack flex relative'>
       <Head>
         <title>Fresh Frveg - Orders</title>
         <meta
@@ -40,6 +43,7 @@ const YourOrder = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-2/3 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
       <div className="checkout-title my-8 mx-5 w-full flex flex-row">
         {/* <div className='left-side bg-white w-1/5 mr-5 border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-72'>
           <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>

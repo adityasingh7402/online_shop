@@ -16,7 +16,9 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
   const { slug } = router.query;
   const [pin, setPin] = useState();
   const [service, setService] = useState();
+  const [lodingS, setlodingS] = useState(true)
   const checkServiceablity = async () => {
+    setlodingS(false)
     let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
     let pinJson = await pins.json();
     if (Object.keys(pinJson).includes(pin)) {
@@ -42,6 +44,7 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
         progress: undefined,
       });
     }
+    setlodingS(true)
   };
   const onChangePin = (e) => {
     setPin(e.target.value);
@@ -145,7 +148,7 @@ const Post = ({ cart, addToCart, toggleCart, product, buyNow, error }) => {
                   onClick={checkServiceablity}
                   className="font-medium text-base  ml-1 rounded-md px-5 bg-green-700 text-white hover:text-gray-800 hover:bg-white border transition-all border-green-700"
                 >
-                  <p>Check</p>
+                  {lodingS === false ? <p>Wait</p> : <p>Check</p>}
                 </button>
               </div>
               <div className="flex justify-start absolute -bottom-3 serviceP">

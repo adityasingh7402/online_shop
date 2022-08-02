@@ -15,6 +15,7 @@ const Signup = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
+  const [lodingS, setlodingS] = useState(true)
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -38,6 +39,7 @@ const Signup = () => {
   }
 
   const handleSubmit = async (e) => {
+    setlodingS(false)
     e.preventDefault()
     const data = { name, email, phone, password }
     let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
@@ -53,7 +55,7 @@ const Signup = () => {
     setEmail('')
     setPhone('')
     setPassword('')
-
+    setlodingS(true)
     if (response.success) {
       toast.success('Your account have been created', {
         position: "top-center",
@@ -121,7 +123,8 @@ const Signup = () => {
               </div>
               <p className='text-gray-500 pt-4 text-xs'>We will send you a text to verify your phone.
                 Message and Data rates may apply</p>
-              <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className=" relative flex text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700"><p>CONTINUE</p>
+              <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className=" relative flex text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
+                {lodingS === false ? <p>WAIT</p> : <p>CONTINUE</p>}
                 <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>
               </button></div>
             </form>

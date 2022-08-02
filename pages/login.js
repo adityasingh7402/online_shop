@@ -13,6 +13,7 @@ const Login = () => {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [lodingS, setlodingS] = useState(true)
 
   useEffect(() => {
     if (localStorage.getItem('myuser')) {
@@ -31,6 +32,7 @@ const Login = () => {
   }
 
   const handleSubmit = async (e) => {
+    setlodingS(false)
     e.preventDefault()
     const data = { email, password }
     let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
@@ -42,7 +44,7 @@ const Login = () => {
     })
     let response = await res.json()
     // console.log(response)
-
+    setlodingS(true)
     setEmail('')
     setPassword('')
     if (response.success) {
@@ -108,7 +110,8 @@ const Login = () => {
               </div>
               <Link href={'/forget'}><a><p className='flex justify-end text-green-700 pb-2 font-medium pr-1'>Forgot Password</p></a></Link>
               <p className='text-gray-500 pt-4 text-xs'>By continuing, you agree to FreshFrveg&apos;s Conditions of Use and Privacy Notice.</p>
-              <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className="flex relative text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700"><p>CONTINUE</p>
+              <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className="flex relative text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
+                {lodingS === false ? <p>WAIT</p> : <p>CONTINUE</p>}
                 <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>
               </button></div>
             </form>

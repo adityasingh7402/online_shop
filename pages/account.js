@@ -24,6 +24,8 @@ const Account = () => {
   const [newPass, setnewPass] = useState("")
   const [ReEnter, setReEnter] = useState("")
   const [dispayName, setdispayName] = useState("")
+  const [lodingS, setlodingS] = useState(true)
+  const [lodingSS, setlodingSS] = useState(true)
 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
@@ -39,6 +41,7 @@ const Account = () => {
   }, [])
 
   const fetchdata = async (token) => {
+    setlodingS(false)
     let data = { token: token }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
       method: 'POST', // or 'PUT'
@@ -53,9 +56,11 @@ const Account = () => {
     setpincode(res.pincode)
     setname(res.name)
     setlandmark(res.landmark)
+    setlodingS(true)
   }
 
   const handleUserSubmit = async () => {
+    setlodingS(false)
     let data = { token: user.token, address, pincode, phone, name, landmark }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateuser`, {
       method: 'POST', // or 'PUT'
@@ -65,6 +70,7 @@ const Account = () => {
       body: JSON.stringify(data),
     })
     let res = await a.json()
+    setlodingS(true)
     toast.success("Successfully Updated Details", {
       position: "top-center",
       autoClose: 2000,
@@ -76,6 +82,7 @@ const Account = () => {
     });
   }
   const handlePasswordSubmit = async () => {
+    setlodingSS(false)
     if (newPass == ReEnter) {
       let res;
       if (newPass == ReEnter) {
@@ -91,6 +98,7 @@ const Account = () => {
         setnewPass('')
         setcurrentPass('')
         setReEnter('')
+        setlodingSS(true)
       }
       else {
         res = { success: false }
@@ -208,7 +216,8 @@ const Account = () => {
           draggable
           pauseOnHover
         />
-        <div className="account-title accFlexCo my-5 mx-20 w-full flex flex-row">
+        <div className="account-title accFlexCo my-5 mx-20 w-full flex flex-row relative">
+          {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
           <div className="right-side w-1/4 mr-5 leftSideAccW">
             <div className="flex accLeftSideN accLeftSideNMB flex-row bg-white justify-start border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-min">
               <div className="image bg-green-500 rounded-full w-16 h-16 overflow-hidden mr-5"><div className="pt-1"><Image src={"/person.png"} width={60} height={60} /></div></div>
@@ -261,7 +270,7 @@ const Account = () => {
                     <input value={landmark} onChange={handleChange} type="text" name='landmark' id="landmark" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div>
                 </div>
-                <button onClick={handleUserSubmit} className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>Update</button>
+                <button onClick={handleUserSubmit} className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>{lodingS === false ? <p>Updating</p> : <p>Update</p>}</button>
               </div>
             </div>
             <div className="passwordChng flex flex-col bg-white justify-start border mt-5 border-gray-200 rounded-sm py-5 px-10 shadow-sm h-min">
@@ -282,7 +291,7 @@ const Account = () => {
                     <input type="password" onChange={handleChange} value={ReEnter} name='ReEnter' id="ReEnter" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div>
                 </div>
-                <button onClick={handlePasswordSubmit} className='rounded-full bg-green-700 text-lg px-8 mt-10 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Change Password</h6></button>
+                <button onClick={handlePasswordSubmit} className='rounded-full bg-green-700 text-lg px-8 mt-10 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>{lodingSS === false ? <p>Changing Password</p> : <p>Change Password</p>}</button>
               </div>
             </div>
           </div>

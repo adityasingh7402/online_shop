@@ -41,9 +41,6 @@ const Contact = () => {
 
   const submitQuery = async (e) => {
     setlodingS(false)
-    setTimeout(() => {
-      setlodingS(true)
-    }, 500);
     let data = { name, email, message }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addquery`, {
       method: 'POST', // or 'PUT'
@@ -56,6 +53,7 @@ const Contact = () => {
     setname('')
     setemail('')
     setmessage('')
+    setlodingS(true)
     toast.success('Message send successfully', {
       position: "top-center",
       autoClose: 2000,
@@ -90,14 +88,16 @@ const Contact = () => {
         pauseOnHover
       />
       <div className="flex justify-around flex-row flexCol-con py-20 relative">
-        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+        {/* {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>} */}
         <div className="left margin-bot">
           <p className='text-5xl text-green-700 pb-16 textSma'>WE&rsquo;RE READY, LET&rsquo;S TALK.</p>
           <div className="contact flex flex-col">
             <input value={name} onChange={handleChange} type="text" id="name" name='name' placeholder="Your Name" required className="p-3 outline-none focus:border-green-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
             <input value={email} onChange={handleChange} type="text" id="email" name="email" placeholder="Your Email / Mobile No" required className="p-3 outline-none focus:border-green-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
             <textarea value={message} onChange={handleChange} type="text" id="message" name="message" placeholder="Message" required cols="57" rows="5" className="p-3 resize-none outline-none focus:border-green-700 mb-5 input-bck text-gray-600 border text-base border-gray-300" />
-            <button onClick={submitQuery} disabled={disabled} className='font-medium rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-10 py-4 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>SEND MESSAGE</h6></button>
+            <button onClick={submitQuery} disabled={disabled} className='font-medium rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-10 py-4 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>
+              {lodingS === false ? <h6>Loading ..</h6> : <h6>SEND MESSAGE</h6>}
+            </button>
           </div>
         </div>
         <div className="right">

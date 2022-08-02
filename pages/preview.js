@@ -69,7 +69,7 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal, deleteF
             </div>
           </div>
         </div>
-        <div className='right-side bg-white w-1/5 rightWidth ml-5 border border-gray-200 rounded-sm py-8 mt-8 px-5 shadow-sm h-72'>
+        <div className='right-side bg-white w-1/5 rightWidth ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72'>
           <div className='flex justify-end items-center pb-2 text-3xl text-gray-800'>
             <div className="subtotal pr-7 subJus">Subtotal :</div>
             <div className='flex justify-start'>₹{subTotal}</div>

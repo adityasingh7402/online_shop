@@ -45,6 +45,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
     }, [name, email, phone, pincode, address, landmark])
 
     const fetchdata = async (token) => {
+        setlodingS(false)
         let data = { token: token }
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
             method: 'POST', // or 'PUT'
@@ -60,6 +61,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
         setname(res.name)
         setlandmark(res.landmark)
         getPincode(res.pincode)
+        setlodingS(true)
     }
 
     const getPincode = async (pin) => {
@@ -180,6 +182,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                 progress: undefined,
             });
         }
+        setlodingS(true)
     }
     return (
         <>
@@ -303,7 +306,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                             </div>
                         </div>
                     </div>
-                    <div className="right-side bg-white w-1/5 rightWidth ml-5 border border-gray-200 rounded-sm py-8 px-5 mt-8 shadow-sm h-72">
+                    <div className="right-side bg-white w-1/5 rightWidth ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72">
                         <div className='flex justify-end items-center pb-2 text-3xl text-gray-800'>
                             <div className="subtotal subJus pr-7">Subtotal :</div>
                             <div className='flex justify-end'>₹{subTotal}</div>
