@@ -174,14 +174,8 @@ function MyApp({ Component, pageProps }) {
                 key={k}
                 className="product flex flex-row w-full border-b-2 border-gray-300 p-3"
               >
-                <div className="product-image w-1/5 imageWidt flex justify-center overflow-hidden">
-                  <Image
-                    alt="ecommerce"
-                    className="block"
-                    src={cart[k].image}
-                    width={200}
-                    height={150}
-                  />
+                <div className="product-image w-36 flex justify-center imageProd">
+                  <img alt={cart[k].name} src={cart[k].image} />
                 </div>
                 <div className="product-text flex pl-5 flex-col">
                   <h1 className="text-xl font-medium">{cart[k].name}</h1>

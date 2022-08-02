@@ -32,7 +32,10 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal, deleteF
         <div className='left-side letfWidth bg-white w-4/5 text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-5 shadow-sm'>
           <p className='headingPr'>Shopping List</p>
           <div className="products flex flex-col w-full text-sm mt-8">
-            <div className="price-text flex justify-end px-4 text-base">Price</div>
+            <div className='flex justify-between items-center'>
+              <div className="price-text flex justify-start px-4 text-base">Item</div>
+              <div className="price-text flex justify-end px-4 text-base">Price</div>
+            </div>
             {
               Object.keys(cart).length == 0 && <div className='flex justify-center text-4xl text-green-700 py-10 items-center border-t border-b border-gray-200'>Your cart is Empty...!</div>
             }
@@ -66,7 +69,7 @@ const preview = ({ cart, addToCart, removeFromCart, clearCart, subTotal, deleteF
             </div>
           </div>
         </div>
-        <div className='right-side bg-white w-1/5 rightWidth ml-5 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-72'>
+        <div className='right-side bg-white w-1/5 rightWidth ml-5 border border-gray-200 rounded-sm py-8 mt-8 px-5 shadow-sm h-72'>
           <div className='flex justify-end items-center pb-2 text-3xl text-gray-800'>
             <div className="subtotal pr-7 subJus">Subtotal :</div>
             <div className='flex justify-start'>₹{subTotal}</div>

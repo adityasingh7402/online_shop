@@ -208,16 +208,16 @@ const Account = () => {
           draggable
           pauseOnHover
         />
-        <div className="checkout-title my-5 mx-20 w-full flex flex-row">
-          <div className="right-side w-1/4 mr-5">
-            <div className="flex flex-row bg-white justify-start border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-min">
+        <div className="account-title accFlexCo my-5 mx-20 w-full flex flex-row">
+          <div className="right-side w-1/4 mr-5 leftSideAccW">
+            <div className="flex accLeftSideN accLeftSideNMB flex-row bg-white justify-start border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-min">
               <div className="image bg-green-500 rounded-full w-16 h-16 overflow-hidden mr-5"><div className="pt-1"><Image src={"/person.png"} width={60} height={60} /></div></div>
               <div className="Account">
                 <div className="text-base text-gray-800 flex">Hello,</div>
                 <div className="text-xl text-gray-800 flex">{dispayName}</div>
               </div>
             </div>
-            <div className="flex flex-row bg-white justify-start border border-gray-200 rounded-sm mt-5 py-5 px-5 shadow-sm h-min">
+            <div className="flex accLeftSideN flex-row bg-white justify-start border border-gray-200 rounded-sm mt-5 py-5 px-5 shadow-sm h-min">
               <div className="Account">
                 <ul>
                   <Link href={'/yourorder'}><a><li className="text-xl flex flex-row items-center pb-3"><BsHandbag className="ml-2 mr-4 text-xl" /><span>My Orders</span></li></a></Link>
@@ -226,10 +226,10 @@ const Account = () => {
               </div>
             </div>
           </div>
-          <div className="left-side w-4/5">
+          <div className="left-side w-4/5 rightSideAccW">
             <div className="persnalD flex flex-col bg-white justify-start border border-gray-200 rounded-sm py-5 px-10 shadow-sm h-min">
               <p className="border-b pb-2 border-gray-200 text-3xl">Personal Information</p>
-              <div className="delivery-detail pl-6 w-3/5 py-8">
+              <div className="accountInpuW personal-d pl-6 py-8">
                 <div className="personal-d grid grid-cols-2 gap-4">
                   <div className="flex flex-col">
                     <label htmlFor="name" className="text-base font-normal pl-1">Name</label>
@@ -266,7 +266,7 @@ const Account = () => {
             </div>
             <div className="passwordChng flex flex-col bg-white justify-start border mt-5 border-gray-200 rounded-sm py-5 px-10 shadow-sm h-min">
               <p className="border-b pb-2 border-gray-200 text-3xl">Change Password</p>
-              <div className="delivery-detail pl-6 w-3/5 py-8">
+              <div className="accountInpuW pl-6 py-8">
                 <div className="personal-d grid grid-cols-2 gap-4">
                   <div className="flex flex-col">
                     <label htmlFor="currentPass" className="text-base font-normal pl-1">Type Current Password</label>

@@ -68,7 +68,7 @@ function Header({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
             <CgClose />
           </div> */}
           <div className="nav flex justify-center items-center navbar">
-            <div className="mx-6 cursor-pointer logo">
+            <div className={menudrop ? "mx-6 cursor-pointer logo top-0" : "mx-6 cursor-pointer logo top-0"}>
               <Link href={"/"}>
                 <Image src="/logo.png" width={100} height={70} />
               </Link>

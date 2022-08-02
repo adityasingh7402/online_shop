@@ -23,8 +23,8 @@
         width: 100px;
         height: 80px;
         position: absolute;
-        top: 0;
         left: 0;
+        margin-top: 5px;
     }
     .navbar{
         flex-direction: column;
@@ -111,6 +111,21 @@
     }
     .textTitle{
         font-size: 2rem;
+    }
+    .account-title{
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media only screen and (max-width: 1070px){
+    .rightSideAccW{
+        width: 655px;
+    }
+    .leftSideAccW{
+        width: 246px;
     }
 }
 
@@ -335,19 +350,33 @@
         padding-right: 10px;
     }
 }
-@media only screen and (max-width: 696px){
-    .userGrid{
-        grid-template-columns: auto;
-    }
-    .w-ThreebyF{
-        width: 100%;
-        padding: 10px;
-    }
-}
+
 @media only screen and (max-width: 960px){
     .orderImage{
         width: 160px;
         height: 110px;
+    }
+    .accFlexCo{
+        flex-direction: column;
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .leftSideAccW{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .rightSideAccW{
+        margin-top: 20px;
+        width: 100%;
+    }
+    .leftSideAccW > .accLeftSideN{
+        width: 49%;
+        height: 110px;
+        margin-top: 0;
     }
 }
 @media only screen and (max-width: 1174px){
@@ -357,3 +386,37 @@
     }
 }
 
+@media only screen and (max-width: 696px){
+    .userGrid{
+        grid-template-columns: auto;
+    }
+    .w-ThreebyF{
+        width: 100%;
+        padding: 10px;
+    }
+    .personal-d{
+        grid-template-columns: auto;
+    }
+    .accountInpuW{
+        width: 100%;
+    }
+    .leftSideAccW{
+        flex-direction: column;
+    }
+    .leftSideAccW > .accLeftSideN{
+        width: 100%;
+    }
+    .accLeftSideNMB{
+        margin-bottom: 20px;
+    }
+    .persnalD > p{
+        font-size: 1.7rem;
+    }
+    .passwordChng > p{
+        font-size: 1.7rem;
+    }
+    .accountInpuW{
+        padding: 0;
+        margin-top: 1rem;
+    }
+}
