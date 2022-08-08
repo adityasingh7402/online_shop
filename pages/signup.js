@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Head from 'next/head'
 import React from "react";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from 'react';
@@ -28,7 +29,7 @@ const Signup = () => {
       setName(e.target.value)
     }
     if (e.target.name == 'email') {
-      setEmail(e.target.value)
+      setEmail(e.target.value.toLowerCase())
     }
     if (e.target.name == 'phone') {
       setPhone(e.target.value)
@@ -100,7 +101,8 @@ const Signup = () => {
         draggable
         pauseOnHover
       />
-      <div className='flex'>
+      <div className='flex relative'>
+        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <div className="login flex justify-center border-2 bg-white border-gray-300 shadow-md rounded-sm my-9 mx-auto">
           <div className="client-data flex flex-col w-full px-6 py-4">
             <p className="text-3xl pb-3 font-normal">Create Account</p>

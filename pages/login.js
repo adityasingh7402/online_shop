@@ -24,7 +24,7 @@ const Login = () => {
 
   const handleChange = (e) => {
     if (e.target.name == 'email') {
-      setEmail(e.target.value)
+      setEmail(e.target.value.toLowerCase())
     }
     if (e.target.name == 'password') {
       setPassword(e.target.value)
@@ -84,7 +84,8 @@ const Login = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='flex'>
+      <div className='flex relative'>
+        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -102,7 +103,7 @@ const Login = () => {
             <form onSubmit={handleSubmit} method="POST">
               <div className="flex flex-col pb-3">
                 <label htmlFor="email" className="text-base font-normal pl-1 pb-1">Email</label>
-                <input value={email} onChange={handleChange} type="text" name='email' id="email" required autoComplete="email" placeholder='Email' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-green-700 border-gray-300" />
+                <input value={email} onChange={handleChange} type="email" name='email' id="email" required autoComplete="email" placeholder='Email' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-green-700 border-gray-300" />
               </div>
               <div className="flex flex-col pb-1">
                 <label htmlFor="password" className="text-base font-normal pl-1 pb-1">Password</label>
