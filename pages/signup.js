@@ -102,7 +102,7 @@ const Signup = () => {
         pauseOnHover
       />
       <div className='flex relative'>
-        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <div className="login flex justify-center border-2 bg-white border-gray-300 shadow-md rounded-sm my-9 mx-auto">
           <div className="client-data flex flex-col w-full px-6 py-4">
             <p className="text-3xl pb-3 font-normal">Create Account</p>

@@ -85,7 +85,7 @@ const Login = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='flex relative'>
-        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <ToastContainer
           position="top-right"
           autoClose={3000}

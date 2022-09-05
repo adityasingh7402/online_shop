@@ -28,7 +28,7 @@ const Search = ({ products }) => {
             <section className="flex flex-row">
                 {/* <div className="filter-side w-1/5 bg-white m-1">Hello</div> */}
                 <div className="product-side w-90 mx-auto mt-5">
-                    <input value={search} onChange={handleChange} type="text" name="search" id="search" className="p-4 w-4/5 mb-10 mx-auto shadow-md text-xl flex rounded-sm text-gray-600 outline-none" placeholder="Search" />
+                    <input value={search} onChange={handleChange} type="text" name="search" id="search" className="p-4 w-10/12 mb-10 mx-auto shadow-md text-xl flex rounded-sm text-gray-600 outline-none" placeholder="Search" />
                     <div className="product-item grid grid-cols-6 productsIt gap-3 my-5 justify-center items-center">
                         {products.filter((val) => {
                             if (search == "") {

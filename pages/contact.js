@@ -87,8 +87,8 @@ const Contact = () => {
         draggable
         pauseOnHover
       />
+      {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg z-10 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
       <div className="flex justify-around flex-row flexCol-con py-20 relative">
-        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         {/* {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>} */}
         <div className="left margin-bot">
           <p className='text-5xl text-green-700 pb-16 textSma'>WE&rsquo;RE READY, LET&rsquo;S TALK.</p>
