@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import Image from "next/image";
 
-const addproduct = () => {
+const Addproduct = () => {
   const [price, setprice] = useState("");
   const [title, settitle] = useState("");
   const [desc, setdesc] = useState("");
@@ -241,4 +241,4 @@ const addproduct = () => {
   );
 };
 
-export default addproduct;
+export default Addproduct;
