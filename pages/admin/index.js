@@ -28,7 +28,7 @@ export default function Home({orders, products}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="my-8 px-5 w-full flex flex-row">
-        <div className=" bg-green-800 w-2/12 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-min">
+        <div className=" bg-green-800 w-56 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-min">
           <ul className="flex flex-col">
             <li className="text-xl pb-5 font-medium text-white flex items-center"><span className="text-2xl pr-5"><HiChartPie /></span> Inventory</li>
             <li onClick={() => setActive("Order")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Order</li>

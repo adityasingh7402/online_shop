@@ -208,7 +208,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, toggle
                     draggable
                     pauseOnHover
                 />
-                    {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+                    {lodingS === false && <span className="fixed flex justify-center z-10 items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
                 <div className="checkout-title relative my-8 mx-5 prevewCol PreBox w-full flex flex-row">
                     <div className="left-side bg-white letfWidth w-4/5 text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-10 shadow-sm">
                         <p className="border-b headingPr pb-2 border-gray-200">DELIVERY ADDRESS</p>

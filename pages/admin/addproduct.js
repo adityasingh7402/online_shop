@@ -48,7 +48,7 @@ const Addproduct = () => {
       setcategory(e.target.value);
     }
     else if (e.target.name == "img") {
-      console.log(typeof e.target.files[0].name)
+      console.log(e.target.files[0])
       setimg(e.target.files[0].name);
     }
   };
