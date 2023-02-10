@@ -22,7 +22,7 @@ const Shop = ({ products }) => {
         {/* <div className="filter-side w-1/5 bg-white m-1">Hello</div> */}
         <div className="product-side w-90 mx-auto">
           <div className="shop-title w-96 shadow-md shopCat my-5 text-center p-3 m-auto background text-white text-3xl rounded-sm">
-            Shop by Chatogary
+            Shop by Category
           </div>
           {Object.keys(products).length == 0 && <div className="flex justify-center items-center text-xl text-gray-700 font-medium">Sorry, all the item are currently out of stock. New stock coming soon. Stay Tuned!</div>}
           <div className="product-item grid grid-cols-6 productsIt gap-3 my-5 justify-center items-center">
