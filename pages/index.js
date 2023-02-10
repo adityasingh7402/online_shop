@@ -83,7 +83,7 @@ export default function Home({ fruits, vegitables }) {
           <div className="service flex justify-center items-center flex-col mx-16">
             <Image src="/5 (3).png" width="55px" height="50px" />
             <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
-              Freshest Produce
+              Fresh Produce
             </h2>
           </div>
 
@@ -110,7 +110,7 @@ export default function Home({ fruits, vegitables }) {
       <div className="catoBack pb-1">
         <hr className="mt-12 drop-shadow-2xl ..." />
         <div className="shop-title w-96 text-center shadow-md p-3 m-auto background text-white text-3xl rounded-sm">
-          Shop by Chatogary
+          Shop by Category
         </div>
         <div className="catogaryes drop-shadow-sm bg-white maginIt lg:mx-16 sm:mx-5 my-6 rounded-sm relative h-72">
           <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
