@@ -9,11 +9,12 @@ const handler = async (req, res) => {
         let user = jsonwebtoken.verify(token, process.env.JWD_SECRET)
         let dbuser = await User.findOneAndUpdate({ email: user.email },
             {
-                address: req.body.address,
-                pincode: req.body.pincode,
+                email: req.body.email,
+                pan_no: req.body.pan_no,
                 phone: req.body.phone,
                 name: req.body.name,
-                landmark: req.body.landmark,
+                ifsc: req.body.ifsc,
+                accno: req.body.accno,
             }
         )
         res.status(200).json({ success: true })

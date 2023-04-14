@@ -183,3 +183,37 @@ input[type=number]::-webkit-outer-spin-button {
 .w-ThreebyF{
   width: 576px;
 }
+
+.container{
+  background-image: url("/back.jpeg");
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+.upperBody img{
+  width: 11rem;
+  height: 15rem;
+}
+.upperBody{
+  border-radius: 4px;
+}
+
+.welc_text{
+  border-top-right-radius: 40px;
+}
+.logo img{
+  width: 70px;
+}
+.saprator{
+  width: 1px;
+  height: 30px;
+  background-color: #fff;
+  margin-right: 14px;
+}
+
+.user_name{
+  border: 2px solid rgb(2, 72, 2);
+}

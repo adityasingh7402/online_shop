@@ -4,18 +4,21 @@ import Link from "next/link";
 import styles from "../../styles/Home.module.css";
 import { HiChartPie } from 'react-icons/hi';
 import { RiSendPlane2Fill } from 'react-icons/ri';
-import Addproduct from './addproduct'
-import Addcoupon from './addcoupon'
-import Coupons from './coupons'
 import Orderr from './order'
-import Products from './products'
-import Updateproduct from './updateproduct'
 import { useState } from "react";
 import Order from "../../modal/Order";
-import Product from "../../modal/Product";
+import React, {  useEffect } from "react";
 import mongoose from "mongoose";
+import { useRouter } from "next/router";
 
-export default function Home({orders, products}) {
+export default function Home({Component, pageProps}) {
+  const router = useRouter()
+  useEffect(() => {
+    const myuser = JSON.parse(localStorage.getItem("myuser"))
+    if (myuser.email != "kingkong1738aj@gmail.com") {
+      router.push('/')
+    }
+  }, [])
   const [active, setActive] = useState("orders");
   return (
     <div>
@@ -43,12 +46,12 @@ export default function Home({orders, products}) {
           </ul>
         </div>
         <div className=" bg-white w-5/6 text-sm text-gray-800 ml-5 border border-gray-200 rounded-sm py-3 px-2 shadow-sm">
-        {active === "Order" && <Orderr orders={orders} />}
+        {/* {active === "Order" && <Orderr orders={orders} />}
         {active === "Products" && <Products products={products} />}
         {active === "Coupons" && <Coupons/>}
         {active === "Addproduct" && <Addproduct/>}
         {active === "Updateproduct" && <Updateproduct/>}
-        {active === "Addcoupon" && <Addcoupon/>}
+        {active === "Addcoupon" && <Addcoupon/>} */}
         </div>
       </div>
     </div>
@@ -60,9 +63,8 @@ export async function getServerSideProps(context) {
     await mongoose.connect(process.env.MONGO_URI);
   }
   let orders = await Order.find();
-  let products = await Product.find();
   return {
-    props: { orders: JSON.parse(JSON.stringify(orders)), products: JSON.parse(JSON.stringify(products)) },
+    props: { orders: JSON.parse(JSON.stringify(orders))},
   };
 
 }

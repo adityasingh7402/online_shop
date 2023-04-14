@@ -85,7 +85,7 @@ const Login = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='flex relative'>
-        {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+        {lodingS === false && <span className="fixed z-40 flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -117,6 +117,7 @@ const Login = () => {
               </button></div>
             </form>
             <p className='text-gray-500 pt-2 text-sm'>Don&apos;t have account? <span className='text-green-700 font-medium'><Link href={"/signup"}>Sign up</Link></span></p>
+          <Link href={'/'}><a><li className="cursor-pointer flex justify-center flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>Home Page</button></li></a></Link>
           </div>
         </div>
       </div>

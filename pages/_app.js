@@ -1,7 +1,5 @@
 import "../styles/globals.css";
 import "../styles/responsive.css";
-import Footer from "./componenat/Footer";
-import Header from "./componenat/Header";
 import LoadingBar from 'react-top-loading-bar'
 import { useState, useEffect } from "react";
 import { useRef } from "react";
@@ -136,134 +134,11 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      {key && <Header
-        logout={logout}
-        key={key}
-        user={user}
-        cart={cart}
-        addToCart={addToCart}
-        removeFromCart={removeFromCart}
-        deleteFromCart={deleteFromCart}
-        clearCart={clearCart}
-        subTotal={subTotal}
-        toggleCart={toggleCart}
-      />}
-      <div
-        ref={ref}
-        className={`cart-sideBar shadow-2xl overflow-y-scroll fixed top-0 bottom-0 right-0 w-2/5 cardWidth catoBack indexZMax transform transition-transform ${Object.keys(cart).length !== 0 ? "translate-x-0" : "translate-x-full"
-          }`}
-      >
-        <div
-          onClick={toggleCart}
-          className="close absolute top-3 right-3 cursor-pointer text-3xl text-gray-600"
-        >
-          <CgClose />
-        </div>
-        <div className="products flex flex-col w-full bg-white text-sm pt-8">
-          {Object.keys(cart).length == 0 && (
-            <div className="flex justify-center text-4xl text-green-700 py-10 items-center border-t border-b border-gray-200">
-              Your cart is Empty...!
-            </div>
-          )}
-          <p className="text-2xl font-normal text-gray-800 border-b border-gray-200 rounded-sm py-2 px-5 shadow-sm">
-            Your Item
-          </p>
-          {Object.keys(cart).map((k) => {
-            return (
-              <div
-                key={k}
-                className="product flex flex-row w-full border-b-2 border-gray-300 p-3"
-              >
-                <div className="product-image w-36 flex justify-center imageProd">
-                  <img alt={cart[k].name} src={cart[k].image} />
-                </div>
-                <div className="product-text flex pl-5 flex-col">
-                  <h1 className="text-xl font-medium">{cart[k].name}</h1>
-                  <p className="text-lg">{cart[k].variant}</p>
-                  <div className="impTool mt-4 flex flex-row">
-                    <div className="qytselet relative flex border-r border-gray-200 px-3 items-center">
-                      <AiOutlineMinusCircle
-                        onClick={() => {
-                          removeFromCart(
-                            k,
-                            1,
-                            cart[k].price,
-                            cart[k].name,
-                            cart[k].variant,
-                            cart[k].image
-                          );
-                        }}
-                        className="text-3xl font-normal cursor-pointer mr-2"
-                      />
-                      <div className="qyantity w-11 rounded-sm text-center text-base h-7 border border-gray-600">
-                        {cart[k].qty}
-                      </div>
-                      <AiOutlinePlusCircle
-                        onClick={() => {
-                          addToCart(
-                            k,
-                            1,
-                            cart[k].price,
-                            cart[k].name,
-                            cart[k].variant,
-                            cart[k].image
-                          );
-                        }}
-                        className="text-3xl font-normal cursor-pointer ml-2"
-                      />
-                    </div>
-                    <div className="qytselet relative flex border-r border-gray-200 text-green-700 cursor-pointer hover:bg-gray-100 font-medium px-3 items-center">
-                      <p onClick={() => {
-                        deleteFromCart(
-                          k,
-                          1,
-                          cart[k].price,
-                          cart[k].name,
-                          cart[k].variant,
-                          cart[k].image
-                        );
-                      }}>Delete</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-          <div className="flex items-center justify-between px-5">
-            <button
-              onClick={clearCart}
-              className="flex text-white font-medium text-sm rounded-full bg-red-700 justify-center w-28 my-2  py-2 hover:text-gray-800 hover:bg-white border transition-all border-red-700"
-            >
-              <p>Clear Cart</p>
-            </button>
-            <div className="subtotal text-2xl text-gray-700 font-medium">
-              Subtotal : ₹{subTotal}
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <Link href={"../checkout"}>
-              <button
-                onClick={toggleCart}
-                className="flex text-white font-medium text-sm rounded-full bg-green-700 justify-center px-5 mb-4 mr-3 items-center py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700"
-              >
-                <p>Go to Cart </p>
-                <span className="text-lg pl-2 font-medium">
-                  <AiOutlineShoppingCart />
-                </span>
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-      <LoadingBar
-        color='#045c15'
-        progress={progress}
-        waitingTime={400}
-        onLoaderFinished={() => setProgress(0)}
-      />
       <Component
         cart={cart}
         buyNow={buyNow}
+        logout={logout}
+        user={user}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
         deleteFromCart={deleteFromCart}
@@ -272,7 +147,6 @@ function MyApp({ Component, pageProps }) {
         toggleCart={toggleCart}
         {...pageProps}
       />
-      <Footer />
     </>
   );
 }

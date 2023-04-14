@@ -37,6 +37,7 @@ const Forget = () => {
                   <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>
                 </button></Link></div>
             <p className='text-green-700 font-medium'><Link href={"/login"}>Sign-In</Link></p>
+            <Link href={'/'}><a><li className="cursor-pointer flex justify-center flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>Home Page</button></li></a></Link>
           </div>
         </div>
       </div>

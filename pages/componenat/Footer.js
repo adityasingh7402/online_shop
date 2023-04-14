@@ -68,13 +68,8 @@ const footer = () => {
               </nav>
             </div>
             <div className="lg:w-1/4 md:w-1/2 flex flex-col items-center justify-center w-full px-4">
-              <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">FOR ANY EQUIRY</h2>
-              <input
-                type="text"
-                className="p-2  w-56 md:w-36 rounded-sm border outline-none focus:border-green-700 border-gray-600 text-gray-600"
-                placeholder="Enter Your Email Address"
-              />
-              <button className='font-medium text-xs rounded-full bg-green-700 w-32 px-3 py-3 mt-2 text-white hover:text-gray-800 hover:bg-white border transition-all border-green-700'><p>SEND</p></button>
+              <h2 className="title-font font-medium text-gray-900 tracking-widest text-base mb-3">FOR ANY EQUIRY</h2>
+              <Link href={"/contact"}><button className='font-medium text-base rounded-full bg-green-700 w-32 px-3 py-2 mt-2 text-white hover:text-gray-800 hover:bg-white border transition-all border-green-700'><p>Contact</p></button></Link>
             </div>
           </div>
         </div>

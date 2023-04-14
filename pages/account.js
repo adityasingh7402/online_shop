@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ToastContainer, toast } from 'react-toastify';
-import { BsHandbag, BsTruck } from "react-icons/bs";
+import { BsCashCoin} from "react-icons/bs";
 import { AiOutlineLock } from "react-icons/ai";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
@@ -13,13 +13,13 @@ const Account = () => {
 
   const [name, setname] = useState("")
   const [phone, setphone] = useState("")
-  const [pincode, setpincode] = useState("")
-  const [address, setaddress] = useState("")
-  const [landmark, setlandmark] = useState("")
+  const [pan_no, setpan_no] = useState("")
+  const [accno, setaccno] = useState("")
   const [email, setemail] = useState("")
+  const [ifsc, setifsc] = useState("")
   const [user, setuser] = useState({ value: null })
   const [mobilevalid, setmobilevalid] = useState(true)
-  const [validpincode, setvalidpincode] = useState(true)
+  const [validpan_no, setvalidpan_no] = useState(true)
   const [currentPass, setcurrentPass] = useState("")
   const [newPass, setnewPass] = useState("")
   const [ReEnter, setReEnter] = useState("")
@@ -51,17 +51,17 @@ const Account = () => {
       body: JSON.stringify(data),
     })
     let res = await a.json()
-    setaddress(res.address)
     setphone(res.phone)
-    setpincode(res.pincode)
+    setpan_no(res.pan_no)
     setname(res.name)
-    setlandmark(res.landmark)
+    setifsc(res.ifsc)
+    setaccno(res.accno)
     setlodingS(true)
   }
 
   const handleUserSubmit = async () => {
     setlodingS(false)
-    let data = { token: user.token, address, pincode, phone, name, landmark }
+    let data = { token: user.token, pan_no, phone, name, accno, ifsc, email }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateuser`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -152,22 +152,22 @@ const Account = () => {
         }
       }, 3000);
     }
-    else if (e.target.name == 'pincode') {
-      setpincode(e.target.value)
+    else if (e.target.name == 'pan_no') {
+      setpan_no(e.target.value)
       setTimeout(() => {
         if (e.target.value.length <= 5 || e.target.value.length >= 7) {
-          setvalidpincode(false)
+          setvalidpan_no(false)
         }
         else {
-          setvalidpincode(true)
+          setvalidpan_no(true)
         }
       }, 3000);
     }
-    else if (e.target.name == 'address') {
-      setaddress(e.target.value)
+    else if (e.target.name == 'ifsc') {
+      setifsc(e.target.value)
     }
-    else if (e.target.name == 'landmark') {
-      setlandmark(e.target.value)
+    else if (e.target.name == 'accno') {
+      setaccno(e.target.value)
     }
     else if (e.target.name == 'currentPass') {
       setcurrentPass(e.target.value)
@@ -229,8 +229,9 @@ const Account = () => {
             <div className="flex accLeftSideN flex-row bg-white justify-start border border-gray-200 rounded-sm mt-5 py-5 px-5 shadow-sm h-min">
               <div className="Account">
                 <ul>
-                  <Link href={'/yourorder'}><a><li className="text-xl flex flex-row items-center pb-3"><BsHandbag className="ml-2 mr-4 text-xl" /><span>My Orders</span></li></a></Link>
+                  <Link href={'/yourorder'}><a><li className="text-xl flex flex-row items-center pb-3"><BsCashCoin className="ml-2 mr-4 text-xl" /><span>Withdrawal Coin</span></li></a></Link>
                   <Link href={'#changepassword'}><a><li className="text-xl flex cursor-pointer flex-row items-center"><AiOutlineLock className="ml-2 mr-4 text-xl" /><span>Change Password</span></li></a></Link>
+                  <Link href={'/'}><a><li className="flex cursor-pointer flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>Home Page</button></li></a></Link>                  
                 </ul>
               </div>
             </div>
@@ -245,29 +246,31 @@ const Account = () => {
                     <input value={name} onChange={handleChange} type="text" name='name' id="name" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">
-                    <label htmlFor="phone" className="text-base font-normal pl-1">10-digit mobile number</label>
+                    <label htmlFor="phone" className="text-base font-normal pl-1">10-digit Mobile Number</label>
                     <input value={phone} onChange={handleChange} type="number" name='phone' id="phone" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                     {mobilevalid === false && <span className="text-red-700 text-sm absolute -bottom-5 right-0">Enter a valid Mobile number</span>}
-                  </div>
-                  <div className="flex flex-col relative">
-                    <label htmlFor="pincode" className="text-base font-normal pl-1">Pincode</label>
-                    <input value={pincode} onChange={handleChange} type="number" name='pincode' id="pincode" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
-                    {validpincode === false && <span className="text-red-700 text-sm absolute -bottom-5 right-0">Ender a valid Pincode</span>}
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="email" className="text-base font-normal pl-1">Email</label>
                     {user && user.token ? <input value={user.email} readOnly type="email" name='email' id="email" className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" /> :
                       <input value={email} onChange={handleChange} type="email" name='email' id="email" className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />}
                   </div>
-                </div>
-                <div className="my-4" id="changepassword">
-                  <label htmlFor="address" className="text-base font-normal pl-1">Address (Area and Street)</label>
-                  <textarea value={address} onChange={handleChange} type="text" name='address' id="address" cols="57" required rows="3" className="p-3 w-full focus:border-green-700 resize-none border outline-none input-bck text-gray-600 text-base border-gray-200" />
-                </div>
-                <div className="personal-d grid grid-cols-2 gap-3">
-                  <div className="flex flex-col">
-                    <label htmlFor="landmark" className="text-base font-normal pl-1">Landmark</label>
-                    <input value={landmark} onChange={handleChange} type="text" name='landmark' id="landmark" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                  <div className="flex flex-col relative">
+                    <label htmlFor="pan_no" className="text-base font-normal pl-1">Pan Card Details</label>
+                    <input value={pan_no} onChange={handleChange} type="text" name='pan_no' id='pan_no' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    {validpan_no === false && <span className="text-red-700 text-sm absolute -bottom-5 right-0">Ender a valid pan_no</span>}
+                  </div>
+                  <div className="flex flex-col relative">
+                    <label htmlFor="accno" className="text-base font-normal pl-1">Account Number</label>
+                    <input value={accno} onChange={handleChange} type="password" name='accno' id='accno' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                  </div>
+                  {/* <div className="flex flex-col relative">
+                    <label htmlFor="pan_no" className="text-base font-normal pl-1">Confirm Account Number</label>
+                    <input value={Re_accno} onChange={handleChange} type="number" name='Re_accno' id="Re_accno" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                  </div> */}
+                  <div className="flex flex-col relative">
+                    <label htmlFor="ifsc" className="text-base font-normal pl-1">Bank IFSC Code Number</label>
+                    <input value={ifsc} onChange={handleChange} type="text" name='ifsc' id="ifsc" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div>
                 </div>
                 <button onClick={handleUserSubmit} className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>{lodingS === false ? <p>Updating</p> : <p>Update</p>}</button>
@@ -293,6 +296,7 @@ const Account = () => {
                 </div>
                 <button onClick={handlePasswordSubmit} className='rounded-full bg-green-700 text-lg px-8 mt-10 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>{lodingSS === false ? <p>Changing Password</p> : <p>Change Password</p>}</button>
               </div>
+              <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>Home Page</button></div></a></Link>     
             </div>
           </div>
         </div>
