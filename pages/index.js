@@ -57,7 +57,7 @@ export default function Home({ logout, user,  userr, myuser}) {
         pauseOnHover
       />
       <div className="container overflow-hidden relative">
-        <div className="cooming text-6xl h-28 bg-green-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-green-800">Comming soon...</div>
+        <div className="cooming text-6xl h-28 bg-green-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-green-800">Coming soon...</div>
         <div className="navbar flex justify-between items-center pr-20 pl-20 pt-4">
           <div className="logo w-24">
             <img src="/logo.png" alt="" />
