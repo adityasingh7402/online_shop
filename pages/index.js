@@ -176,7 +176,7 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  let userr = await User.findOne(context.myuser);
+  let userr = await User.findOne();
   return {
     props: { userr: JSON.parse(JSON.stringify(userr)) }
   };
