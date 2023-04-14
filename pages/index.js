@@ -33,7 +33,8 @@ export default function Home({ logout, user,  userr, myuser}) {
      sethour(h);
      
   }
-  setInterval(time, 1000);
+  // setInterval(time, 1000);
+  console.log(userr)
   return (
     <div>
       <Head>

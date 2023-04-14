@@ -5,9 +5,10 @@ const UserSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true},
     phone: {type: Number, required: true},
     password: {type: String, required: true},
-    address: {type: String, default: ''},
-    pincode: {type: String, default: ''},
-    landmark: {type: String, default: ''},
+    wallet: {type: Number, default: 0},
+    ifsc: {type: String, default: ''},
+    pan_no: {type: String, default: ''},
+    accno: {type: Number, default: ''},
 }, {timestamps: true});
 
 // mongoose.models = {}
