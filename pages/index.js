@@ -98,65 +98,139 @@ export default function Home({ logout, user,  userr, myuser}) {
             </div>
           </div>
         </div>
-        <div className="card text-green-900 flex justify-center items-center p-5 text-lg mt-10">
-          <div className="card_no flex justify-around items-center w-4/6">
-            <div className="card card_first  w-44 h-min">
-              <div className="upperBody w-44 h-60 border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl top-12 left-12 text-white">
-                  1
-                </div>
-                <img src="/card.jpg" alt="" />
-              </div>
-              <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  4
-                </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  5
-                </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  7
-                </div>
-              </div>
-            </div>
-            <div className="card card_second  w-44 h-min">
-              <div className="upperBody w-44 h-60 border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl top-12 left-12 text-white">
-                  2
-                </div>
-                <img src="/card.jpg" alt="" />
-              </div>
-              <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  4
-                </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  5
-                </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  7
-                </div>
-              </div>
-            </div>
-            <div className="card card_third  w-44 h-min">
-              <div className="upperBody w-44 h-60 border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl top-12 left-12 text-white">
-                  3
-                </div>
-                <img src="/card.jpg" alt="" />
-              </div>
-              <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  4
-                </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  5
-                </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  7
-                </div>
-              </div>
-            </div>
+      </div>
+      <div className="bg-gray-200 shadow-md">
+        <div className="services grid lg:grid-cols-4 gap-y-10 md:grid-cols-2 md:w-full items-center bg-gray-200 p-2 lg:w-4/5 mx-auto justify-center">
+          <div className="service flex justify-center items-center flex-col mx-16">
+            <Image src="/5 (3).png" width="55px" height="50px" />
+            <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
+              Freshest Produce
+            </h2>
+          </div>
+
+          <div className="service flex justify-center items-center flex-col mx-16">
+            <Image src="/okk.jpg" width="45px" height="50px" />
+            <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
+              Good Quality
+            </h2>
+          </div>
+          <div className="service flex justify-center items-center flex-col mx-16">
+            <Image src="/5 (1).png" width="50px" height="50px" />
+            <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
+              Fast Delivery
+            </h2>
+          </div>
+          <div className="service flex justify-center items-center flex-col mx-16">
+            <Image src="/5 (2).png" width="40px" height="50px" />
+            <h2 className="text-lg font-normal tracking-wider text-center text-gray-700">
+              Customer Service
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div className="catoBack pb-1">
+        <hr className="mt-12 drop-shadow-2xl ..." />
+        <div className="shop-title w-96 text-center shadow-md p-3 m-auto background text-white text-3xl rounded-sm">
+          Shop by Chatogary
+        </div>
+        <div className="catogaryes drop-shadow-sm bg-white maginIt lg:mx-16 sm:mx-5 my-6 rounded-sm relative h-72">
+          <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
+            Fresh Fruits
+          </div>
+          <div className="slider absolute bottom-4 left-0 right-0">
+            <Splide
+              options={{
+                perPage: 6,
+                perMove: 1,
+                gap: "-2rem",
+                breakpoints: {
+                  1212: {
+                    perPage: 4,
+
+                  },
+                  930: {
+                    perPage: 3,
+
+                  },
+                  717: {
+                    perPage: 2,
+
+                  },
+                  550: {
+                    perPage: 1,
+                    rewind: true,
+                    autoplay: true,
+                    speed: 800,
+
+                  },
+                },
+              }}
+            >
+              {fruits.map((item) => {
+                return (
+                  <Link passHref={true}
+                    key={item._id}
+                    href={`/products/${item.slug}`}>
+                    <SplideSlide>
+                      <div className="imagePro flex items-center flex-col cursor-pointer pb-7 mt-2">
+                        <p className="text-gray-700 text-lg pb-6">{item.title}</p>
+                        <img src={`/${item.img}`} className="productImgS" alt={item.title} />
+                      </div>
+                    </SplideSlide>
+                  </Link>
+                );
+              })}
+            </Splide>
+          </div>
+        </div>
+        <div className="catogaryes drop-shadow-sm bg-white maginIt lg:mx-16 sm:mx-5 my-6 rounded-sm relative h-72">
+          <div className="element absolute text-2xl font-semibold top-5 text-gray-800 left-5 tracking-wide">
+            Fresh Vegitables
+          </div>
+          <div className="slider absolute bottom-4 left-0 right-0">
+            <Splide
+              options={{
+                perPage: 6,
+                perMove: 1,
+                gap: "-2rem",
+                breakpoints: {
+                  1212: {
+                    perPage: 4,
+
+                  },
+                  930: {
+                    perPage: 3,
+
+                  },
+                  717: {
+                    perPage: 2,
+
+                  },
+                  550: {
+                    perPage: 1,
+                    rewind: true,
+                    autoplay: true,
+                    speed: 800,
+
+                  },
+                },
+              }}
+            >
+              {vegitables.map((item) => {
+                return (
+                  <Link passHref={true}
+                    key={item._id}
+                    href={`/products/${item.slug}`}>
+                    <SplideSlide>
+                      <div className="imagePro flex items-center flex-col cursor-pointer pb-7 mt-2">
+                        <p className="text-gray-700 text-lg pb-6">{item.title}</p>
+                        <img src={`/${item.img}`} className="productImgS" alt={item.title} />
+                      </div>
+                    </SplideSlide>
+                  </Link>
+                );
+              })}
+            </Splide>
           </div>
         </div>
         <div className="ending uppercase text-lg mt-5 flex justify-center items-center bg-white text-green-900 font-bold p-3 text-center ">
