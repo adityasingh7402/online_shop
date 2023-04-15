@@ -1,8 +1,6 @@
 import Head from "next/head";
 import "@splidejs/react-splide/css";
 import { useEffect, useState } from "react";
-import User from "../modal/User";
-import mongoose from "mongoose";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import { RiAccountCircleLine, RiCoinsLine } from "react-icons/ri";
@@ -20,6 +18,30 @@ export default function Home({ logout, user,  userr, myuser}) {
   const [minute, setminute] = useState("")
   const [hour, sethour] = useState("")
   const [date, setdate] = useState()
+  const [name, setname] = useState("")
+  const [wallet, setwallet] = useState("")
+  const [users, setusers] = useState({ value: null })
+
+  useEffect(() => {
+    const myuser = JSON.parse(localStorage.getItem("myuser"))
+    if (myuser && myuser.token) {
+      setusers(myuser)
+      fetchdata(myuser.token)
+    }
+  }, [])
+  const fetchdata = async (token) => {
+    let data = { token: token }
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    let res = await a.json()
+    setwallet(res.wallet)
+    setname(res.name)
+  }
   const options = { month: 'long', day: 'numeric'};
   useEffect(() => {
     const d = new Date()
@@ -33,8 +55,8 @@ export default function Home({ logout, user,  userr, myuser}) {
      sethour(h);
      
   }
+  // console.log(userr)
   // setInterval(time, 1000);
-  console.log(userr)
   return (
     <div>
       <Head>
@@ -63,7 +85,7 @@ export default function Home({ logout, user,  userr, myuser}) {
             <img src="/logo.png" alt="" />
           </div>
           <div className="user_name relative flex justify-between items-center text-white z-20 bg-green-900 p-4 px-7 rounded-lg">
-            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 cursor-pointer hover:text-green-100">{userr.name}</div>}
+            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 cursor-pointer hover:text-green-100">{name}</div>}
             {dropdown && <div className="dropdown absolute -left-10 top-11 w-44 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
               <ul>
                 <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-green-300 text-green-700 py-2 hover:text-green-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
@@ -75,7 +97,7 @@ export default function Home({ logout, user,  userr, myuser}) {
               <button className="text-xl flex items-center px-4 rounded-md bg-green-900 cursor-pointer text-slate-50 hover:text-green-200 transition-all">Login</button>
             </a></Link>}
             {user && user.value && <div className="saprator"></div>}
-            {user && user.value && <div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1"/> <span className="text-2xl">{userr.wallet}</span> <AiOutlinePlus className="ml-1 text-white"/></div>}
+            {user && user.value && <div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1"/> <span className="text-2xl">{wallet}</span> <AiOutlinePlus className="ml-1 text-white"/></div>}
           </div>
         </div>
         <div className="welc flex justify-between items-center text-white pr-14 mt-14">
@@ -172,12 +194,21 @@ export default function Home({ logout, user,  userr, myuser}) {
   );
 }
 
-export async function getServerSideProps(context) {
-  if (!mongoose.connections[0].readyState) {
-    await mongoose.connect(process.env.MONGO_URI);
-  }
-  let userr = await User.findOne();
-  return {
-    props: { userr: JSON.parse(JSON.stringify(userr)) }
-  };
-}
+// export async function getServerSideProps(context) {
+//   const userEmail = context.query.email;
+//   console.log("Hello");
+//   console.log(userEmail)
+//   let error = null;
+//   if (!mongoose.connections[0].readyState) {
+//     await mongoose.connect(process.env.MONGO_URI);
+//   }
+//   let userr = await User.findOne({ email: userEmail});
+//   if (userr == null) {
+//     return {
+//       props: { error: 404 }
+//     };
+//   }
+//   return {
+//     props: { error: error, userr: JSON.parse(JSON.stringify(userr)) }
+//   };
+// }
