@@ -1,36 +1,62 @@
 import Head from "next/head";
-import "@splidejs/react-splide/css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import { RiAccountCircleLine, RiCoinsLine } from "react-icons/ri";
 import "react-toastify/dist/ReactToastify.css";
 import { CgLogOff, CgClose } from "react-icons/cg";
-import { BsCashCoin} from "react-icons/bs";
+import { BsCashCoin } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
+import mongoose from "mongoose";
+import RandomNSchema from "../modal/randomCard";
+import { useRouter } from 'next/router';
 
-export default function Home({ logout, user,  userr, myuser}) {
-  useEffect(() => {
-    const myuser = JSON.parse(localStorage.getItem("myuser"))
-  }, [])
+export default function Home({ logout, user, buyNow, randomNum, cart, clearCart }) {
   const [dropdown, setdropdown] = useState(false)
   const [menudrop, setmenudrop] = useState(false)
   const [minute, setminute] = useState("")
   const [hour, sethour] = useState("")
   const [date, setdate] = useState()
   const [name, setname] = useState("")
-  const [wallet, setwallet] = useState("")
+  const [email, setemail] = useState("")
+  const [phone, setphone] = useState("")
+  const [amount, setamount] = useState()
+  const [disabled, setdisabled] = useState(true)
+  const [token, settoken] = useState("")
+  var [closeScr, setcloseScr] = useState(false)
+  const [wallet, setwallet] = useState(0)
   const [users, setusers] = useState({ value: null })
+  const [showMessage, setShowMessage] = useState(false);
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
     if (myuser && myuser.token) {
       setusers(myuser)
       fetchdata(myuser.token)
+      settoken(myuser.token)
     }
+    const interval = setInterval(() => {
+      const now = new Date();
+      const hours = now.getHours();
+      if (hours >= 9 && hours < 23) {
+        setShowMessage(true);
+      } else {
+        setShowMessage(false);
+      }
+    }, 100000);
+    return () => clearInterval(interval);
+    
   }, [])
+
+  const handleChange = async (e) => {
+    if (e.target.name == 'amount') {
+      setamount(e.target.value)
+    }
+  }
+
   const fetchdata = async (token) => {
-    let data = { token: token }
+    let data = { token: token, email, wallet }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -41,22 +67,76 @@ export default function Home({ logout, user,  userr, myuser}) {
     let res = await a.json()
     setwallet(res.wallet)
     setname(res.name)
+    setemail(res.email)
+    setphone(res.phone)
   }
-  const options = { month: 'long', day: 'numeric'};
+  const options = { month: 'long', day: 'numeric' };
   useEffect(() => {
     const d = new Date()
     setdate(d)
+
+      const TimeLive = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(TimeLive);
   }, [])
-  function time() {
-    var d = new Date();
-    var m = d.getMinutes();
-    var h = d.getHours();
-     setminute(m);
-     sethour(h);
-     
+
+  const timeOptions = {
+    hour: 'numeric',
+    minute: 'numeric'
   }
-  // console.log(userr)
-  setInterval(time, 1000);
+
+  const initiatePayment = async () => {
+    let oid = Math.floor(Math.random() * Date.now());
+    const data = {
+      cart, oid, amount, email, name, phone, wallet, randomNum: cart.randomNum,
+      cardno: cart.cardno,
+    };
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    let txnRes = await a.json()
+    if (txnRes.success) {
+      toast.success(txnRes.success, {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      let walletUp = wallet - amount;
+      let data2 = { token: token, email, walletUp }
+      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateuser`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data2),
+      })
+      setwallet(wallet - amount)
+      setcloseScr(false)
+    }
+    else {
+      toast.error(txnRes.error, {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setcloseScr(false)
+    }
+  }
+
   return (
     <div>
       <Head>
@@ -78,8 +158,28 @@ export default function Home({ logout, user,  userr, myuser}) {
         draggable
         pauseOnHover
       />
-      <div className="container overflow-hidden relative">
-        <div className="cooming text-6xl h-28 bg-green-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-green-800">Coming soon...</div>
+      <div className="containerr overflow-hidden relative w-full">
+        {closeScr == true && <div className="bittingPop w-full absolute h-screen z-40">
+          <div className="batInfo bg-white h-72 rounded-sm top-1/4 mx-auto mt-16 shadow-md">
+            <div className="information_bit p-8">
+              <div className="top_bit flex justify-between items-center w-full text-lg pb-8">
+                <div className="left_bit uppercase text-2xl">Start bit</div>
+                <div className="right_bit">You&rsquo;re Card is- <span className="text-3xl">{cart.cardno}</span>  & Number- <span className="text-3xl">{cart.randomNum}</span> </div>
+              </div>
+              <div className="bottom_pay_bit">
+                <div className="head_bit text-lg pb-2">Enter Coin of Bit</div>
+                <div className="amount_bit">
+                  <input value={amount} onChange={handleChange} type="text" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none w-full border-green-700 mb-5  text-gray-600 text-base border " />
+                </div>
+              </div>
+              <div className="botton_bit flex justify-between items-center">
+                <button onClick={() => { clearCart; setcloseScr(false) }} className='font-medium mr-10 rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Cancel</h6></button>
+                <button onClick={initiatePayment} className='font-medium rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Bit</h6></button>
+              </div>
+            </div>
+          </div>
+        </div>}
+        {/* <div className="cooming text-6xl h-28 bg-green-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-green-800">Coming soon...</div> */}
         <div className="navbar flex justify-between items-center pr-20 pl-20 pt-4">
           <div className="logo w-24">
             <img src="/logo.png" alt="" />
@@ -89,7 +189,8 @@ export default function Home({ logout, user,  userr, myuser}) {
             {dropdown && <div className="dropdown absolute -left-10 top-11 w-44 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
               <ul>
                 <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-green-300 text-green-700 py-2 hover:text-green-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
-                <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-green-300 text-green-700 py-2 hover:text-green-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdrawal Coin</span></li></a></Link>
+                <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-green-300 text-green-700 py-2 hover:text-green-500"><RiCoinsLine className="mx-2 text-lg" /><span>Bitting Details</span></li></a></Link>
+                <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-green-300 text-green-700 py-2 hover:text-green-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdrawal Coin</span></li></a></Link>
                 <li onClick={logout} className="text-base border-t flex flex-row items-center cursor-pointer border-green-300 text-green-700 py-2 hover:text-green-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
               </ul>
             </div>}
@@ -97,25 +198,25 @@ export default function Home({ logout, user,  userr, myuser}) {
               <button className="text-xl flex items-center px-4 rounded-md bg-green-900 cursor-pointer text-slate-50 hover:text-green-200 transition-all">Login</button>
             </a></Link>}
             {user && user.value && <div className="saprator"></div>}
-            {user && user.value && <div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1"/> <span className="text-2xl">{wallet}</span> <AiOutlinePlus className="ml-1 text-white"/></div>}
+            {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span> <AiOutlinePlus className="ml-1 text-white" /></div></Link>}
           </div>
         </div>
         <div className="welc flex justify-between items-center text-white pr-14 mt-14">
           <div className="welc_text uppercase text-4xl bg-green-900 p-5 pl-32">
-            Start Betting - {date && date.toLocaleDateString("en-IN", options)} - {hour}:{minute && minute <= 9 ? '0'+minute : minute} 
+            Start Betting - {date && date.toLocaleDateString("en-IN", options)} - {time.toLocaleTimeString([], timeOptions)}
           </div>
           <div className="random_no flex justify-between items-center text-2xl">
             <div className="text pr-2">Today Numbers :  </div>
             <div className="R_number">
-            <div className="lowerBody flex justify-around mt-3 items-center font-bold">
+              <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-green-800 items-center p-5 mr-1 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  4
+                  {randomNum.card1}
                 </div>
                 <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-green-800 items-center p-5 mr-1 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  5
+                  {randomNum.card2}
                 </div>
                 <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-green-800 items-center p-5 mr-1 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  7
+                  {randomNum.card3}
                 </div>
               </div>
             </div>
@@ -131,14 +232,14 @@ export default function Home({ logout, user,  userr, myuser}) {
                 <img src="/card.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  4
+                <div onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card1}
                 </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  5
+                <div onClick={() => { buyNow(randomNum.card2, 1); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card2}
                 </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  7
+                <div onClick={() => { buyNow(randomNum.card3, 1); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card3}
                 </div>
               </div>
             </div>
@@ -150,14 +251,14 @@ export default function Home({ logout, user,  userr, myuser}) {
                 <img src="/card.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  4
+                <div onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card1}
                 </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  5
+                <div onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card2}
                 </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  7
+                <div onClick={() => { buyNow(randomNum.card3, 2); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card3}
                 </div>
               </div>
             </div>
@@ -169,23 +270,26 @@ export default function Home({ logout, user,  userr, myuser}) {
                 <img src="/card.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  4
+                <div onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card1}
                 </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  5
+                <div onClick={() => { buyNow(randomNum.card2, 3); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card2}
                 </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  7
+                <div onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card3}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="ending uppercase text-lg mt-5 flex justify-center items-center bg-white text-green-900 font-bold p-3 text-center ">
-          Batting start at - 9 AM
-        </div>
-        <div className="footer absolute bottom-0 right-0 left-0 flex justify-between items-center bg-green-900 text-white font-bold p-4 text-center pl-12 pr-12">
+        {!showMessage && <div className="ending uppercase text-lg mt-5 flex justify-center items-center bg-white text-green-900 font-bold p-3 text-center ">
+          Batting End at - 11 PM
+        </div>}
+        {showMessage && <div className="ending uppercase text-lg mt-5 flex justify-center items-center bg-white text-green-900 font-bold p-3 text-center ">
+        Batting start at - 9 AM
+        </div>}
+        <div className="footer w-full flex justify-between items-center bg-green-900 text-white font-bold p-4 text-center pl-12 pr-12">
           <div className="webname">patticircle.com &#169;</div>
           <div className="term">Terms & Conditions</div>
         </div>
@@ -194,21 +298,12 @@ export default function Home({ logout, user,  userr, myuser}) {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const userEmail = context.query.email;
-//   console.log("Hello");
-//   console.log(userEmail)
-//   let error = null;
-//   if (!mongoose.connections[0].readyState) {
-//     await mongoose.connect(process.env.MONGO_URI);
-//   }
-//   let userr = await User.findOne({ email: userEmail});
-//   if (userr == null) {
-//     return {
-//       props: { error: 404 }
-//     };
-//   }
-//   return {
-//     props: { error: error, userr: JSON.parse(JSON.stringify(userr)) }
-//   };
-// }
+export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI);
+  }
+  let randomNum = await RandomNSchema.findOne();
+  return {
+    props: { randomNum: JSON.parse(JSON.stringify(randomNum)) },
+  };
+}

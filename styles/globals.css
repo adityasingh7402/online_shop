@@ -184,13 +184,11 @@ input[type=number]::-webkit-outer-spin-button {
   width: 576px;
 }
 
-.container{
+.containerr{
   background-image: url("/back.jpeg");
   background-blend-mode: darken;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100vw;
-  height: 100vh;
 }
 
 .upperBody img{
@@ -216,4 +214,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 .user_name{
   border: 2px solid rgb(2, 72, 2);
+}
+
+.batInfo{
+  width: 530px;
+}
+
+.bittingPop{
+  background: rgba(0, 0, 0, 0.453);
 }

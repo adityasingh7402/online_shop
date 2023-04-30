@@ -15,6 +15,7 @@ const handler = async (req, res) => {
                 name: req.body.name,
                 ifsc: req.body.ifsc,
                 accno: req.body.accno,
+                wallet: req.body.walletUp,
             }
         )
         res.status(200).json({ success: true })

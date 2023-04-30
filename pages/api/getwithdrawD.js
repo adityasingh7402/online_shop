@@ -1,14 +1,14 @@
 import connectDb from "../../middleware/mongoose"
-import Order from "../../modal/Order"
+import Withdrawal from "../../modal/Withdrawal"
 import jsonwebtoken from "jsonwebtoken";
 
 
 const handler = async (req, res) => {
     const token = req.body.token;
     const data = jsonwebtoken.verify(token, process.env.JWD_SECRET);
-    let orders = await Order.find({ email: data.email});
+    let withdrawals = await Withdrawal.find({ email: data.email});
 
-    res.status(200).json({ orders })
+    res.status(200).json({ withdrawals })
 }
 
 export default connectDb(handler);

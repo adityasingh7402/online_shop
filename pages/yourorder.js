@@ -1,7 +1,9 @@
 import { React, useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
+import {  RiCoinsLine } from "react-icons/ri";
 import Image from 'next/image'
 import Link from 'next/link';
+import { AiOutlineClose } from "react-icons/ai";
 import Head from "next/head"
 
 
@@ -32,9 +34,17 @@ const YourOrder = () => {
     }
 
   }, [])
+  const updatedOrders = orders.map((item) => {
+    const date = new Date(item.createdAt);
+    const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return {
+      ...item,
+      time: time
+    }
+  });
 
   return (
-    <div className='catoBack flex relative'>
+    <div className='containerr catoBack flex relative'>
       <Head>
         <title>Fresh Frveg - Orders</title>
         <meta
@@ -43,8 +53,9 @@ const YourOrder = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Link href={'/'}><div className="gotoHome right-10 top-10 fixed cursor-pointer text-green-900 p-2 bg-white font-bold text-4xl"><AiOutlineClose /></div></Link>
       {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
-      <div className="checkout-title my-8 mx-5 w-full flex flex-row">
+      <div className="checkout-title my-8 mx-5 w-full flex flex-row h-screen">
         {/* <div className='left-side bg-white w-1/5 mr-5 border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-72'>
           <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
         </div> */}
@@ -54,22 +65,24 @@ const YourOrder = () => {
             {orders.length == 0 && <div className="flex justify-center text-4xl text-green-700 py-20 items-center border-t border-b border-gray-200">
               Your Order List is Empty....
             </div>}
-            {orders.map((item) => {
-              return <div key={item._id} className="product flex yourOrderCol justify-center flex-row w-full border-t-2 border-b-2 border-gray-200 p-3 hover:bg-gray-100">
-                <div className="product-image w-48 flex justify-center items-center pr-8">
-                  <img alt="ecommerce" className="w-48 h-36 orderImage" src={'/basket.png'} />
-                </div>
+            {updatedOrders.map((item, index) => {
+              return <div key={item._id} className="product flex yourOrderCol justify-center flex-row w-full mb-5 border-t-2 border-b-2 border-gray-300 p-9 hover:bg-gray-100">
                 <div className="product-text yourOrderWT flex justify-start flex-col">
-                  <h1 className='text-2xl pb-1 font-medium'>{item.name}</h1>
+                  <h1 className='text-2xl pb-1 font-medium'>{item.createdAt.substring(0, 10)}, {item.time}
+                  </h1>
                   <p className='text-lg pb-1'>Order id :  <span>#{item.orderId}</span></p>
-                  <p className='text-lg pb-1'>{item.createdAt.substring(0, 10)}</p>
-                  <p className='text-lg pb-1'>Payment Status: <span className='font-medium'>{item.status}</span></p>
+                  <p className="font-medium py-3">Card : <span className="font-normal">{` Card No - ${item.cardno} , Random No ${item.randomNum}`}</span></p>
+                  <p className='text-lg pb-1'>Winning Status : &nbsp;
+                    {item.winning == "Pending" && <span className='font-medium text-yellow-500'>{item.winning}</span>}
+                    {item.winning == "Win" && <span className='font-medium text-green-700'>{item.winning}</span>}
+                    {item.winning == "Loss" && <span className='font-medium text-red-700'>{item.winning}</span>}
+
+                  </p>
                 </div>
                 <div className="product-price w-1/6 flex justify-start">
-                  <span className='text-2xl'>₹{parseInt(item.amount) + 40}</span>
-                </div>
-                <div className="product-price">
-                  <Link href={'/order?id=' + item._id}><button className='font-medium rounded-full bg-green-700 w-40 text-lg px-8 mt-10 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Details</h6></button></Link>
+                  {item.winning == "Pending" && <span className='font-medium flex flex-row items-center text-2xl text-yellow-500'>{parseInt(item.amount)}<RiCoinsLine className="ml-1" /></span>}
+                  {item.winning == "Win" && <span className='font-medium flex flex-row items-center text-2xl text-green-700'>+{parseInt(item.amount  *2 - 0.1 * item.amount)}<RiCoinsLine className="ml-1" /></span>}
+                  {item.winning == "Loss" && <span className='font-medium flex flex-row items-center text-2xl text-red-700'>-{parseInt(item.amount)}<RiCoinsLine className="ml-1" /></span>}
                 </div>
               </div>
             })}

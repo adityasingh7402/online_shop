@@ -3,10 +3,25 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
-import Order from "../../modal/Order";
+import Orderr from "../../modal/Order";
 import mongoose from "mongoose";
 
-const order = ({ orders }) => {
+
+const Order = ({ orders }) => {
+  const [isHidden, setIsHidden] = useState(true);
+  const router = useRouter()
+  useEffect(() => {
+    const myuser = JSON.parse(localStorage.getItem("myuser"));
+    if (!myuser || myuser.email !== "kingkong1738aj@gmail.com") {
+      router.push('/');
+    } else {
+      setIsHidden(false);
+    }
+  }, []);
+  if (isHidden) {
+    return null;
+  }
+
   return (
     <>
       <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
@@ -19,16 +34,9 @@ const order = ({ orders }) => {
             <p className="font-medium">Name : <span className="font-normal">{item.name}</span></p>
             <p className="font-medium">Email : <span className="font-normal">{item.email}</span></p>
             <p className="font-medium">Mobile : <span className="font-normal">{item.phone}</span></p>
-            <p className="font-medium">Address : <span className="font-normal">{item.address}</span></p>
-            <p className="font-medium">Pincode : <span className="font-normal">{item.pincode}</span></p>
-            <p className="font-medium">State : <span className="font-normal">{item.state} {item.city}</span></p>
             <p className="font-medium">Amount : <span className="font-normal">{item.amount}</span></p>
-            {Object.keys(item.products).map((key) => {
-              return <p key={key} className="font-medium">Product : <span className="font-normal">{`${item.products[key].name} - ${item.products[key].qty} - ${item.products[key].price}`}</span></p>
-            })}
-            <p className="font-medium">Payment Info : <span className="font-normal">{item.paymentInfo}</span></p>
-            <p className="font-medium">Transaction Id : <span className="font-normal">{item.transactionId}</span></p>
-            <p className="font-medium">Status : <span className="font-normal">{item.status}</span></p>
+            <p className="font-medium">Card : <span className="font-normal">{` Card No - ${item.cardno} , Random No ${item.randomNum}`}</span></p>
+            <p className="font-medium">Status : <span className="font-normal">{item.winning}</span></p>
             <p className="font-medium">Date on Buy : <span className="font-normal">{item.createdAt}</span></p>
           </div>)
         })}
@@ -41,10 +49,23 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  let orders = await Order.find();
+  const yesterdayStart = new Date();
+  yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+  yesterdayStart.setHours(0, 0, 0, 0);
+
+  const yesterdayEnd = new Date();
+  yesterdayEnd.setDate(yesterdayEnd.getDate() - 1);
+  yesterdayEnd.setHours(23, 59, 59, 999);
+
+  const orders = await Orderr.find({
+    createdAt: {
+      $gte: yesterdayStart,
+      $lt: yesterdayEnd
+    }
+  });
   return {
     props: { orders: JSON.parse(JSON.stringify(orders)) },
   };
 }
 
-export default order;
+export default Order;

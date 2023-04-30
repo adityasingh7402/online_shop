@@ -1,11 +1,11 @@
 import connectDb from "../../middleware/mongoose"
-import Order from "../../modal/Order"
-import Product from "../../modal/Product";
+import Addcoin from "../../modal/Addcoin"
 import PaytmChecksum from "paytmchecksum";
 
 
 const handler = async (req, res) => {
-  let order;
+  console.log("Heeadiing")
+  let Order;
 
   var paytmChecksum = "";
   var paytmParams = {};
@@ -24,25 +24,22 @@ const handler = async (req, res) => {
   }
 
   if (req.body.STATUS == 'TXN_SUCCESS') {
-    order = await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, {
+    Order = await Addcoin.findOneAndUpdate({ orderId: req.body.ORDERID }, {
       status:
         'Paid', paymentInfo: JSON.stringify(req.body), transactionId: req.body.TXNID
     })
-    let products = order.products
-    for (let slug in products) {
-      await Product.findOneAndUpdate({ slug: slug }, { $inc: { "availableQty": - products[slug].qty } })
-    }
   }
   else if (req.body.STATUS == 'PENDING') {
-    order = await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, {
+    Order = await Addcoin.findOneAndUpdate({ orderId: req.body.ORDERID }, {
       status:
         'Pending', paymentInfo: JSON.stringify(req.body), transactionId: req.body.TXNID
     })
   }
 
-  res.redirect('/order?clearCart=1&id=' + order._id, 200)
+  // res.redirect('/order?clearCart=1&id=' + order._id, 200)
   // res.status(200).json({ body: req.body })
 }
+console.log("ened")
 
 export default connectDb(handler);
 // export default function handler(req, res) {

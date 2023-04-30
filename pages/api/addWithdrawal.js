@@ -1,8 +1,5 @@
-const https = require('https');
-const PaytmChecksum = require('paytmchecksum');
 import connectDb from "../../middleware/mongoose"
-import Order from "../../modal/Order"
-import pincodes from "../../pincodes.json"
+import Withdrawal from "../../modal/Withdrawal"
 
 const handler = async (req, res) => {
     let wallet = req.body.wallet
@@ -12,21 +9,21 @@ const handler = async (req, res) => {
     }
     else {
         if (req.method == 'POST') {
-            let p = new Order({
-                email: req.body.email,
+            let p = new Withdrawal({
                 orderId: req.body.oid,
                 name: req.body.name,
+                email: req.body.email,
                 phone: req.body.phone,
-                randomNum: req.body.randomNum,
-                cardno: req.body.cardno,
-                cardDetails: req.body.cart,
                 amount: req.body.amount,
+                pan_no: req.body.pan_no,
+                ifsc: req.body.ifsc,
+                accno: req.body.accno
             })
             await p.save()
-            res.status(200).json({ success: "Bit success" })
+            res.status(200).json({ success: "Withdrawal successfull" })
         }
         else {
-            res.status(400).json({ error: "Bit failed" })
+            res.status(400).json({ error: "Withdrawal failed" })
         }
     }
 }

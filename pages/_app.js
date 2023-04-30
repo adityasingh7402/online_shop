@@ -1,14 +1,7 @@
 import "../styles/globals.css";
 import "../styles/responsive.css";
-import LoadingBar from 'react-top-loading-bar'
 import { useState, useEffect } from "react";
 import { useRef } from "react";
-import { CgClose } from "react-icons/cg";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import { AiOutlineMinusCircle } from "react-icons/ai";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,7 +23,7 @@ function MyApp({ Component, pageProps }) {
   const ref = useRef();
 
   const [cart, setCart] = useState({});
-  const [subTotal, setSubTotal] = useState(0);
+  const [selectUserss, setselectUserss] = useState({});
   const [user, setuser] = useState({ value: null })
   const [key, setKey] = useState()
   const [progress, setProgress] = useState(0)
@@ -45,6 +38,10 @@ function MyApp({ Component, pageProps }) {
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")));
         saveCart(JSON.parse(localStorage.getItem("cart")));
+      }
+      if (localStorage.getItem("selectUserss")) {
+        setselectUserss(JSON.parse(localStorage.getItem("selectUserss")));
+        saveselectUser(JSON.parse(localStorage.getItem("selectUserss")));
       }
     } catch (error) {
       console.error(error);
@@ -71,17 +68,9 @@ function MyApp({ Component, pageProps }) {
     for (let i = 0; i < keys.length; i++) {
       subt += myCart[keys[i]].price * myCart[keys[i]].qty;
     }
-    setSubTotal(subt);
   };
-  const addToCart = (itemCode, qty, price, name, variant, image) => {
-    let newCart = cart;
-    if (itemCode in cart) {
-      newCart[itemCode].qty = cart[itemCode].qty + qty
-    } else {
-      newCart[itemCode] = { qty: 1, price, name, variant, image };
-    }
-    setCart(newCart);
-    saveCart(newCart);
+  const saveselectUser = (selectUserss) => {
+    localStorage.setItem("selectUserss", JSON.stringify(selectUserss));
   };
   const clearCart = () => {
     document.body.style.overflowY = 'scroll';
@@ -97,39 +86,20 @@ function MyApp({ Component, pageProps }) {
     setCart({});
     saveCart({});
   };
-  const removeFromCart = (itemCode, qty, price, name, variant, image) => {
-    let newCart = cart;
-    if (itemCode in cart) {
-      newCart[itemCode].qty = cart[itemCode].qty - qty;
-    }
-    if (newCart[itemCode]["qty"] <= 0) {
-      delete newCart[itemCode];
-    }
-    setCart(newCart);
-    saveCart(newCart);
-  };
-
-  const deleteFromCart = (itemCode, qty, price, name, variant, image) => {
-    let newCart = cart;
-    if (itemCode in cart) {
-      newCart[itemCode].qty = cart[itemCode].qty - cart[itemCode].qty;
-    }
-    if (newCart[itemCode]["qty"] <= 0) {
-      delete newCart[itemCode];
-    }
-    setCart(newCart);
-    saveCart(newCart);
-  };
 
 
 
-  const buyNow = (itemCode, qty, price, name, variant, image) => {
+  const buyNow = (randomNum, cardno) => {
     let newCart = {}
-    newCart[itemCode] = { qty: 1, price, name, variant, image }
-
+    newCart = { randomNum, cardno }
     setCart(newCart)
     saveCart(newCart)
-    router.push('/checkout')
+  }
+  const selectUser = (randomNum, cardno) => {
+    let selectUsers = {}
+    selectUsers = { randomNum, cardno }
+    setselectUserss(selectUsers);
+    saveselectUser(selectUsers)
   }
 
   return (
@@ -139,11 +109,9 @@ function MyApp({ Component, pageProps }) {
         buyNow={buyNow}
         logout={logout}
         user={user}
-        addToCart={addToCart}
-        removeFromCart={removeFromCart}
-        deleteFromCart={deleteFromCart}
+        selectUser={selectUser}
+        selectUsers={selectUserss}
         clearCart={clearCart}
-        subTotal={subTotal}
         toggleCart={toggleCart}
         {...pageProps}
       />

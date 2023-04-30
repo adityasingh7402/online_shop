@@ -9,8 +9,6 @@ import { useRouter } from "next/router";
 import Head from "next/head"
 
 const Account = () => {
-  const router = useRouter()
-
   const [name, setname] = useState("")
   const [phone, setphone] = useState("")
   const [pan_no, setpan_no] = useState("")
@@ -27,10 +25,14 @@ const Account = () => {
   const [lodingS, setlodingS] = useState(true)
   const [lodingSS, setlodingSS] = useState(true)
 
+  const [isHidden, setIsHidden] = useState(true);
+  const router = useRouter()
   useEffect(() => {
-    const myuser = JSON.parse(localStorage.getItem("myuser"))
+    const myuser = JSON.parse(localStorage.getItem("myuser"));
     if (!myuser) {
-      router.push('/')
+      router.push('/');
+    } else {
+      setIsHidden(false);
     }
     if (myuser && myuser.token) {
       setuser(myuser)
@@ -182,6 +184,9 @@ const Account = () => {
       setReEnter(e.target.value)
     }
   }
+  if (isHidden) {
+    return null;
+  }
 
   return (
     <>
@@ -262,7 +267,7 @@ const Account = () => {
                   </div>
                   <div className="flex flex-col relative">
                     <label htmlFor="accno" className="text-base font-normal pl-1">Account Number</label>
-                    <input value={accno} onChange={handleChange} type="password" name='accno' id='accno' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={accno} onChange={handleChange} type="Number" name='accno' id='accno' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div>
                   {/* <div className="flex flex-col relative">
                     <label htmlFor="pan_no" className="text-base font-normal pl-1">Confirm Account Number</label>
