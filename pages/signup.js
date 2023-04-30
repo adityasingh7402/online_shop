@@ -83,10 +83,10 @@ const Signup = () => {
   return (
     <div>
       <Head>
-        <title>Fresh Frveg - Signup</title>
+        <title>Patti Circle- Signup</title>
         <meta
           name="description"
-          content="Shop fresh Fruits and vegetables online"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

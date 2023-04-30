@@ -191,10 +191,10 @@ const Account = () => {
   return (
     <>
       <Head>
-        <title>Fresh Frveg - Account</title>
+        <title>Patti Circle- Account</title>
         <meta
           name="description"
-          content="Shop fresh Fruits and vegetables online"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

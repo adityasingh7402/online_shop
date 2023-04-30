@@ -134,7 +134,7 @@ const Addcoin = () => {
         <div className='containerr  catoBack flex relative'>
             <Head>
                 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
-                <title>Patti Circle - Withdrawal</title>
+                <title>Patti Circle - Purchase Coin</title>
                 <meta
                     name="description"
                     content="Patti Circle win win Game"

@@ -46,10 +46,10 @@ const YourOrder = () => {
   return (
     <div className='containerr catoBack flex relative'>
       <Head>
-        <title>Fresh Frveg - Orders</title>
+        <title>Patti Circle- Your Orders</title>
         <meta
           name="description"
-          content="Shop fresh Fruits and vegetables online"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

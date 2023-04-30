@@ -33,10 +33,10 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
   return (
     <div className="overflow-hidden h-screen">
       <Head>
-        <title>Fresh Frveg- Shop Online Fruits and vegetables</title>
+        <title>Patti Circle- Win Win Game</title>
         <meta
           name="description"
-          content="Shop fresh Fruits and vegetables online"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

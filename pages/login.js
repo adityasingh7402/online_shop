@@ -76,10 +76,10 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Fresh Frveg - Login</title>
+        <title>Patti Circle- Login</title>
         <meta
           name="description"
-          content="Shop fresh Fruits and vegetables online"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
