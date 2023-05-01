@@ -34,7 +34,7 @@ const handler = async (req, res) => {
             // Loop through each user's orders, add up the amounts, and update their wallet
             for (const [email, orders] of Object.entries(ordersByUser)) {
                 const totalAmount = orders.reduce(
-                    (acc, order) => acc + (2 * order.amount - 0.1 * order.amount),
+                    (acc, order) => acc + (2 * order.amount - 0.2 * order.amount),
                     0
                 );
                 // const roundedAmount = Math.floor(totalAmount);

@@ -188,17 +188,26 @@ const Withdrawal = () => {
                         {orders.length == 0 && <div className="flex justify-center text-4xl text-green-700 py-20 items-center border-t border-b border-gray-200">
                             Your Order List is Empty....
                         </div>}
-                        {updatedOrders.map((item, index) => {
-                            return <div key={item._id} className="product flex yourOrderCol justify-center flex-row w-full mb-5 border-t-2 border-b-2 border-gray-300 p-9 hover:bg-gray-100">
-                                <div className="product-text yourOrderWT flex justify-start flex-col">
-                                    <h1 className='text-2xl pb-1 font-medium'>{item.createdAt.substring(0, 10)}, {item.time}
-                                    </h1>
-                                    <p className='text-lg pb-1'>Order id :  <span>#{item.orderId}</span></p>
-                                    <p className='text-lg pb-1'>Coin : {item.amount}</p>
-                                    <p className='text-lg pb-1'>Status : {item.status}</p>
-                                </div>
-                            </div>
-                        })}
+                        <table>
+                            <tr>
+                                <th className='text-left border p-4 border-slate-600'><div className="Date text-lg font-medium">Date</div></th>
+                                <th className='text-left border p-4 border-slate-600'><div className="Refrence text-lg font-medium">Refrence No</div></th>
+                                <th className='text-left border p-4 border-slate-600'><div className="Coin text-lg font-medium">Coin</div></th>
+                                <th className='text-left border p-4 border-slate-600'><div className="Status text-lg font-medium">Status</div></th>
+                            </tr>
+                            {updatedOrders.map((item, index) => {
+                                return <tr key={item._id}>
+                                    <td className='text-left border p-4 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
+                                    <td className='text-left border p-4 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
+                                    <td className='text-left border p-4 border-slate-600'><div className="Coin">{item.amount}</div></td>
+                                    <td className='text-left border p-4 border-slate-600'><div className="Status">
+                                        {item.status == "Pending" && <span className='font-medium text-yellow-500'>{item.status}</span>}
+                                        {item.status == "Win" && <span className='font-medium text-green-700'>{item.status}</span>}
+                                        {item.status == "Loss" && <span className='font-medium text-red-700'>{item.status}</span>}
+                                    </div></td>
+                                </tr>
+                            })}
+                        </table>
                     </div>
                 </div>
             </div>

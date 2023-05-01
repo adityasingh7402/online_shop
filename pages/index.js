@@ -36,17 +36,6 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
       fetchdata(myuser.token)
       settoken(myuser.token)
     }
-    const interval = setInterval(() => {
-      const now = new Date();
-      const hours = now.getHours();
-      if (hours >= 9 && hours < 23) {
-        setShowMessage(true);
-      } else {
-        setShowMessage(false);
-      }
-    }, 100000);
-    return () => clearInterval(interval);
-    
   }, [])
 
   const handleChange = async (e) => {
@@ -70,22 +59,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
     setemail(res.email)
     setphone(res.phone)
   }
-  const options = { month: 'long', day: 'numeric' };
-  useEffect(() => {
-    const d = new Date()
-    setdate(d)
 
-      const TimeLive = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(TimeLive);
-  }, [])
-
-  const timeOptions = {
-    hour: 'numeric',
-    minute: 'numeric'
-  }
 
   const initiatePayment = async () => {
     let oid = Math.floor(Math.random() * Date.now());
@@ -158,7 +132,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         draggable
         pauseOnHover
       />
-      <div className="containerr overflow-hidden relative w-full">
+      <div className="containerr overflow-hidden relative w-full h-screen">
         {closeScr == true && <div className="bittingPop w-full absolute h-screen z-40">
           <div className="batInfo bg-white h-72 rounded-sm top-1/4 mx-auto mt-16 shadow-md">
             <div className="information_bit p-8">
@@ -181,8 +155,11 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         </div>}
         {/* <div className="cooming text-6xl h-28 bg-green-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-green-800">Coming soon...</div> */}
         <div className="navbar flex justify-between items-center pr-20 pl-20 pt-4">
-          <div className="logo w-24">
+          <div className="logo w-24 ">
             <img src="/logo.png" alt="" />
+          </div>
+          <div className="uppercase text-4xl text-white bg-green-900 py-5 px-20 ml-32">
+            Start Betting
           </div>
           <div className="user_name relative flex justify-between items-center text-white z-20 bg-green-900 p-4 px-7 rounded-lg">
             {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 cursor-pointer hover:text-green-100">{name}</div>}
@@ -201,9 +178,12 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span> <AiOutlinePlus className="ml-1 text-white" /></div></Link>}
           </div>
         </div>
-        <div className="welc flex justify-between items-center text-white pr-14 mt-14">
-          <div className="welc_text uppercase text-4xl bg-green-900 p-5 pl-32">
-            Start Betting - {date && date.toLocaleDateString("en-IN", options)} - {time.toLocaleTimeString([], timeOptions)}
+        <div className="welc flex justify-between items-center text-white px-14 mt-14">
+          <div className="welc_text text-2xl flex justify-center items-center flex-row">
+            Today&rsquo;s Lucky Number : 
+            <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-green-800 items-center p-5 mr-1 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                  {randomNum.card1}
+                </div>
           </div>
           <div className="random_no flex justify-between items-center text-2xl">
             <div className="text pr-2">Today Numbers :  </div>
@@ -224,9 +204,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         </div>
         <div className="card text-green-900 flex justify-center items-center p-5 text-lg mt-10">
           <div className="card_no flex justify-around items-center w-4/6">
-            <div className="card card_first  w-44 h-min">
-              <div className="upperBody w-44 h-60 border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl top-12 left-12 text-white">
+            <div className="card card_first h-min">
+              <div className="upperBody border border-white overflow-hidden relative">
+                <div className="cardNo absolute text-9xl left-7 top-7 text-white">
                   1
                 </div>
                 <img src="/card.jpg" alt="" />
@@ -235,17 +215,11 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
                   {randomNum.card1}
                 </div>
-                <div onClick={() => { buyNow(randomNum.card2, 1); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  {randomNum.card2}
-                </div>
-                <div onClick={() => { buyNow(randomNum.card3, 1); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  {randomNum.card3}
-                </div>
               </div>
             </div>
-            <div className="card card_second  w-44 h-min">
-              <div className="upperBody w-44 h-60 border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl top-12 left-12 text-white">
+            <div className="card card_second h-min">
+              <div className="upperBody border border-white overflow-hidden relative">
+                <div className="cardNo absolute text-9xl left-7 top-7 text-white">
                   2
                 </div>
                 <img src="/card.jpg" alt="" />
@@ -254,17 +228,11 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
                   {randomNum.card1}
                 </div>
-                <div onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  {randomNum.card2}
-                </div>
-                <div onClick={() => { buyNow(randomNum.card3, 2); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  {randomNum.card3}
-                </div>
               </div>
             </div>
-            <div className="card card_third  w-44 h-min">
-              <div className="upperBody w-44 h-60 border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl top-12 left-12 text-white">
+            <div className="card card_third h-min">
+              <div className="upperBody border border-white overflow-hidden relative">
+                <div className="cardNo absolute text-9xl left-7 top-7 text-white">
                   3
                 </div>
                 <img src="/card.jpg" alt="" />
@@ -273,25 +241,18 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
                   {randomNum.card1}
                 </div>
-                <div onClick={() => { buyNow(randomNum.card2, 3); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  {randomNum.card2}
-                </div>
-                <div onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
-                  {randomNum.card3}
-                </div>
               </div>
             </div>
           </div>
         </div>
-        {!showMessage && <div className="ending uppercase text-lg mt-5 flex justify-center items-center bg-white text-green-900 font-bold p-3 text-center ">
-          Batting End at - 11 PM
-        </div>}
-        {showMessage && <div className="ending uppercase text-lg mt-5 flex justify-center items-center bg-white text-green-900 font-bold p-3 text-center ">
-        Batting start at - 9 AM
-        </div>}
-        <div className="footer w-full flex justify-between items-center bg-green-900 text-white font-bold p-4 text-center pl-12 pr-12">
+        <div className="ending uppercase text-lg mt-5 flex justify-between px-40 items-center bg-white text-green-900 font-bold p-3 text-center ">
+          <p> Batting Start at - 9 AM </p>
+          <p> Batting End at - 11 PM </p>
+        </div>
+        <div className="footer w-full flex absolute bottom-0 left-0 justify-between items-center bg-green-900 text-white font-bold p-4 text-center pl-12 pr-12">
           <div className="webname">patticircle.com &#169;</div>
           <div className="term">Terms & Conditions</div>
+          <Link href={'./contact'}><div className="term cursor-pointer">Contact us</div></Link>
         </div>
       </div>
     </div>

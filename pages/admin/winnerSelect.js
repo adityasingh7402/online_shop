@@ -32,36 +32,26 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
     }
     
   }, [])
+  let amountFfitst = 0;
+  let amountSfitst = 0;
+  let amountTfitst = 0;
   winnOrder.forEach((obj) => {
       const objj = obj.cardDetails;
+      const amounts = obj.amount;
+      console.log(amounts + "amount")
       const randomNumValue = objj.randomNum;
       const cardnoValue = objj.cardno;
       if (randomNumValue == randomNum.card1 && cardnoValue == 1) {
         firstCf++;
-      }
-      if (randomNumValue == randomNum.card2 && cardnoValue == 1) {
-        firstCs++;
-      }
-      if (randomNumValue == randomNum.card3 && cardnoValue == 1) {
-        firstCt++;
+        amountFfitst = amountFfitst + amounts;
       }
       if (randomNumValue == randomNum.card1 && cardnoValue == 2) {
         secondCf++;
-      }
-      if (randomNumValue == randomNum.card2 && cardnoValue == 2) {
-        secondCs++;
-      }
-      if (randomNumValue == randomNum.card3 && cardnoValue == 2) {
-        secondCt++;
+        amountSfitst = amountSfitst + amounts;
       }
       if (randomNumValue == randomNum.card1 && cardnoValue == 3) {
         thirdCf++;
-      }
-      if (randomNumValue == randomNum.card2 && cardnoValue == 3) {
-        thirdCs++;
-      }
-      if (randomNumValue == randomNum.card3 && cardnoValue == 3) {
-        thirdCt++;
+        amountTfitst = amountTfitst + amounts;
       }
     });
   const handleUserSubmit = async () => {
@@ -113,47 +103,26 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
         pauseOnHover
       />
       <div className="box p-5">
-        <div className="grid_random flex flex-col justify-around items-center">
-          <div className="fircol flex justify-between items-center">
-            <div onClick={() => { selectUser(randomNum.card1, 1); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
+        <div className="grid_random flex flex-row justify-around items-center">
+          <div className="fircol flex justify-between items-center mt-8">
+            <div onClick={() => { selectUser(randomNum.card1, 1); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
               <div className="cardno">Card no- 1,  Random No- {randomNum.card1}</div>
-              <div className="noOfCard">{firstCf}</div>
-            </div>
-            <div onClick={() => { selectUser(randomNum.card2, 1); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
-              <div className="cardno">Card no- 1,  Random No- {randomNum.card2}</div>
-              <div className="noOfCard">{firstCs}</div>
-            </div>
-            <div onClick={() => { selectUser(randomNum.card3, 1); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
-              <div className="cardno">Card no- 1,  Random No- {randomNum.card3}</div>
-              <div className="noOfCard">{firstCt}</div>
+              <div className="noOfCard">Total Users: {firstCf}</div>
+              <div className="noOfCard">Total Bit Amount:  ₹{amountFfitst}</div>
             </div>
           </div>
           <div className="fircol flex justify-between items-center mt-8">
-            <div onClick={() => { selectUser(randomNum.card1, 2); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
+            <div onClick={() => { selectUser(randomNum.card1, 2); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
               <div className="cardno">Card no- 2,  Random No- {randomNum.card1}</div>
-              <div className="noOfCard">{secondCf}</div>
-            </div>
-            <div onClick={() => { selectUser(randomNum.card2, 2); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
-              <div className="cardno">Card no- 2,  Random No- {randomNum.card2}</div>
-              <div className="noOfCard">{secondCs}</div>
-            </div>
-            <div onClick={() => { selectUser(randomNum.card3, 2); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
-              <div className="cardno">Card no- 2,  Random No- {randomNum.card3}</div>
-              <div className="noOfCard">{secondCt}</div>
+              <div className="noOfCard">Total Users: {secondCf}</div>
+              <div className="noOfCard">Total Bit Amount: ₹{amountSfitst}</div>
             </div>
           </div>
           <div className="fircol flex justify-between items-center mt-8">
-            <div onClick={() => { selectUser(randomNum.card1, 3); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
+            <div onClick={() => { selectUser(randomNum.card1, 3); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
               <div className="cardno">Card no- 3,  Random No- {randomNum.card1}</div>
-              <div className="noOfCard">{thirdCf}</div>
-            </div>
-            <div onClick={() => { selectUser(randomNum.card2, 3); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
-              <div className="cardno">Card no- 3,  Random No- {randomNum.card2}</div>
-              <div className="noOfCard">{thirdCs}</div>
-            </div>
-            <div onClick={() => { selectUser(randomNum.card3, 3); }} className="card_box flex cursor-pointer hover:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-5 mr-10">
-              <div className="cardno">Card no- 3,  Random No- {randomNum.card3}</div>
-              <div className="noOfCard">{thirdCt}</div>
+              <div className="noOfCard">Total Users: {thirdCf}</div>
+              <div className="noOfCard">Total Bit Amount:  ₹{amountTfitst}</div>
             </div>
           </div>
         </div>
@@ -169,13 +138,13 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  const yesterdayStart = new Date();
-  yesterdayStart.setDate(yesterdayStart.getDate() - 1);
-  yesterdayStart.setHours(0, 0, 0, 0);
+  // const yesterdayStart = new Date();
+  // yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+  // yesterdayStart.setHours(0, 0, 0, 0);
 
-  const yesterdayEnd = new Date();
-  yesterdayEnd.setDate(yesterdayEnd.getDate() - 1);
-  yesterdayEnd.setHours(23, 59, 59, 999);
+  // const yesterdayEnd = new Date();
+  // yesterdayEnd.setDate(yesterdayEnd.getDate() - 1);
+  // yesterdayEnd.setHours(23, 59, 59, 999);
 
   const winnOrder = await Order.find({
     createdAt: {
