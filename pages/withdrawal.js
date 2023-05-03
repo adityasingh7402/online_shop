@@ -14,6 +14,7 @@ const Withdrawal = () => {
     const [orders, setorders] = useState([])
     const [lodingS, setlodingS] = useState(true)
     const [token, settoken] = useState("")
+    const [updated, setupdated] = useState(false)
     const [name, setname] = useState("")
     const [amount, setamount] = useState('')
     const [userInfi, setuserInfi] = useState({})
@@ -39,6 +40,7 @@ const Withdrawal = () => {
         setwallet(res.wallet)
         setname(res.name)
         setuserInfi(res)
+        setupdated(res.updated)
     }
     const handleChange = async (e) => {
         if (e.target.name == 'amount') {
@@ -164,12 +166,12 @@ const Withdrawal = () => {
                             <div className="coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-3  p-9 pb-0 border-l-2">
                                 <div className="details text-base">
                                     <div className="p font-medium text-2xl pb-2">Bank Details</div>
-                                    <p className='headTitle p-1 font-medium'>Name :  <span className='font-normal'>{userInfi.name}</span></p>
-                                    <p className='headTitle p-1 font-medium'>Email :  <span className='font-normal'>{userInfi.email}</span></p>
+                                    <p className='headTitle p-1 font-medium'>Holder Name :  <span className='font-normal'>{userInfi.accountHN}</span></p>
+                                    <p className='headTitle p-1 font-medium'>Account Number :  <span className='font-normal'>{userInfi.accno}</span></p>
+                                    <p className='headTitle p-1 font-medium'>IFSC Code:  <span className='font-normal'>{userInfi.ifsc}</span></p>
+                                    <p className='headTitle p-1 font-medium'>Branch :  <span className='font-normal'>{userInfi.branch}</span></p>
                                     <p className='headTitle p-1 font-medium'>Mobile Number :  <span className='font-normal'>{userInfi.phone}</span></p>
-                                    <p className='headTitle p-1 font-medium'>Pan Number :  <span className='font-normal'>{userInfi.pan_no}</span></p>
-                                    <p className='headTitle p-1 font-medium'>Bank IFSC :  <span className='font-normal'>{userInfi.ifsc}</span></p>
-                                    <p className='headTitle p-1 font-medium'>Bank Account Number :  <span className='font-normal'>{userInfi.accno}</span></p>
+                                    <p className='headTitle p-1 font-medium'>{`UPI Number (Optional)`} :  <span className='font-normal'>{userInfi.UPINo}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +180,8 @@ const Withdrawal = () => {
                                 <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Withdraw</h6></button>
                             </div>
                             <div className="botton_bit flex justify-between items-center">
-                                <Link href={'/account'}><button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Update</h6></button></Link>
+                            {updated && <Link href={'./contact'}><button className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><p>Update</p></button></Link>}
+                            {!updated && <Link href={'./account'}><button className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><p>Update</p></button></Link>}
                             </div>
                         </div>
                     </div>

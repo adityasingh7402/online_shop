@@ -7,9 +7,12 @@ const handler = async (req, res) => {
     if (req.method == "POST") {
         let token = req.body.token
         let user = jsonwebtoken.verify(token, process.env.JWD_SECRET)
-        let dbuser = await User.findOne({ email: user.email })
-        const { name, email, wallet, accountHN, phone, ifsc, accno, bankName, UPINo, branch, updated } = dbuser
-        res.status(200).json({ name, email, wallet, accountHN, phone, ifsc, accno, bankName, UPINo, branch, updated })
+        let dbuser = await User.findOneAndUpdate({ email: user.email },
+            {
+                wallet: req.body.walletUp,
+            }
+        )
+        res.status(200).json({ success: true })
     }
     else {
         res.status(500).json({ error: "error" })

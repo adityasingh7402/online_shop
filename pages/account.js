@@ -11,19 +11,22 @@ import Head from "next/head"
 const Account = () => {
   const [name, setname] = useState("")
   const [phone, setphone] = useState("")
-  const [pan_no, setpan_no] = useState("")
+  const [accountHN, setaccountHN] = useState("")
   const [accno, setaccno] = useState("")
   const [email, setemail] = useState("")
+  const [bankName, setbankName] = useState("")
+  const [branch, setbranch] = useState("")
+  const [upiId, setupiId] = useState("")
   const [ifsc, setifsc] = useState("")
   const [user, setuser] = useState({ value: null })
   const [mobilevalid, setmobilevalid] = useState(true)
-  const [validpan_no, setvalidpan_no] = useState(true)
   const [currentPass, setcurrentPass] = useState("")
   const [newPass, setnewPass] = useState("")
   const [ReEnter, setReEnter] = useState("")
   const [dispayName, setdispayName] = useState("")
   const [lodingS, setlodingS] = useState(true)
   const [lodingSS, setlodingSS] = useState(true)
+  const [updated, setupdated] = useState(false)
 
   const [isHidden, setIsHidden] = useState(true);
   const router = useRouter()
@@ -54,16 +57,20 @@ const Account = () => {
     })
     let res = await a.json()
     setphone(res.phone)
-    setpan_no(res.pan_no)
+    setaccountHN(res.accountHN)
+    setbranch(res.branch)
+    setbankName(res.bankName)
+    setupiId(res.UPINo)
     setname(res.name)
     setifsc(res.ifsc)
+    setupdated(res.updated)
     setaccno(res.accno)
     setlodingS(true)
   }
 
   const handleUserSubmit = async () => {
     setlodingS(false)
-    let data = { token: user.token, pan_no, phone, name, accno, ifsc, email }
+    let data = { token: user.token, accountHN, phone, name, accno, ifsc, email, bankName, branch, upiId }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateuser`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -73,6 +80,7 @@ const Account = () => {
     })
     let res = await a.json()
     setlodingS(true)
+    if(res.success){
     toast.success("Successfully Updated Details", {
       position: "top-center",
       autoClose: 2000,
@@ -82,6 +90,18 @@ const Account = () => {
       draggable: true,
       progress: undefined,
     });
+  }
+  else{
+    toast.error(res.error, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
   }
   const handlePasswordSubmit = async () => {
     setlodingSS(false)
@@ -152,24 +172,25 @@ const Account = () => {
         else {
           setmobilevalid(true)
         }
-      }, 3000);
+      }, 2000);
     }
-    else if (e.target.name == 'pan_no') {
-      setpan_no(e.target.value)
-      setTimeout(() => {
-        if (e.target.value.length <= 5 || e.target.value.length >= 7) {
-          setvalidpan_no(false)
-        }
-        else {
-          setvalidpan_no(true)
-        }
-      }, 3000);
+    else if (e.target.name == 'accountHN') {
+      setaccountHN(e.target.value)
     }
     else if (e.target.name == 'ifsc') {
       setifsc(e.target.value)
     }
+    else if (e.target.name == 'bankName') {
+      setbankName(e.target.value)
+    }
     else if (e.target.name == 'accno') {
       setaccno(e.target.value)
+    }
+    else if (e.target.name == 'upiId') {
+      setupiId(e.target.value)
+    }
+    else if (e.target.name == 'branch') {
+      setbranch(e.target.value)
     }
     else if (e.target.name == 'currentPass') {
       setcurrentPass(e.target.value)
@@ -261,24 +282,36 @@ const Account = () => {
                       <input value={email} onChange={handleChange} type="email" name='email' id="email" className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />}
                   </div>
                   <div className="flex flex-col relative">
-                    <label htmlFor="pan_no" className="text-base font-normal pl-1">Pan Card Details</label>
-                    <input value={pan_no} onChange={handleChange} type="text" name='pan_no' id='pan_no' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
-                    {validpan_no === false && <span className="text-red-700 text-sm absolute -bottom-5 right-0">Ender a valid pan_no</span>}
+                    <label htmlFor="bankName" className="text-base font-normal pl-1">Bank Name</label>
+                    <input value={bankName} onChange={handleChange} type="text" name='bankName' id='bankName' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                  </div>
+                  <div className="flex flex-col relative">
+                    <label htmlFor="accountHN" className="text-base font-normal pl-1">Account Holder Name</label>
+                    <input value={accountHN} onChange={handleChange} type="text" name='accountHN' id='accountHN' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">
                     <label htmlFor="accno" className="text-base font-normal pl-1">Account Number</label>
                     <input value={accno} onChange={handleChange} type="Number" name='accno' id='accno' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div>
                   {/* <div className="flex flex-col relative">
-                    <label htmlFor="pan_no" className="text-base font-normal pl-1">Confirm Account Number</label>
+                    <label htmlFor="accountHN" className="text-base font-normal pl-1">Confirm Account Number</label>
                     <input value={Re_accno} onChange={handleChange} type="number" name='Re_accno' id="Re_accno" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div> */}
                   <div className="flex flex-col relative">
                     <label htmlFor="ifsc" className="text-base font-normal pl-1">Bank IFSC Code Number</label>
                     <input value={ifsc} onChange={handleChange} type="text" name='ifsc' id="ifsc" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
                   </div>
+                  <div className="flex flex-col relative">
+                    <label htmlFor="branch" className="text-base font-normal pl-1">Bank Branch Name</label>
+                    <input value={branch} onChange={handleChange} type="text" name='branch' id="branch" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                  </div>
+                  <div className="flex flex-col relative">
+                    <label htmlFor="upiId" className="text-base font-normal pl-1">{`UPI ID (Optional)`}</label>
+                    <input value={upiId} onChange={handleChange} type="text" name='upiId' id="upiId" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                  </div>
                 </div>
-                <button onClick={handleUserSubmit} className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>{lodingS === false ? <p>Updating</p> : <p>Update</p>}</button>
+                {updated && <button onClick={handleUserSubmit} disabled={!mobilevalid} className='rounded-full disabled:bg-green-500 bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>{lodingS === false ? <p>Updating</p> : <p>Update</p>}</button>}
+                {!updated && <Link href={'./contact'}><button className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><p>For Updating</p></button></Link>}
               </div>
             </div>
             <div className="passwordChng flex flex-col bg-white justify-start border mt-5 border-gray-200 rounded-sm py-5 px-10 shadow-sm h-min">

@@ -13,21 +13,15 @@ import { useRouter } from 'next/router';
 
 export default function Home({ logout, user, buyNow, randomNum, cart, clearCart }) {
   const [dropdown, setdropdown] = useState(false)
-  const [menudrop, setmenudrop] = useState(false)
-  const [minute, setminute] = useState("")
-  const [hour, sethour] = useState("")
-  const [date, setdate] = useState()
   const [name, setname] = useState("")
   const [email, setemail] = useState("")
   const [phone, setphone] = useState("")
   const [amount, setamount] = useState()
-  const [disabled, setdisabled] = useState(true)
+  const [timeBit, settimeBit] = useState(true)
   const [token, settoken] = useState("")
   var [closeScr, setcloseScr] = useState(false)
   const [wallet, setwallet] = useState(0)
   const [users, setusers] = useState({ value: null })
-  const [showMessage, setShowMessage] = useState(false);
-  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
@@ -35,6 +29,14 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
       setusers(myuser)
       fetchdata(myuser.token)
       settoken(myuser.token)
+    }
+    const now = new Date();
+    const hours = now.getHours();
+
+    if (hours >= 9 && hours <= 23) {
+      settimeBit(false);
+    } else {
+      settimeBit(true);
     }
   }, [])
 
@@ -87,7 +89,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
       });
       let walletUp = wallet - amount;
       let data2 = { token: token, email, walletUp }
-      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateuser`, {
+      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateWallet`, {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
@@ -96,6 +98,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
       })
       setwallet(wallet - amount)
       setcloseScr(false)
+      setamount();
     }
     else {
       toast.error(txnRes.error, {
@@ -108,6 +111,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         progress: undefined,
       });
       setcloseScr(false)
+      setamount();
     }
   }
 
@@ -206,41 +210,41 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <div className="card_no flex justify-around items-center w-4/6">
             <div className="card card_first h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl left-7 top-7 text-white">
+                <div className="cardNo absolute text-8xl left-9 top-10 text-white">
                   1
                 </div>
                 <img src="/card.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
                   {randomNum.card1}
-                </div>
+                </button>
               </div>
             </div>
             <div className="card card_second h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl left-7 top-7 text-white">
+                <div className="cardNo absolute text-8xl left-9 top-10 text-white">
                   2
                 </div>
                 <img src="/card.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
                   {randomNum.card1}
-                </div>
+                </button>
               </div>
             </div>
             <div className="card card_third h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-9xl left-7 top-7 text-white">
+                <div className="cardNo absolute text-8xl left-9 top-10 text-white">
                   3
                 </div>
                 <img src="/card.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
                   {randomNum.card1}
-                </div>
+                </button>
               </div>
             </div>
           </div>

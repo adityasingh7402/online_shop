@@ -7,8 +7,12 @@ const UserSchema = new mongoose.Schema({
     password: {type: String, required: true},
     wallet: {type: Number, default: 0},
     ifsc: {type: String, default: ''},
-    pan_no: {type: String, default: ''},
-    accno: {type: Number, default: ''},
+    branch: {type: String, default: ''},
+    bankName: {type: String, default: ''},
+    accountHN: {type: String, default: ''},
+    accno: {type: String, default: ''},
+    UPINo: {type: String, default: ''},
+    updated: {type: Boolean, default: false},
 }, {timestamps: true});
 
 // mongoose.models = {}

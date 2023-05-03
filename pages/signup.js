@@ -17,6 +17,7 @@ const Signup = () => {
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [lodingS, setlodingS] = useState(true)
+  const [mobilevalid, setmobilevalid] = useState(false)
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -33,6 +34,14 @@ const Signup = () => {
     }
     if (e.target.name == 'phone') {
       setPhone(e.target.value)
+      setTimeout(() => {
+        if (e.target.value.length <= 9 || e.target.value.length >= 11) {
+          setmobilevalid(true)
+        }
+        else {
+          setmobilevalid(false)
+        }
+      }, 2000);
     }
     if (e.target.name == 'password') {
       setPassword(e.target.value)
@@ -67,6 +76,9 @@ const Signup = () => {
         draggable: true,
         progress: undefined,
       });
+      setTimeout(() => {
+        router.push('/login')
+      }, 2000);
     }
     else {
       toast.error(response.error, {
@@ -115,9 +127,10 @@ const Signup = () => {
                 <label htmlFor="email" className="text-base font-normal pl-1 pb-1">Email</label>
                 <input value={email} onChange={handleChange} type="email" name='email' id="email" required autoComplete="email" placeholder='Email' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-green-700 border-gray-300" />
               </div>
-              <div className="flex flex-col pb-5">
+              <div className="flex flex-col relative pb-5">
                 <label htmlFor="phone" className="text-base font-normal pl-1 pb-1">Mobile phone</label>
                 <input value={phone} onChange={handleChange} type="number" name='phone' id="phone" required autoComplete="phone" placeholder='Mobile phone' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-green-700 border-gray-300" />
+                {mobilevalid === true && <span className="text-red-700 text-sm absolute -bottom-2 right-0">Enter a valid Mobile number</span>}
               </div>
               <div className="flex flex-col pb-5">
                 <label htmlFor="password" className="text-base font-normal pl-1 pb-1">Password</label>
@@ -125,7 +138,7 @@ const Signup = () => {
               </div>
               <p className='text-gray-500 pt-4 text-xs'>We will send you a text to verify your phone.
                 Message and Data rates may apply</p>
-              <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className=" relative flex text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
+              <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" disabled={mobilevalid} className=" relative disabled:bg-green-500 flex text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
                 {lodingS === false ? <p>WAIT</p> : <p>CONTINUE</p>}
                 <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>
               </button></div>
