@@ -155,7 +155,7 @@ export async function getServerSideProps(context) {
   let randomNum = await RandomNSchema.findOne();
   return {
     props: { winnOrder: JSON.parse(JSON.stringify(winnOrder)), randomNum: JSON.parse(JSON.stringify(randomNum)) },
-  };
+  };s
 }
 
 export default WinnerSelect

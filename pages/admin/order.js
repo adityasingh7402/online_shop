@@ -27,7 +27,7 @@ const Order = ({ orders }) => {
       <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
         Orders - Admin Panel
       </div>
-      <div className="box p-5">
+      {/* <div className="box p-5">
         {orders.map((item) => {
           return (<div key={item._id} className="userOrderss border-2 border-gray-200 mt-2 w-full flex flex-col overflow-x-scroll p-5">
             <p className="font-medium">Order Id : <span className="font-normal">{item.orderId}</span></p>
@@ -40,6 +40,32 @@ const Order = ({ orders }) => {
             <p className="font-medium">Date on Buy : <span className="font-normal">{item.createdAt}</span></p>
           </div>)
         })}
+      </div> */}
+      <div className="tables p-5 w-full">
+      <table>
+        <tr>
+          <th className='text-left border p-4 border-slate-600'><div className="Date text-lg font-medium">Order Id</div></th>
+          <th className='text-left border p-4 border-slate-600'><div className="Refrence text-lg font-medium">Name</div></th>
+          <th className='text-left border p-4 border-slate-600'><div className="card text-lg font-medium">Email</div></th>
+          <th className='text-left border p-4 border-slate-600'><div className="Coin text-lg font-medium">Mobile</div></th>
+          <th className='text-left border p-4 border-slate-600'><div className="Status text-lg font-medium">Amount</div></th>
+          <th className='text-left border p-4 border-slate-600'><div className="Pending text-lg font-medium">Card</div></th>
+          <th className='text-left border p-4 border-slate-600'><div className="Win text-lg font-medium">Status</div></th>
+          <th className='text-left border p-4 border-slate-600'><div className="Loss text-lg font-medium">Date on Buy</div></th>
+        </tr>
+        {orders.map((item) => {
+          return <tr key={item._id}>
+            <td className='text-left border p-4 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
+            <td className='text-left border p-4 border-slate-600'><div className="Refrence">{item.name}</div></td>
+            <td className='text-left border p-4 border-slate-600'><div className="Refrence">{item.email}</div></td>
+            <td className='text-left border p-4 border-slate-600'><div className="Refrence">{item.phone}</div></td>
+            <td className='text-left border p-4 border-slate-600'><div className="Refrence">{item.amount}</div></td>
+            <td className='text-left border p-4 border-slate-600'><div className="Refrence">{` C- ${item.cardno} , R- ${item.randomNum}`}</div></td>
+            <td className='text-left border p-4 border-slate-600'><div className="Refrence">{item.winning}</div></td>
+            <td className='text-left border p-4 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
+          </tr>
+        })}
+      </table>
       </div>
     </>
   );

@@ -12,7 +12,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #15803d;
+  background: #841212;
 }
 
 ::-webkit-scrollbar-track {
@@ -153,7 +153,7 @@ input[type=number]::-webkit-outer-spin-button {
     height: 0;
     border: solid transparent;
     border-width: 10px;
-    border-bottom-color: green;
+    border-bottom-color: red;
     z-index: 0;
 }
 
@@ -185,7 +185,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .containerr{
-  background-image: url("/back.jpeg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(/backg.webp);
   background-blend-mode: darken;
   background-repeat: no-repeat;
   background-size: cover;
@@ -214,7 +214,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-right: 14px;
 }
 .user_name{
-  border: 2px solid rgb(2, 72, 2);
+  border: 2px solid rgb(72, 3, 2);
 }
 
 .batInfo{

@@ -81,15 +81,15 @@ const ChangeNum = ({randomNum}) => {
                 <div className="grid_random flex flex-row justify-around items-center">
                     <div className="flex flex-col relative p-5">
                         <label htmlFor="accno" className="text-base font-normal pl-1">First Number</label>
-                        <input value={first_no} onChange={handleChange} type="number" name='first_no' id='first_no' required placeholder={randomNum.card1} className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-green-700" />
+                        <input value={first_no} onChange={handleChange} type="number" name='first_no' id='first_no' requigreen placeholder={randomNum.card1} className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-green-700" />
                     </div>
                     <div className="flex flex-col relative p-5">
                         <label htmlFor="accno" className="text-base font-normal pl-1">Second Number</label>
-                        <input value={second_no} onChange={handleChange} type="number" name='second_no' id='second_no' required placeholder={randomNum.card2} className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-green-700" />
+                        <input value={second_no} onChange={handleChange} type="number" name='second_no' id='second_no' requigreen placeholder={randomNum.card2} className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-green-700" />
                     </div>
                     <div className="flex flex-col relative p-5">
                         <label htmlFor="accno" className="text-base font-normal pl-1">Third Number</label>
-                        <input value={third_no} onChange={handleChange} type="number" name='third_no' id='third_no' required placeholder={randomNum.card3} className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-green-700" />
+                        <input value={third_no} onChange={handleChange} type="number" name='third_no' id='third_no' requigreen placeholder={randomNum.card3} className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-green-700" />
                     </div>
                 </div>
                 <div className="btnn flex justify-center items-center pt-10">

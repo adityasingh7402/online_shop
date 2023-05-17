@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
 import { BsFacebook } from "react-icons/bs";
-import { AiOutlineTwitter } from "react-icons/ai";
+import { AiOutlineTwitter, AiOutlineClose } from "react-icons/ai";
 import { AiOutlineInstagram } from "react-icons/ai";
 import Image from "next/image";
 
@@ -76,6 +76,7 @@ const Contact = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Link href={'/'}><div className="gotoHome right-10 top-10 z-10 fixed cursor-pointer text-white p-2 bg-red-800 font-bold text-4xl"><AiOutlineClose /></div></Link>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -87,22 +88,22 @@ const Contact = () => {
         draggable
         pauseOnHover
       />
-      {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg z-10 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+      {lodingS === false && <span className="fixed flex justify-center items-center text-red-900 text-lg z-10 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
       <div className="flex justify-around flex-row flexCol-con py-20 relative">
-        {/* {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>} */}
+        {/* {lodingS === false && <span className="fixed flex justify-center items-center text-red-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>} */}
         <div className="left margin-bot">
-          <p className='text-5xl text-green-700 pb-16 textSma'>WE&rsquo;RE READY, LET&rsquo;S TALK.</p>
+          <p className='text-5xl text-red-700 pb-16 textSma'>WE&rsquo;RE READY, LET&rsquo;S TALK.</p>
           <div className="contact flex flex-col">
-            <input value={name} onChange={handleChange} type="text" id="name" name='name' placeholder="Your Name" required className="p-3 outline-none focus:border-green-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
-            <input value={email} onChange={handleChange} type="text" id="email" name="email" placeholder="Your Email / Mobile No" required className="p-3 outline-none focus:border-green-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
-            <textarea value={message} onChange={handleChange} type="text" id="message" name="message" placeholder="Message" required cols="57" rows="5" className="p-3 resize-none outline-none focus:border-green-700 mb-5 input-bck text-gray-600 border text-base border-gray-300" />
-            <button onClick={submitQuery} disabled={disabled} className='font-medium rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-10 py-4 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>
+            <input value={name} onChange={handleChange} type="text" id="name" name='name' placeholder="Your Name" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
+            <input value={email} onChange={handleChange} type="text" id="email" name="email" placeholder="Your Email / Mobile No" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
+            <textarea value={message} onChange={handleChange} type="text" id="message" name="message" placeholder="Message" required cols="57" rows="5" className="p-3 resize-none outline-none focus:border-red-700 mb-5 input-bck text-gray-600 border text-base border-gray-300" />
+            <button onClick={submitQuery} disabled={disabled} className='font-medium rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-10 py-4 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>
               {lodingS === false ? <h6>WAIT</h6> : <h6>SEND MESSAGE</h6>}
             </button>
           </div>
         </div>
         <div className="right">
-          <p className='text-5xl text-green-700 pb-16 textSma'>CONTACT INFO</p>
+          <p className='text-5xl text-red-700 pb-16 textSma'>CONTACT INFO</p>
           <div className="contact flex flex-col">
             <div className="wrap pb-2">
               <p className='text-lg text-gray-900 font-medium'>Address</p>
@@ -117,9 +118,9 @@ const Contact = () => {
               <h5 className='text-gray-600'>+91 9999557786</h5>
             </div>
             <div className="wrap flex flex-row text-2xl">
-              <div className='px-2 text-green-700 cursor-pointer'><BsFacebook /></div>
-              <div className='px-2 text-green-700 cursor-pointer'><AiOutlineTwitter /></div>
-              <div className='px-2 text-green-700 cursor-pointer'><AiOutlineInstagram /></div>
+              <div className='px-2 text-red-700 cursor-pointer'><BsFacebook /></div>
+              <div className='px-2 text-red-700 cursor-pointer'><AiOutlineTwitter /></div>
+              <div className='px-2 text-red-700 cursor-pointer'><AiOutlineInstagram /></div>
             </div>
           </div>
         </div>

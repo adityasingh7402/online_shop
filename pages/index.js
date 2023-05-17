@@ -147,36 +147,38 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
               <div className="bottom_pay_bit">
                 <div className="head_bit text-lg pb-2">Enter Coin of Bit</div>
                 <div className="amount_bit">
-                  <input value={amount} onChange={handleChange} type="text" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none w-full border-green-700 mb-5  text-gray-600 text-base border " />
+                  <input value={amount} onChange={handleChange} type="text" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border " />
                 </div>
               </div>
               <div className="botton_bit flex justify-between items-center">
-                <button onClick={() => { clearCart; setcloseScr(false) }} className='font-medium mr-10 rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Cancel</h6></button>
-                <button onClick={initiatePayment} className='font-medium rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Bit</h6></button>
+                <button onClick={() => { clearCart; setcloseScr(false) }} className='font-medium mr-10 rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Cancel</h6></button>
+                <button onClick={initiatePayment} className='font-medium rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Bit</h6></button>
               </div>
             </div>
           </div>
         </div>}
-        {/* <div className="cooming text-6xl h-28 bg-green-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-green-800">Coming soon...</div> */}
+        {/* <div className="cooming text-6xl h-28 bg-red-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-red-800">Coming soon...</div> */}
         <div className="navbar flex justify-between items-center pr-20 pl-20 pt-4">
           <div className="logo w-24 ">
-            <img src="/logo.png" alt="" />
+            <img src="/logo.gif" alt="" />
           </div>
-          <div className="uppercase text-4xl text-white bg-green-900 py-5 px-20 ml-32">
-            Start Betting
+          <div className="uppercase text-4xl text-white bg-red-900 py-5 px-20 ml-32">
+            <div className="clasimg w-96">
+            <img src="start.png" alt="" />
+            </div>
           </div>
-          <div className="user_name relative flex justify-between items-center text-white z-20 bg-green-900 p-4 px-7 rounded-lg">
-            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 cursor-pointer hover:text-green-100">{name}</div>}
+          <div className="user_name relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
+            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 cursor-pointer hover:text-red-100">{name}</div>}
             {dropdown && <div className="dropdown absolute -left-10 top-11 w-44 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
               <ul>
-                <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-green-300 text-green-700 py-2 hover:text-green-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
-                <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-green-300 text-green-700 py-2 hover:text-green-500"><RiCoinsLine className="mx-2 text-lg" /><span>Bitting Details</span></li></a></Link>
-                <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-green-300 text-green-700 py-2 hover:text-green-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdrawal Coin</span></li></a></Link>
-                <li onClick={logout} className="text-base border-t flex flex-row items-center cursor-pointer border-green-300 text-green-700 py-2 hover:text-green-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
+                <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-red-300 text-red-700 py-2 hover:text-red-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
+                <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Bitting Details</span></li></a></Link>
+                <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdrawal Coin</span></li></a></Link>
+                <li onClick={logout} className="text-base border-t flex flex-row items-center cursor-pointer border-red-300 text-red-700 py-2 hover:text-red-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
               </ul>
             </div>}
             {user && !user.value && <Link href={"/login"}><a>
-              <button className="text-xl flex items-center px-4 rounded-md bg-green-900 cursor-pointer text-slate-50 hover:text-green-200 transition-all">Login</button>
+              <button className="text-xl flex items-center px-4 rounded-md bg-red-900 cursor-pointer text-slate-50 hover:text-red-200 transition-all">Login</button>
             </a></Link>}
             {user && user.value && <div className="saprator"></div>}
             {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span> <AiOutlinePlus className="ml-1 text-white" /></div></Link>}
@@ -185,7 +187,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         <div className="welc flex justify-between items-center text-white px-14 mt-14">
           <div className="welc_text text-2xl flex justify-center items-center flex-row">
             Today&rsquo;s Lucky Number : 
-            <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-green-800 items-center p-5 mr-1 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+            <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   {randomNum.card1}
                 </div>
           </div>
@@ -193,30 +195,30 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             <div className="text pr-2">Today Numbers :  </div>
             <div className="R_number">
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-green-800 items-center p-5 mr-1 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   {randomNum.card1}
                 </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-green-800 items-center p-5 mr-1 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   {randomNum.card2}
                 </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-green-800 items-center p-5 mr-1 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   {randomNum.card3}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="card text-green-900 flex justify-center items-center p-5 text-lg mt-10">
+        <div className="card text-red-900 flex justify-center items-center p-5 text-lg mt-10">
           <div className="card_no flex justify-around items-center w-4/6">
             <div className="card card_first h-min">
               <div className="upperBody border border-white overflow-hidden relative">
                 <div className="cardNo absolute text-8xl left-9 top-10 text-white">
                   1
                 </div>
-                <img src="/card.jpg" alt="" />
+                <img src="/card1.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   {randomNum.card1}
                 </button>
               </div>
@@ -226,10 +228,10 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div className="cardNo absolute text-8xl left-9 top-10 text-white">
                   2
                 </div>
-                <img src="/card.jpg" alt="" />
+                <img src="/card1.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   {randomNum.card1}
                 </button>
               </div>
@@ -239,21 +241,21 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div className="cardNo absolute text-8xl left-9 top-10 text-white">
                   3
                 </div>
-                <img src="/card.jpg" alt="" />
+                <img src="/card1.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-green-900 hover:bg-green-200 cursor-pointer">
+                <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   {randomNum.card1}
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <div className="ending uppercase text-lg mt-5 flex justify-between px-40 items-center bg-white text-green-900 font-bold p-3 text-center ">
+        <div className="ending uppercase text-lg mt-5 flex justify-between px-40 items-center bg-white text-red-900 font-bold p-3 text-center ">
           <p> Batting Start at - 9 AM </p>
           <p> Batting End at - 11 PM </p>
         </div>
-        <div className="footer w-full flex absolute bottom-0 left-0 justify-between items-center bg-green-900 text-white font-bold p-4 text-center pl-12 pr-12">
+        <div className="footer w-full flex absolute bottom-0 left-0 justify-between items-center bg-red-900 text-white font-bold p-4 text-center pl-12 pr-12">
           <div className="webname">patticircle.com &#169;</div>
           <div className="term">Terms & Conditions</div>
           <Link href={'./contact'}><div className="term cursor-pointer">Contact us</div></Link>

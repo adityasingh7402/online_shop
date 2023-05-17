@@ -219,7 +219,7 @@ const Account = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="catoBack flex">
+      <div className="catoBack flex containerr">
         <ToastContainer
           position="top-right"
           autoClose={1000}
@@ -242,11 +242,11 @@ const Account = () => {
           draggable
           pauseOnHover
         />
-          {lodingS === false && <span className="fixed flex justify-center z-10 items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+          {lodingS === false && <span className="fixed flex justify-center z-10 items-center text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <div className="account-title accFlexCo my-5 mx-20 w-full flex flex-row relative">
           <div className="right-side w-1/4 mr-5 leftSideAccW">
             <div className="flex accLeftSideN accLeftSideNMB flex-row bg-white justify-start border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-min">
-              <div className="image bg-green-500 rounded-full w-16 h-16 overflow-hidden mr-5"><div className="pt-1"><Image src={"/person.png"} width={60} height={60} /></div></div>
+              <div className="image bg-red-500 rounded-full w-16 h-16 overflow-hidden mr-5"><div className="pt-1"><Image src={"/person.png"} width={60} height={60} /></div></div>
               <div className="Account">
                 <div className="text-base text-gray-800 flex">Hello,</div>
                 <div className="text-xl text-gray-800 flex">{dispayName}</div>
@@ -257,7 +257,7 @@ const Account = () => {
                 <ul>
                   <Link href={'/yourorder'}><a><li className="text-xl flex flex-row items-center pb-3"><BsCashCoin className="ml-2 mr-4 text-xl" /><span>Withdrawal Coin</span></li></a></Link>
                   <Link href={'#changepassword'}><a><li className="text-xl flex cursor-pointer flex-row items-center"><AiOutlineLock className="ml-2 mr-4 text-xl" /><span>Change Password</span></li></a></Link>
-                  <Link href={'/'}><a><li className="flex cursor-pointer flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>Home Page</button></li></a></Link>                  
+                  <Link href={'/'}><a><li className="flex cursor-pointer flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>Home Page</button></li></a></Link>                  
                 </ul>
               </div>
             </div>
@@ -269,49 +269,49 @@ const Account = () => {
                 <div className="personal-d grid grid-cols-2 gap-4">
                   <div className="flex flex-col">
                     <label htmlFor="name" className="text-base font-normal pl-1">Name</label>
-                    <input value={name} onChange={handleChange} type="text" name='name' id="name" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={name} onChange={handleChange} type="text" name='name' id="name" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">
                     <label htmlFor="phone" className="text-base font-normal pl-1">10-digit Mobile Number</label>
-                    <input value={phone} onChange={handleChange} type="number" name='phone' id="phone" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={phone} onChange={handleChange} type="number" name='phone' id="phone" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                     {mobilevalid === false && <span className="text-red-700 text-sm absolute -bottom-5 right-0">Enter a valid Mobile number</span>}
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="email" className="text-base font-normal pl-1">Email</label>
-                    {user && user.token ? <input value={user.email} readOnly type="email" name='email' id="email" className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" /> :
-                      <input value={email} onChange={handleChange} type="email" name='email' id="email" className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />}
+                    {user && user.token ? <input value={user.email} readOnly type="email" name='email' id="email" className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" /> :
+                      <input value={email} onChange={handleChange} type="email" name='email' id="email" className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />}
                   </div>
                   <div className="flex flex-col relative">
                     <label htmlFor="bankName" className="text-base font-normal pl-1">Bank Name</label>
-                    <input value={bankName} onChange={handleChange} type="text" name='bankName' id='bankName' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={bankName} onChange={handleChange} type="text" name='bankName' id='bankName' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">
                     <label htmlFor="accountHN" className="text-base font-normal pl-1">Account Holder Name</label>
-                    <input value={accountHN} onChange={handleChange} type="text" name='accountHN' id='accountHN' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={accountHN} onChange={handleChange} type="text" name='accountHN' id='accountHN' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">
                     <label htmlFor="accno" className="text-base font-normal pl-1">Account Number</label>
-                    <input value={accno} onChange={handleChange} type="Number" name='accno' id='accno' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={accno} onChange={handleChange} type="Number" name='accno' id='accno' required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   {/* <div className="flex flex-col relative">
                     <label htmlFor="accountHN" className="text-base font-normal pl-1">Confirm Account Number</label>
-                    <input value={Re_accno} onChange={handleChange} type="number" name='Re_accno' id="Re_accno" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={Re_accno} onChange={handleChange} type="number" name='Re_accno' id="Re_accno" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div> */}
                   <div className="flex flex-col relative">
                     <label htmlFor="ifsc" className="text-base font-normal pl-1">Bank IFSC Code Number</label>
-                    <input value={ifsc} onChange={handleChange} type="text" name='ifsc' id="ifsc" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={ifsc} onChange={handleChange} type="text" name='ifsc' id="ifsc" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">
                     <label htmlFor="branch" className="text-base font-normal pl-1">Bank Branch Name</label>
-                    <input value={branch} onChange={handleChange} type="text" name='branch' id="branch" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={branch} onChange={handleChange} type="text" name='branch' id="branch" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">
                     <label htmlFor="upiId" className="text-base font-normal pl-1">{`UPI ID (Optional)`}</label>
-                    <input value={upiId} onChange={handleChange} type="text" name='upiId' id="upiId" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={upiId} onChange={handleChange} type="text" name='upiId' id="upiId" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                 </div>
-                {updated && <button onClick={handleUserSubmit} disabled={!mobilevalid} className='rounded-full disabled:bg-green-500 bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>{lodingS === false ? <p>Updating</p> : <p>Update</p>}</button>}
-                {!updated && <Link href={'./contact'}><button className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><p>For Updating</p></button></Link>}
+                {updated && <button onClick={handleUserSubmit} disabled={!mobilevalid} className='rounded-full disabled:bg-red-500 bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>{lodingS === false ? <p>Updating</p> : <p>Update</p>}</button>}
+                {!updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>For Updating</p></button></Link>}
               </div>
             </div>
             <div className="passwordChng flex flex-col bg-white justify-start border mt-5 border-gray-200 rounded-sm py-5 px-10 shadow-sm h-min">
@@ -320,21 +320,21 @@ const Account = () => {
                 <div className="personal-d grid grid-cols-2 gap-4">
                   <div className="flex flex-col">
                     <label htmlFor="currentPass" className="text-base font-normal pl-1">Type Current Password</label>
-                    <input value={currentPass} onChange={handleChange} type="password" name='currentPass' id="currentPass" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={currentPass} onChange={handleChange} type="password" name='currentPass' id="currentPass" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="div"></div>
                   <div className="flex flex-col">
                     <label htmlFor="newPass" className="text-base font-normal pl-1">Type New Password</label>
-                    <input value={newPass} onChange={handleChange} type="password" name='newPass' id="newPass" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input value={newPass} onChange={handleChange} type="password" name='newPass' id="newPass" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor="ReEnter" className="text-base font-normal pl-1">Re-type New Password</label>
-                    <input type="password" onChange={handleChange} value={ReEnter} name='ReEnter' id="ReEnter" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-green-700 border-gray-200" />
+                    <input type="password" onChange={handleChange} value={ReEnter} name='ReEnter' id="ReEnter" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                 </div>
-                <button onClick={handlePasswordSubmit} className='rounded-full bg-green-700 text-lg px-8 mt-10 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>{lodingSS === false ? <p>Changing Password</p> : <p>Change Password</p>}</button>
+                <button onClick={handlePasswordSubmit} className='rounded-full bg-red-700 text-lg px-8 mt-10 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>{lodingSS === false ? <p>Changing Password</p> : <p>Change Password</p>}</button>
               </div>
-              <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>Home Page</button></div></a></Link>     
+              <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>Home Page</button></div></a></Link>     
             </div>
           </div>
         </div>
