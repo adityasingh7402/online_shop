@@ -11,6 +11,8 @@ const YourOrder = () => {
   const router = useRouter()
   const [orders, setorders] = useState([])
   const [lodingS, setlodingS] = useState(true)
+  const [wallet, setwallet] = useState(0)
+  const [token, settoken] = useState("")
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -34,6 +36,13 @@ const YourOrder = () => {
     }
 
   }, [])
+  useEffect(() => {
+    const myuser = JSON.parse(localStorage.getItem("myuser"))
+    if (myuser && myuser.token) {
+        fetchdata(myuser.token)
+        settoken(myuser.token)
+    }
+}, [])
   const updatedOrders = orders.map((item) => {
     const date = new Date(item.createdAt);
     const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -42,6 +51,18 @@ const YourOrder = () => {
       time: time
     }
   });
+  const fetchdata = async (token) => {
+    let data = { token: token, wallet }
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    let res = await a.json()
+    setwallet(res.wallet)
+}
 
   return (
     <div className='containerr h-screen catoBack flex relative'>
@@ -65,6 +86,7 @@ const YourOrder = () => {
             {orders.length == 0 && <div className="flex justify-center text-4xl text-green-700 py-20 items-center border-t border-b border-gray-200">
               Your Order List is Empty....
             </div>}
+            <div className="coin flex justify-end text-2xl cursor-pointer text-yellow-700 pb-4 mt-5"><span className='mr-5'> Your Wallet </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
             <table>
               <tr>
               <th className='text-left border p-4 border-slate-600'><div className="Date text-lg font-medium">Date</div></th>

@@ -16,6 +16,7 @@ const Addcoin = () => {
     const [orders, setorders] = useState([])
     const [token, settoken] = useState("")
     const [name, setname] = useState("")
+    const [oid, setoid] = useState("")
     const [amount, setamount] = useState('')
     const [userInfi, setuserInfi] = useState({})
 
@@ -44,6 +45,7 @@ const Addcoin = () => {
         else {
             fetchOrders()
         }
+        setoid(Math.floor(Math.random() * Date.now()));
     }, [])
 
     const fetchdata = async (token) => {
@@ -122,6 +124,19 @@ const Addcoin = () => {
         }
         setlodingS(true)
     }
+    const initiatePaymentdemo = async () => {
+        setlodingS(false)
+        const data = { email: userInfi.email, name: userInfi.name, phone: userInfi.phone, amount, oid, };
+        let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addCoin`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        let txnRes = await a.json()
+        setlodingS(true)
+    }
     const updatedOrders = orders.map((item) => {
         const date = new Date(item.createdAt);
         const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -162,14 +177,27 @@ const Addcoin = () => {
                 <div className='right-side mx-auto justify-center bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-20 shadow-sm'>
                     <p className='flex justify-center items-center text-4xl py-3 text-gray-700'>Add Coin</p>
                     <div className="coin flex text-2xl cursor-pointer text-yellow-700 pb-4 mt-5"><span className='mr-5'> Your Wallet : </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
-                    <div className="collection_with coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-10 border-2  border-gray-300 py-20 px-20">
+                    <div className="collection_with coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-10 border-2  border-gray-300 py-10 px-20">
+                        <div className="box_bank flex justify-start flex-row items-center w-1/2">
+                            <div className="qrcode">
+                                <div className="payment-box w-56">
+                                    <img src="./payment.jpg" alt="" />
+                                </div>
+                            </div>
+                            <div className="detailss flex justify-start items-start flex-col">
+                                <p className='text-2xl font-medium pb-2'>First Pay</p>
+                                <p className='text-xl font-medium pb-2'>Reference No <span className='font-normal text-base'>{oid}</span></p>
+                                <p className='text-xl font-medium pb-2'>Email <span className='font-normal text-base'>{userInfi.email}</span></p>
+                            </div>
+                        </div>
                         <div className="box_bank flex justify-center flex-col items-start w-1/2">
                             <p className='text-lg'>Enter Coin</p>
                             <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" name='amount' required className="p-3 outline-none w-full border-green-700 mb-5  text-gray-600 text-base border px-2" />
                         </div>
                         <div className="box_button flex justify-around flex-row items-center w-full">
                             <div className="botton_bit flex justify-between items-center">
-                                <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Purchase Now</h6></button>
+                                {/* <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Purchase Now</h6></button> */}
+                                <button onClick={initiatePaymentdemo} className='font-medium text-lg rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Purchase Now</h6></button>
                             </div>
                         </div>
                     </div>

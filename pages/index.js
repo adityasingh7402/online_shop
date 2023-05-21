@@ -18,6 +18,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   const [phone, setphone] = useState("")
   const [amount, setamount] = useState()
   const [timeBit, settimeBit] = useState(true)
+  const [paymentVer, setpaymentVer] = useState(true)
+  const [imageload, setimageload] = useState(false)
   const [token, settoken] = useState("")
   var [closeScr, setcloseScr] = useState(false)
   const [wallet, setwallet] = useState(0)
@@ -29,6 +31,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
       setusers(myuser)
       fetchdata(myuser.token)
       settoken(myuser.token)
+      setimageload(true);
     }
     const now = new Date();
     const hours = now.getHours();
@@ -43,6 +46,12 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   const handleChange = async (e) => {
     if (e.target.name == 'amount') {
       setamount(e.target.value)
+      if (e.target.value > 0) {
+        setpaymentVer(false)
+      }
+      else {
+        setpaymentVer(true)
+      }
     }
   }
 
@@ -64,6 +73,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
 
 
   const initiatePayment = async () => {
+    setpaymentVer(true);
     let oid = Math.floor(Math.random() * Date.now());
     const data = {
       cart, oid, amount, email, name, phone, wallet, randomNum: cart.randomNum,
@@ -113,10 +123,19 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
       setcloseScr(false)
       setamount();
     }
+    setpaymentVer(false)
   }
 
-  return (
-    <div>
+  return (<>
+    {!imageload && <div className="imageloadd">
+      <div className="imagess h-screen w-full overflow-hidden relative">
+          <div className="logo w-24 absolute left-20 top-10">
+            <img src="/logo.gif" alt="" />
+          </div>
+          <div onClick={()=> setimageload(true)} className="title-logo flex w-full h-screen mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
+      </div>
+    </div>}
+    {imageload && <div>
       <Head>
         <title>Patti Circle- Win Win Game</title>
         <meta
@@ -147,12 +166,12 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
               <div className="bottom_pay_bit">
                 <div className="head_bit text-lg pb-2">Enter Coin of Bit</div>
                 <div className="amount_bit">
-                  <input value={amount} onChange={handleChange} type="text" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border " />
+                  <input value={amount} onChange={handleChange} type="Number" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border " />
                 </div>
               </div>
               <div className="botton_bit flex justify-between items-center">
                 <button onClick={() => { clearCart; setcloseScr(false) }} className='font-medium mr-10 rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Cancel</h6></button>
-                <button onClick={initiatePayment} className='font-medium rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Bit</h6></button>
+                <button onClick={initiatePayment} disabled={paymentVer} className='font-medium rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Bit</h6></button>
               </div>
             </div>
           </div>
@@ -162,9 +181,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <div className="logo w-24 ">
             <img src="/logo.gif" alt="" />
           </div>
-          <div className="uppercase text-4xl text-white bg-red-900 py-5 px-20 ml-32">
-            <div className="clasimg w-96">
-            <img src="start.png" alt="" />
+          <div className="uppercase text-4xl text-white py-5 px-20 ml-32">
+            <div className="clasimg">
+              Choose Your Lucky Card
             </div>
           </div>
           <div className="user_name relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
@@ -174,6 +193,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-red-300 text-red-700 py-2 hover:text-red-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
                 <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Bitting Details</span></li></a></Link>
                 <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdrawal Coin</span></li></a></Link>
+                <Link href={'/addcoin'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Add Coin</span></li></a></Link>
                 <li onClick={logout} className="text-base border-t flex flex-row items-center cursor-pointer border-red-300 text-red-700 py-2 hover:text-red-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
               </ul>
             </div>}
@@ -185,13 +205,13 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           </div>
         </div>
         <div className="welc flex justify-between items-center text-white px-14 mt-14">
-          <div className="welc_text text-2xl flex justify-center items-center flex-row">
-            Today&rsquo;s Lucky Number : 
+          <div className="welc_text text-xl flex justify-center items-center flex-row">
+            Today&rsquo;s Lucky Number :
             <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  {randomNum.card1}
-                </div>
+              {randomNum.card1}
+            </div>
           </div>
-          <div className="random_no flex justify-between items-center text-2xl">
+          <div className="random_no flex justify-between items-center text-xl">
             <div className="text pr-2">Today Numbers :  </div>
             <div className="R_number">
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
@@ -208,11 +228,11 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             </div>
           </div>
         </div>
-        <div className="card text-red-900 flex justify-center items-center p-5 text-lg mt-10">
+        <div className="card text-red-900 flex justify-center items-center p-5 text-lg mt-6">
           <div className="card_no flex justify-around items-center w-4/6">
             <div className="card card_first h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-8xl left-9 top-10 text-white">
+                <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   1
                 </div>
                 <img src="/card1.png" alt="" />
@@ -225,7 +245,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             </div>
             <div className="card card_second h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-8xl left-9 top-10 text-white">
+                <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   2
                 </div>
                 <img src="/card1.png" alt="" />
@@ -238,7 +258,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             </div>
             <div className="card card_third h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-8xl left-9 top-10 text-white">
+                <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   3
                 </div>
                 <img src="/card1.png" alt="" />
@@ -251,17 +271,22 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             </div>
           </div>
         </div>
-        <div className="ending uppercase text-lg mt-5 flex justify-between px-40 items-center bg-white text-red-900 font-bold p-3 text-center ">
-          <p> Batting Start at - 9 AM </p>
-          <p> Batting End at - 11 PM </p>
-        </div>
-        <div className="footer w-full flex absolute bottom-0 left-0 justify-between items-center bg-red-900 text-white font-bold p-4 text-center pl-12 pr-12">
-          <div className="webname">patticircle.com &#169;</div>
-          <div className="term">Terms & Conditions</div>
-          <Link href={'./contact'}><div className="term cursor-pointer">Contact us</div></Link>
+        <div className="foooter w-full flex flex-col absolute bottom-0 left-0 justify-between">
+          <div className="ending uppercase text-lg mt-5 flex justify-between px-40 items-center bg-white text-red-900 font-bold p-3 text-center ">
+            <p> Batting Start at - 9 AM </p>
+            <p> Batting End at - 11 PM </p>
+          </div>
+          <div className="footer w-full flex justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
+            <div className="webname">patticircle.com &#169;</div>
+            <Link href={'./howtoplay'}><div className="term cursor-pointer">How to Play</div></Link>
+            <Link href={'./terms'}><div className="term cursor-pointer">Terms & Conditions</div></Link>
+            <Link href={'./faq'}><div className="term cursor-pointer">FAQ</div></Link>
+            <Link href={'./contact'}><div className="term cursor-pointer">Contact us</div></Link>
+          </div>
         </div>
       </div>
-    </div>
+    </div>}
+  </>
   );
 }
 
