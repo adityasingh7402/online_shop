@@ -129,7 +129,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   return (<>
     {!imageload && <div className="imageloadd">
       <div className="imagess h-screen w-full overflow-hidden relative">
-          <div className="logo w-40 absolute left-20 top-10">
+          <div className="logo w-40 absolute left-25 top-8">
             <img src="/logo.gif" alt="" />
           </div>
           <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-screen mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
@@ -184,7 +184,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <div className="logo w-32 ">
             <img src="/logo.gif" alt="" />
           </div>
-          <div className="uppercase text-4xl text-white py-5 px-20 ml-32">
+          <div className="uppercase text-4xl text-white py-5 px-20">
             <div className="clasimg">
               Choose Your Lucky Card
             </div>
@@ -207,7 +207,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span> <AiOutlinePlus className="ml-1 text-white" /></div></Link>}
           </div>
         </div>
-        <div className="welc flex justify-between items-center text-white px-14 mt-14">
+        <div className="welc flex justify-between items-center text-white px-14 mt-5">
           <div className="welc_text text-xl flex justify-center items-center flex-row">
             Today&rsquo;s Lucky Number :
             <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -275,7 +275,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           </div>
         </div>
         <div className="foooter w-full flex flex-col absolute bottom-0 left-0 justify-between">
-          <div className="ending uppercase text-lg mt-5 flex justify-between px-40 items-center bg-white text-red-900 font-bold p-3 text-center ">
+          <div className="ending uppercase text-lg mt-5 flex justify-between px-40 items-center bg-white text-red-900 font-bold p-2 text-center ">
             <p> Batting Start at - 9 AM </p>
             <p> Batting End at - 11 PM </p>
           </div>
