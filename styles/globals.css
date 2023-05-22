@@ -191,12 +191,12 @@ input[type=number]::-webkit-outer-spin-button {
   background-size: cover;
 }
 
-.imageloadd{
+/* .imageloadd{
   background-image: linear-gradient(rgba(0, 0, 0, 0.247),rgba(0, 0, 0, 0.273)),url(/backg.webp);
   background-blend-mode: darken;
   background-repeat: no-repeat;
-  background-size: cover;
-}
+  background-size: contain;
+} */
 
 .upperBody img{
   width: 8rem;
@@ -233,5 +233,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .title-logo img{
-  width: 500px;
+  width: 450px;
+}
+
+.imgphoto img{
+  width: 100vw;
+  height: 100vh;
 }
