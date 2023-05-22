@@ -6,6 +6,7 @@ const handler = async (req, res) => {
     if (req.method == 'POST') {
         let p = new Query({
             name: req.body.name,
+            phone: req.body.phone,
             email: req.body.email,
             message: req.body.message,
         })

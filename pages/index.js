@@ -129,7 +129,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   return (<>
     {!imageload && <div className="imageloadd">
       <div className="imagess h-screen w-full overflow-hidden relative">
-          <div className="logo w-40 absolute left-25 top-8">
+          <div className="logo w-40 absolute left-36 top-7">
             <img src="/logo.gif" alt="" />
           </div>
           <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-screen mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
