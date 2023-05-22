@@ -129,7 +129,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   return (<>
     {!imageload && <div className="imageloadd">
       <div className="imagess h-screen w-full overflow-hidden relative">
-          <div className="logo w-24 absolute left-20 top-10">
+          <div className="logo w-40 absolute left-20 top-10">
             <img src="/logo.gif" alt="" />
           </div>
           <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-screen mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
@@ -181,7 +181,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         </div>}
         {/* <div className="cooming text-6xl h-28 bg-red-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-red-800">Coming soon...</div> */}
         <div className="navbar flex justify-between items-center pr-20 pl-20 pt-4">
-          <div className="logo w-24 ">
+          <div className="logo w-32 ">
             <img src="/logo.gif" alt="" />
           </div>
           <div className="uppercase text-4xl text-white py-5 px-20 ml-32">
