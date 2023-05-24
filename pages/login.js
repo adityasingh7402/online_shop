@@ -83,8 +83,8 @@ const Login = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='flex relative'>
-        {lodingS === false && <span className="fixed z-40 flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+      <div className='flex relative containerr h-screen justify-center items-center'>
+        {lodingS === false && <span className="fixed z-40 flex justify-center items-center text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -96,27 +96,27 @@ const Login = () => {
           draggable
           pauseOnHover
         />
-        <div className="login flex justify-center border-2 bg-white border-gray-200 shadow-md rounded-sm my-9 mx-auto">
+        <div className="login flex justify-center border-2 h-min bg-white border-gray-200 shadow-md rounded-sm my-9 mx-auto">
           <div className="client-data flex flex-col w-full px-6 py-4">
             <p className="text-3xl pb-3 font-normal">Sign-In</p>
             <form onSubmit={handleSubmit} method="POST">
               <div className="flex flex-col pb-3">
                 <label htmlFor="email" className="text-base font-normal pl-1 pb-1">Email</label>
-                <input value={email} onChange={handleChange} type="email" name='email' id="email" required autoComplete="email" placeholder='Email' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-green-700 border-gray-300" />
+                <input value={email} onChange={handleChange} type="email" name='email' id="email" required autoComplete="email" placeholder='Email' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
               </div>
               <div className="flex flex-col pb-1">
                 <label htmlFor="password" className="text-base font-normal pl-1 pb-1">Password</label>
-                <input value={password} onChange={handleChange} type="password" name='password' id="password" required autoComplete="password" placeholder='At least 6 characters' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-green-700 border-gray-300" />
+                <input value={password} onChange={handleChange} type="password" name='password' id="password" required autoComplete="password" placeholder='At least 6 characters' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
               </div>
-              <Link href={'/forget'}><a><p className='flex justify-end text-green-700 pb-2 font-medium pr-1'>Forgot Password</p></a></Link>
+              <Link href={'/forget'}><a><p className='flex justify-end text-red-700 pb-2 font-medium pr-1'>Forgot Password</p></a></Link>
               <p className='text-gray-500 pt-4 text-xs'>By continuing, you agree to FreshFrveg&apos;s Conditions of Use and Privacy Notice.</p>
-              <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className="flex relative text-white font-medium text-sm rounded-full bg-green-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-green-700">
+              <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className="flex relative text-white font-medium text-sm rounded-full bg-red-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-red-700">
                 {lodingS === false ? <p>WAIT</p> : <p>CONTINUE</p>}
                 <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>
               </button></div>
             </form>
-            <p className='text-gray-500 pt-2 text-sm'>Don&apos;t have account? <span className='text-green-700 font-medium'><Link href={"/signup"}>Sign up</Link></span></p>
-          <Link href={'/'}><a><li className="cursor-pointer flex justify-center flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'>Home Page</button></li></a></Link>
+            <p className='text-gray-500 pt-2 text-sm'>Don&apos;t have account? <span className='text-red-700 font-medium'><Link href={"/signup"}>Sign up</Link></span></p>
+          <Link href={'/'}><a><li className="cursor-pointer flex justify-center flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>Home Page</button></li></a></Link>
           </div>
         </div>
       </div>

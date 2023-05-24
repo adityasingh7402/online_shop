@@ -6,6 +6,7 @@ const AddcoinSchema = new mongoose.Schema({
     name: { type: String, required: true },
     phone: { type: String, required: true },
     amount: { type: Number, required: true },
+    transId: { type: Number, required: true },
     paymentInfo: { type: String, default: '' },
     transactionId: { type: String, default: "" },
     status: { type: String, default: 'Initiated', required: true },
