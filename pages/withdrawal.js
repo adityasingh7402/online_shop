@@ -73,7 +73,7 @@ const Withdrawal = () => {
         let oid = Math.floor(Math.random() * Date.now());
         const data = {
             email: userInfi.email, name: userInfi.name, phone: userInfi.phone, amount, accno: userInfi.accno,
-            pan_no: userInfi.pan_no, ifsc: userInfi.ifsc, oid, wallet: userInfi.wallet
+            branch: userInfi.branch,bankName: userInfi.bankName,UPINo: userInfi.UPINo, ifsc: userInfi.ifsc, oid, wallet: userInfi.wallet
         };
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addWithdrawal`, {
             method: 'POST', // or 'PUT'
@@ -145,8 +145,10 @@ const Withdrawal = () => {
                 draggable
                 pauseOnHover
             />
-            <Link href={'/'}><div className="gotoHome right-10 top-10 fixed cursor-pointer text-green-900 p-2 bg-white font-bold text-4xl"><AiOutlineClose /></div></Link>
-            {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
+            <div className="gotoHome right-10 top-10 fixed cursor-pointer font-bold text-4xl">
+                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
+            </div>
+            {lodingS === false && <span className="fixed flex justify-center items-center text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
             <div className="checkout-title my-8 mx-5 w-full flex flex-row">
                 {/* <div className='left-side bg-white w-1/5 mr-5 border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-72'>
             <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
@@ -159,7 +161,7 @@ const Withdrawal = () => {
                                 <div className="coin flex text-2xl cursor-pointer text-yellow-700 pb-4 mt-5"><span className='mr-5'> Your Wallet </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
                                 <div className="amount_bit py-3 w-3/4 pt-5">
                                     <p className='text-base pb-3'>Enter Coin want to Withdraw</p>
-                                    <input value={amount} onChange={handleChange} autoComplete="off" type="text" id="amount" name='amount' placeholder='Enter Coins' required className="p-3 outline-none w-full border-green-700 mb-5  text-gray-600 text-base border px-2" />
+                                    <input value={amount} onChange={handleChange} autoComplete="off" type="text" id="amount" name='amount' placeholder='Enter Coins' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border px-2" />
                                 </div>
                             </div>
 
@@ -177,18 +179,18 @@ const Withdrawal = () => {
                         </div>
                         <div className="box_button flex justify-around flex-row items-center w-full">
                             <div className="botton_bit flex justify-between items-center">
-                                <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-green-500 hover:disabled:text-white disabled:cursor-default bg-green-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><h6>Withdraw</h6></button>
+                                <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Withdraw</h6></button>
                             </div>
                             <div className="botton_bit flex justify-between items-center">
-                            {updated && <Link href={'./contact'}><button className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><p>Update</p></button></Link>}
-                            {!updated && <Link href={'./account'}><button className='rounded-full bg-green-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-green-700'><p>Update</p></button></Link>}
+                            {updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update</p></button></Link>}
+                            {!updated && <Link href={'./account'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update</p></button></Link>}
                             </div>
                         </div>
                     </div>
 
                     <div className="products flex flex-col w-full text-sm mt-8">
                         <p className='flex justify-center items-center text-4xl py-8 text-gray-700'>Withdrawal List</p>
-                        {orders.length == 0 && <div className="flex justify-center text-4xl text-green-700 py-20 items-center border-t border-b border-gray-200">
+                        {orders.length == 0 && <div className="flex justify-center text-4xl text-red-700 py-20 items-center border-t border-b border-gray-200">
                             Your Order List is Empty....
                         </div>}
                         <table>
@@ -205,7 +207,7 @@ const Withdrawal = () => {
                                     <td className='text-left border p-4 border-slate-600'><div className="Coin">{item.amount}</div></td>
                                     <td className='text-left border p-4 border-slate-600'><div className="Status">
                                         {item.status == "Pending" && <span className='font-medium text-yellow-500'>{item.status}</span>}
-                                        {item.status == "Win" && <span className='font-medium text-green-700'>{item.status}</span>}
+                                        {item.status == "Win" && <span className='font-medium text-red-700'>{item.status}</span>}
                                         {item.status == "Loss" && <span className='font-medium text-red-700'>{item.status}</span>}
                                     </div></td>
                                 </tr>

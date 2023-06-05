@@ -15,8 +15,10 @@ const handler = async (req, res) => {
                 email: req.body.email,
                 phone: req.body.phone,
                 amount: req.body.amount,
-                pan_no: req.body.pan_no,
+                bankBranch: req.body.branch,
+                bankName: req.body.bankName,
                 ifsc: req.body.ifsc,
+                upino: req.body.UPINo,
                 accno: req.body.accno
             })
             await p.save()

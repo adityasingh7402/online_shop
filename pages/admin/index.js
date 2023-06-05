@@ -5,6 +5,8 @@ import { HiChartPie } from 'react-icons/hi';
 import { RiSendPlane2Fill } from 'react-icons/ri';
 import ChangeNum from "./changeNum";
 import Orderr from './order'
+import OrderrWi from "../../modal/Withdrawal";
+import Withdrawal from "./Withdrawal";
 import WinnerSelect from "./winnerSelect";
 import { useState } from "react";
 import Order from "../../modal/Order";
@@ -15,7 +17,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Home({ orders, randomNum, selectUser, selectUsers, winnOrder }) {
+export default function Home({ orders, randomNum, selectUser, selectUsers, winnOrder, withdrawals }) {
   const [isHidden, setIsHidden] = useState(true);
   const router = useRouter()
   useEffect(() => {
@@ -67,6 +69,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
         </div>
         <div className=" bg-white w-5/6 text-sm text-gray-800 ml-5 border border-gray-200 rounded-sm py-3 px-2 shadow-sm overflow-scroll h-screen">
           {active === "Order" && <Orderr orders={orders} />}
+          {active === "Withdrawal" && <Withdrawal withdrawals={withdrawals} />}
           {active === "ChangeNum" && <ChangeNum randomNum={randomNum} />}
           {active === "WinnerSelect" && <WinnerSelect winnOrder={winnOrder} randomNum={randomNum} selectUser={selectUser} selectUsers={selectUsers} />}
         </div>
@@ -88,6 +91,7 @@ export async function getServerSideProps(context) {
   yesterdayEnd.setHours(23, 59, 59, 999);
 
   const orders = await Order.find();
+  const withdrawals = await OrderrWi.find();
   const winnOrder = await Order.find({
     createdAt: {
       $gte: yesterdayStart,
@@ -96,6 +100,6 @@ export async function getServerSideProps(context) {
   });
   let randomNum = await RandomNSchema.findOne();
   return {
-    props: { orders: JSON.parse(JSON.stringify(orders)), randomNum: JSON.parse(JSON.stringify(randomNum)), winnOrder: JSON.parse(JSON.stringify(winnOrder)) },
+    props: { orders: JSON.parse(JSON.stringify(orders)), randomNum: JSON.parse(JSON.stringify(randomNum)), winnOrder: JSON.parse(JSON.stringify(winnOrder)), withdrawals: JSON.parse(JSON.stringify(withdrawals)) },
   };
 }

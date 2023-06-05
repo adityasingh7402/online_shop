@@ -310,8 +310,8 @@ const Account = () => {
                     <input value={upiId} onChange={handleChange} type="text" name='upiId' id="upiId" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                 </div>
-                {updated && <button onClick={handleUserSubmit} disabled={!mobilevalid} className='rounded-full disabled:bg-red-500 bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>{lodingS === false ? <p>Updating</p> : <p>Update</p>}</button>}
-                {!updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>For Updating</p></button></Link>}
+                {!updated && <button onClick={handleUserSubmit} disabled={!mobilevalid} className='rounded-full disabled:bg-red-500 bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>{lodingS === false ? <p>Updating</p> : <p>Update</p>}</button>}
+                {updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>For Updating</p></button></Link>}
               </div>
             </div>
             <div className="passwordChng flex flex-col bg-white justify-start border mt-5 border-gray-200 rounded-sm py-5 px-10 shadow-sm h-min">
