@@ -21,6 +21,7 @@ const Addcoin = () => {
     const [transId, settransId] = useState('')
     const [curdate, setcurdate] = useState('')
     const [userInfi, setuserInfi] = useState({})
+    const [paymentVer, setpaymentVer] = useState(true)
 
     useEffect(() => {
         const myuser = JSON.parse(localStorage.getItem("myuser"))
@@ -71,8 +72,14 @@ const Addcoin = () => {
     }
     const handleChange = async (e) => {
         if (e.target.name == 'amount') {
-            setamount(parseInt(e.target.value))
-        }
+            setamount(e.target.value)
+            if (e.target.value > 0) {
+              setpaymentVer(false)
+            }
+            else {
+              setpaymentVer(true)
+            }
+          }
         else if (e.target.name == 'transId') {
             settransId(parseInt(e.target.value))
         }
@@ -222,7 +229,7 @@ const Addcoin = () => {
                             <div className="botton_bit flex justify-between items-center w-1/2">
                                 {/* <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button> */}
                                 <Link href={'./'}><button className='font-medium text-base rounded-full  hover:bg-red-700 w-40 px-2 py-3 bg-white hover:text-white text-gray-800 border transition-all border-red-700'><h6>Go To Back</h6></button></Link>
-                                <button onClick={initiatePaymentdemo} className='font-medium text-base rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-40 px-2 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button>
+                                <button disabled={paymentVer} onClick={initiatePaymentdemo} className='font-medium text-base rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-40 px-2 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button>
                             </div>
                         </div>
                     </div>

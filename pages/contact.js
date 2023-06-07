@@ -81,7 +81,7 @@ const Contact = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="gotoHome right-10 top-10 z-10 fixed cursor-pointer  p-3  font-bold text-4xl">
+      <div className="gotoHome btphonre right-10 top-10 z-10 fixed cursor-pointer  p-3  font-bold text-4xl">
       <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
       </div>
       <ToastContainer
@@ -101,7 +101,7 @@ const Contact = () => {
         <div className="left margin-bot">
           <p className='text-5xl text-white pb-16 textSma'>Contact Us</p>
           <div className="contact flex flex-col">
-            <input value={name} onChange={handleChange} type="text" id="name" name='name' placeholder="Your Name" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
+            <input value={name} onChange={handleChange} type="text" id="name" name='name' placeholder="Your Name / User Name" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
             <input value={phone} onChange={handleChange} type="number" id="phone" name="phone" placeholder="Mobile No" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
             <input value={email} onChange={handleChange} type="text" id="email" name="email" placeholder="Your Email" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
             <textarea value={message} onChange={handleChange} type="text" id="message" name="message" placeholder="Message" required cols="57" rows="5" className="p-3 resize-none outline-none focus:border-red-700 mb-5 input-bck text-gray-600 border text-base border-gray-300" />

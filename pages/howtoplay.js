@@ -4,11 +4,11 @@ import Link from 'next/link';
 
 const Howtoplay = () => {
     return (
-        <div className='containerr w-full h-full relative'>
-            <div className="gotoHome right-10 top-10 fixed cursor-pointer font-bold text-4xl">
-                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
+        <div className='containerr w-full phonesers h-full relative'>
+            <div className="gotoHome right-10 btphonre top-10 fixed cursor-pointer font-bold text-4xl">
+                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full sversti bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
             </div>
-            <div className="containerterm text-white p-20 w-3/4 mx-auto">
+            <div className="containerterm text-white p-20 w-3/4 witchsev mx-auto">
                 <div className="headingss pb-10">
                     <h1 className='text-5xl font-medium pb-2'>How to Play PattiCircle.Com</h1>
                 </div>

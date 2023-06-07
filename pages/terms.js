@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 const terms = () => {
     return (
-        <div className='containerr w-full h-screen relative'>
-            <div className="gotoHome right-10 top-10 fixed cursor-pointer font-bold text-4xl">
-                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
+        <div className='containerr w-full phonesers h-screen relative'>
+            <div className="gotoHome right-10 btphonre top-10 fixed cursor-pointer font-bold text-4xl">
+                <Link href={'/'}><a><div className="flex cursor-pointer btphonre justify-center items-center"><button className='rounded-full sversti bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
             </div>
             <div className="containerterm text-white w-3/4 mx-auto pt-20">
                 <div className="headingss pb-10">

@@ -132,8 +132,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <div className="logo w-40 absolute left-36 top-7">
             <img src="/logo.gif" alt="" />
           </div>
-          <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-screen mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
-          <div className="imgphoto h-screen w-full">
+          <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
+          <div className="imgphoto h-full w-full">
             <img src="./backg.webp" alt="" />
           </div>
       </div>

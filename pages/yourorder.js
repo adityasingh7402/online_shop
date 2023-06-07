@@ -74,17 +74,17 @@ const YourOrder = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="gotoHome right-10 top-10 fixed cursor-pointer font-bold text-4xl">
+      <div className="gotoHome right-10 sersbtn top-10 fixed cursor-pointer font-bold text-4xl">
         <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
       </div>
       {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
-      <div className="checkout-title my-8 mx-5 w-full flex flex-row">
+      <div className="checkout-title sversti my-8 mx-5 w-full flex flex-row">
         {/* <div className='left-side bg-white w-1/5 mr-5 border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-72'>
           <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
         </div> */}
-        <div className='mx-5 bg-white w-full text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-5 shadow-sm overflow-scroll'>
+        <div className='mx-5 sversti bg-white w-full text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-5 shadow-sm overflow-scroll'>
           <p>Your Order List</p>
-          <div className="products flex flex-col w-full text-sm mt-8 ">
+          <div className="products sversti flex flex-col w-full text-sm mt-8 ">
             {orders.length == 0 && <div className="flex justify-center text-4xl text-green-700 py-20 items-center border-t border-b border-gray-200">
               Your Order List is Empty....
             </div>}

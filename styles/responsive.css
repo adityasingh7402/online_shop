@@ -260,6 +260,34 @@
     .orderLasPR{
         width: 100%;
     }
+
+    .sversti{
+        margin: 5px;
+    }
+    .sersbtn{
+        top: 3.2rem;
+        right: 10px;
+    }
+    .serycol{
+        flex-direction: column;
+    }
+    .sevpad{
+        padding: 0px;
+    }
+    .servbor{
+        border: none;
+    }
+    .phonesers{
+        height: 100%;
+    }
+    .btphonre{
+        top: 2px;
+        right: 5px;
+    }
+    .witchsev{
+        width: 100vw;
+        padding: 3rem;
+    }
 }
 @media only screen and (max-width: 591px){
     .producDetail{

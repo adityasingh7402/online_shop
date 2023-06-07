@@ -18,6 +18,7 @@ const Withdrawal = () => {
     const [name, setname] = useState("")
     const [amount, setamount] = useState('')
     const [userInfi, setuserInfi] = useState({})
+    const [paymentVer, setpaymentVer] = useState(true)
 
     useEffect(() => {
         const myuser = JSON.parse(localStorage.getItem("myuser"))
@@ -44,8 +45,14 @@ const Withdrawal = () => {
     }
     const handleChange = async (e) => {
         if (e.target.name == 'amount') {
-            setamount(parseInt(e.target.value))
-        }
+            setamount(e.target.value)
+            if (e.target.value >= 500) {
+              setpaymentVer(false)
+            }
+            else {
+              setpaymentVer(true)
+            }
+          }
     }
     useEffect(() => {
         const fetchOrders = async () => {
@@ -146,18 +153,18 @@ const Withdrawal = () => {
                 pauseOnHover
             />
             <div className="gotoHome right-10 top-10 fixed cursor-pointer font-bold text-4xl">
-                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
+                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full sersbtn bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
             </div>
             {lodingS === false && <span className="fixed flex justify-center items-center text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
-            <div className="checkout-title my-8 mx-5 w-full flex flex-row">
+            <div className="checkout-title my-8 sversti mx-5 w-full flex flex-row">
                 {/* <div className='left-side bg-white w-1/5 mr-5 border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-72'>
             <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
           </div> */}
-                <div className='right-side mx-auto bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 px-5 shadow-sm'>
+                <div className='right-side mx-auto bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 sevpad px-5 shadow-sm'>
                     <p className='flex justify-center items-center text-4xl py-3 text-gray-700'>Withdraw Coin</p>
-                    <div className="collection_with coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-3 border-t-2 border-b-2 border-gray-300 p-9">
-                        <div className="box_bank flex justify-center flex-row items-center w-full">
-                            <div className="coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-3   p-9">
+                    <div className="collection_with coin_with product flex yourOrderCol justify-center items-center flex-col w-full sversti mb-5 mt-3 border-t-2 border-b-2 border-gray-300 p-9">
+                        <div className="box_bank flex justify-center flex-row serycol items-center w-full">
+                            <div className="coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-3  sversti  p-9">
                                 <div className="coin flex text-2xl cursor-pointer text-yellow-700 pb-4 mt-5"><span className='mr-5'> Your Wallet </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
                                 <div className="amount_bit py-3 w-3/4 pt-5">
                                     <p className='text-base pb-3'>Enter Coin want to Withdraw</p>
@@ -165,7 +172,7 @@ const Withdrawal = () => {
                                 </div>
                             </div>
 
-                            <div className="coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-3  p-9 pb-0 border-l-2">
+                            <div className="coin_with product flex yourOrderCol sevpad justify-center items-center flex-col w-full mb-5 mt-3 servbor  p-9 pb-0 border-l-2">
                                 <div className="details text-base">
                                     <div className="p font-medium text-2xl pb-2">Bank Details</div>
                                     <p className='headTitle p-1 font-medium'>Holder Name :  <span className='font-normal'>{userInfi.accountHN}</span></p>
@@ -177,9 +184,9 @@ const Withdrawal = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="box_button flex justify-around flex-row items-center w-full">
+                        <div className="box_button flex justify-around flex-row serycol items-center w-full">
                             <div className="botton_bit flex justify-between items-center">
-                                <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Withdraw</h6></button>
+                                <button disabled={paymentVer} onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Withdraw</h6></button>
                             </div>
                             <div className="botton_bit flex justify-between items-center">
                             {updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update</p></button></Link>}
@@ -188,7 +195,7 @@ const Withdrawal = () => {
                         </div>
                     </div>
 
-                    <div className="products flex flex-col w-full text-sm mt-8">
+                    <div className="products flex flex-col w-full text-sm mt-8 overflow-scroll">
                         <p className='flex justify-center items-center text-4xl py-8 text-gray-700'>Withdrawal List</p>
                         {orders.length == 0 && <div className="flex justify-center text-4xl text-red-700 py-20 items-center border-t border-b border-gray-200">
                             Your Order List is Empty....
