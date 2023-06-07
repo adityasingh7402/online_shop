@@ -165,7 +165,7 @@ const Withdrawal = () => {
                     <div className="collection_with coin_with product flex yourOrderCol justify-center items-center flex-col w-full sversti mb-5 mt-3 border-t-2 border-b-2 border-gray-300 p-9">
                         <div className="box_bank flex justify-center flex-row serycol items-center w-full">
                             <div className="coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-3  sversti  p-9">
-                                <div className="coin flex text-2xl cursor-pointer text-yellow-700 pb-4 mt-5"><span className='mr-5'> Your Wallet </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
+                                <div className="coin flex text-2xl poostioncet cursor-pointer text-yellow-700 pb-4 mt-5"><span className='mr-5'> Your Wallet </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
                                 <div className="amount_bit py-3 w-3/4 pt-5">
                                     <p className='text-base pb-3'>Enter Coin want to Withdraw</p>
                                     <input value={amount} onChange={handleChange} autoComplete="off" type="text" id="amount" name='amount' placeholder='Enter Coins' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border px-2" />

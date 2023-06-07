@@ -272,7 +272,7 @@
         flex-direction: column;
     }
     .sevpad{
-        padding: 0px;
+        padding: 5px;
     }
     .servbor{
         border: none;
@@ -408,6 +408,23 @@
         width: 49%;
         height: 110px;
         margin-top: 0;
+    }
+    .ninersti{
+        margin: 5px;
+    }
+    .nivpad{
+        padding: 5px;
+    }
+    .nincol{
+        flex-direction: column;
+    }
+    .btnwithf{
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .poostioncet{
+        justify-content: center;
     }
 }
 @media only screen and (max-width: 1174px){

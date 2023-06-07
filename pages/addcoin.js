@@ -195,16 +195,16 @@ const Addcoin = () => {
                 pauseOnHover
             />
             {lodingS === false && <span className="fixed flex justify-center items-center text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
-            <div className="checkout-title my-4 mx-5 w-full flex flex-row">
+            <div className="checkout-title my-4 mx-5 ninersti w-full flex flex-row">
                 {/* <div className='left-side bg-white w-1/5 mr-5 border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-72'>
             <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
           </div> */}
-                <div className='right-side mx-auto justify-center bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-3 px-20 shadow-sm'>
+                <div className='right-side nivpad mx-auto justify-center bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-3 px-20 shadow-sm'>
                     <p className='flex justify-center items-center text-4xl py-2 text-gray-700'>Add Coin</p>
-                    <div className="coin flex text-2xl cursor-pointer text-yellow-700 pb-4 mt-3"><span className='mr-5'> Your Wallet : </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
-                    <div className="collection_with coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-5 border-2  border-gray-300 py-3 px-10">
+                    <div className="coin flex text-2xl poostioncet cursor-pointer text-yellow-700 pb-4 mt-3"><span className='mr-5'> Your Wallet : </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
+                    <div className="collection_with nivpad coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-5 border-2  border-gray-300 py-3 px-10">
                         <div className="refrenceno text-xl mb-2">Ref. Number: <span className='text-2xl font-medium'>{oid}</span></div>
-                        <div className="box_bank flex flex-row items-start">
+                        <div className="box_bank flex flex-row nincol items-start">
                             <div className="qrcode">
                                 <div className="payment-box w-52 border">
                                     <img src="./payment.jpg" alt="" />
@@ -226,7 +226,7 @@ const Addcoin = () => {
                             </div>
                         </div>
                         <div className="box_button flex justify-around flex-row items-center w-full mt-7">
-                            <div className="botton_bit flex justify-between items-center w-1/2">
+                            <div className="botton_bit btnwithf flex justify-between items-center w-1/2">
                                 {/* <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button> */}
                                 <Link href={'./'}><button className='font-medium text-base rounded-full  hover:bg-red-700 w-40 px-2 py-3 bg-white hover:text-white text-gray-800 border transition-all border-red-700'><h6>Go To Back</h6></button></Link>
                                 <button disabled={paymentVer} onClick={initiatePaymentdemo} className='font-medium text-base rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-40 px-2 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button>
@@ -240,7 +240,7 @@ const Addcoin = () => {
                         <p className='text-base'>3. Send to us by clicking Purchase button.</p>
                         <p className='text-base'>4. Coin will be added within one working day.</p>
                     </div>
-                    <div className="products flex flex-col w-full text-sm mt-8">
+                    <div className="products flex flex-col overflow-scroll w-full text-sm mt-8">
                         <p className='flex justify-center items-center text-4xl py-8 text-gray-700'>Coin History</p>
                         {/* {orders.length == 0 && <div className="flex justify-center text-4xl text-red-700 py-20 items-center border-t border-b border-gray-200">
                             Your Order List is Empty....
