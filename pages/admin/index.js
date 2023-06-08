@@ -6,7 +6,9 @@ import { RiSendPlane2Fill } from 'react-icons/ri';
 import ChangeNum from "./changeNum";
 import Orderr from './order'
 import OrderrWi from "../../modal/Withdrawal";
+import addCoin from "../../modal/Addcoin";
 import Withdrawal from "./Withdrawal";
+import AddCoin from "./AddCoin";
 import WinnerSelect from "./winnerSelect";
 import { useState } from "react";
 import Order from "../../modal/Order";
@@ -17,7 +19,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Home({ orders, randomNum, selectUser, selectUsers, winnOrder, withdrawals }) {
+export default function Home({ orders, randomNum, selectUser, selectUsers, winnOrder, withdrawals, addcoins }) {
   const [isHidden, setIsHidden] = useState(true);
   const router = useRouter()
   useEffect(() => {
@@ -62,6 +64,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
             <li onClick={() => setActive("ChangeNum")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Change Card No</li>
             <li onClick={() => setActive("WinnerSelect")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Winner Select</li>
             <li onClick={() => setActive("Withdrawal")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Withdrawal</li>
+            <li onClick={() => setActive("AddCoin")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Add Coin</li>
           </ul>
           <ul className="flex flex-col mt-2">
             <Link href={'/'}><li className="text-base pb-4 cursor-pointer hover:text-green-200 text-white flex items-center"><button className="px-5 py-2 border broder-white w-full rounded-full hover:bg-green-900"><p>Logout</p></button></li></Link>
@@ -70,6 +73,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
         <div className=" bg-white w-5/6 text-sm text-gray-800 ml-5 border border-gray-200 rounded-sm py-3 px-2 shadow-sm overflow-scroll h-screen">
           {active === "Order" && <Orderr orders={orders} />}
           {active === "Withdrawal" && <Withdrawal withdrawals={withdrawals} />}
+          {active === "AddCoin" && <AddCoin addcoins={addcoins} />}
           {active === "ChangeNum" && <ChangeNum randomNum={randomNum} />}
           {active === "WinnerSelect" && <WinnerSelect winnOrder={winnOrder} randomNum={randomNum} selectUser={selectUser} selectUsers={selectUsers} />}
         </div>
@@ -92,6 +96,7 @@ export async function getServerSideProps(context) {
 
   const orders = await Order.find();
   const withdrawals = await OrderrWi.find();
+  const addcoins = await addCoin.find();
   const winnOrder = await Order.find({
     createdAt: {
       $gte: yesterdayStart,
@@ -100,6 +105,6 @@ export async function getServerSideProps(context) {
   });
   let randomNum = await RandomNSchema.findOne();
   return {
-    props: { orders: JSON.parse(JSON.stringify(orders)), randomNum: JSON.parse(JSON.stringify(randomNum)), winnOrder: JSON.parse(JSON.stringify(winnOrder)), withdrawals: JSON.parse(JSON.stringify(withdrawals)) },
+    props: { orders: JSON.parse(JSON.stringify(orders)), randomNum: JSON.parse(JSON.stringify(randomNum)), winnOrder: JSON.parse(JSON.stringify(winnOrder)), withdrawals: JSON.parse(JSON.stringify(withdrawals)), addcoins: JSON.parse(JSON.stringify(addcoins)) },
   };
 }

@@ -133,8 +133,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             <img src="/logo.gif" alt="" />
           </div>
           <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
-          <div className="imgphoto h-full w-full">
-            <img src="./backg.webp" alt="" />
+          <div className="imgphoto w-full h-full overflow-hidden">
+            <img src="./frontpage.jpg" alt="" />
           </div>
       </div>
     </div>}
@@ -158,7 +158,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         draggable
         pauseOnHover
       />
-      <div className="containerr overflow-hidden relative w-full h-screen">
+      <div className="containerr relative w-full h-screen screnfulln overflow-hidden">
         {closeScr == true && <div className="bittingPop w-full absolute h-screen z-40">
           <div className="batInfo bg-white h-72 rounded-sm top-1/4 mx-auto mt-16 shadow-md">
             <div className="information_bit p-8">
@@ -232,7 +232,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           </div>
         </div>
         <div className="card text-red-900 flex justify-center items-center p-5 text-lg mt-6">
-          <div className="card_no flex justify-around items-center w-4/6">
+          <div className="card_no flex justify-around items-center w-4/6 flexcolh">
             <div className="card card_first h-min">
               <div className="upperBody border border-white overflow-hidden relative">
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">

@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
-import withdrawal from "../../modal/Withdrawal";
+import addCoin from "../../modal/Addcoin";
 import mongoose from "mongoose";
 
 
-const Withdrawal = ({ withdrawals }) => {
+const AddCoin = ({ addcoins }) => {
   const [isHidden, setIsHidden] = useState(true);
   const router = useRouter()
   useEffect(() => {
@@ -49,26 +49,22 @@ const Withdrawal = ({ withdrawals }) => {
           <th className='text-left border p-3 border-slate-600'><div className="card text-lg font-medium">Email</div></th>
           <th className='text-left border p-3 border-slate-600'><div className="Coin text-lg font-medium">Mobile</div></th>
           <th className='text-left border p-3 border-slate-600'><div className="Amount text-lg font-medium">Amount</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="ifsc text-lg font-medium">IFSC</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">B Name</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">B Branch</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">Acc No</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">UPI</div></th>
+          <th className='text-left border p-3 border-slate-600'><div className="ifsc text-lg font-medium">Transaction ID</div></th>
+          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">Payment Info</div></th>
+          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">Pay Trans ID</div></th>
           <th className='text-left border p-3 border-slate-600'><div className="Win text-lg font-medium">Status</div></th>
           <th className='text-left border p-3 border-slate-600'><div className="Loss text-lg font-medium">Date on Buy</div></th>
         </tr>
-        {withdrawals.map((item) => {
+        {addcoins.map((item) => {
           return <tr key={item._id}>
             <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
             <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.name}</div></td>
             <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.email}</div></td>
             <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.phone}</div></td>
             <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.amount}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.ifsc}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.bankName}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.bankBranch}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.accno}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.upino}</div></td>
+            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.transId}</div></td>
+            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.paymentInfo}</div></td>
+            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.transactionId}</div></td>
             <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.status}</div></td>
             <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
           </tr>
@@ -83,10 +79,10 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  const withdrawals = await withdrawal.find();
+  const addcoins = await addCoin.find();
   return {
-    props: { withdrawals: JSON.parse(JSON.stringify(withdrawals)) },
+    props: { addcoins: JSON.parse(JSON.stringify(addcoins)) },
   };
 }
 
-export default Withdrawal;
+export default AddCoin;

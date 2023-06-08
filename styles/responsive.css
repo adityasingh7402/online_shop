@@ -104,7 +104,7 @@
     }
 }
 
-@media only screen and (max-width: 1237px){
+@media only screen and (max-width: 1250px){
     .productsIt{
         grid-template-columns: auto auto auto auto;
         gap: 2.75rem;
@@ -120,6 +120,10 @@
         margin-right: auto;
         padding-left: 10px;
         padding-right: 10px;
+    }
+    .screnfulln{
+        height: 100%;
+        overflow: auto;
     }
 }
 
@@ -287,6 +291,9 @@
     .witchsev{
         width: 100vw;
         padding: 3rem;
+    }
+    .flexcolh{
+        flex-direction: column;
     }
 }
 @media only screen and (max-width: 591px){
