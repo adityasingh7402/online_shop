@@ -13,6 +13,7 @@ const YourOrder = () => {
   const [lodingS, setlodingS] = useState(true)
   const [wallet, setwallet] = useState(0)
   const [token, settoken] = useState("")
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -34,6 +35,14 @@ const YourOrder = () => {
     else {
       fetchOrders()
     }
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 600);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
 
   }, [])
   useEffect(() => {
@@ -75,7 +84,8 @@ const YourOrder = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="gotoHome right-10 sersbtn top-10 fixed cursor-pointer font-bold text-4xl">
-        <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
+        {!isSmallScreen && <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>}
+        {isSmallScreen &&<Link href={'/'}><div className="gotoHome right-10 top-10 fixed cursor-pointer text-white p-2 bg-red-900 font-bold text-4xl"><AiOutlineClose /></div></Link>}
       </div>
       {lodingS === false && <span className="fixed flex justify-center items-center text-green-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
       <div className="checkout-title sversti my-8 mx-5 w-full flex flex-row">
