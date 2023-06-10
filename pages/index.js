@@ -24,6 +24,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   var [closeScr, setcloseScr] = useState(false)
   const [wallet, setwallet] = useState(0)
   const [users, setusers] = useState({ value: null })
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
@@ -41,6 +42,14 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
     } else {
       settimeBit(true);
     }
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 600);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [])
 
   const handleChange = async (e) => {
@@ -127,14 +136,25 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   }
 
   return (<>
-    {!imageload && <div className="imageloadd">
+    {!imageload && !isSmallScreen && <div className="imageloadd containerr">
       <div className="imagess h-screen w-full overflow-hidden relative">
           <div className="logo w-40 absolute left-36 top-7">
-            <img src="/logo.gif" alt="" />
+            <img src="/logopn.png" alt="" />
           </div>
           <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
           <div className="imgphoto w-full h-full overflow-hidden">
-            <img src="./frontpage.jpg" alt="" />
+            <img src="./frontpage.png" alt="" />
+          </div>
+      </div>
+    </div>}
+    {!imageload && isSmallScreen && <div className="imageloadd">
+      <div className="imagess h-screen w-full overflow-hidden relative">
+          {/* <div className="logo w-40 absolute left-36 top-7">
+            <img src="/logo.gif" alt="" />
+          </div> */}
+          <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"></div>
+          <div className="imgphoto w-full h-full overflow-hidden">
+            <img src="./mobres.jpg" alt="" />
           </div>
       </div>
     </div>}
@@ -159,7 +179,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         pauseOnHover
       />
       <div className="containerr relative w-full h-screen screnfulln overflow-hidden">
-        {closeScr == true && <div className="bittingPop w-full absolute h-screen z-40">
+        {closeScr == true && <div className="bittingPop w-full absolute h-screen sabmainb z-40">
           <div className="batInfo bg-white h-72 rounded-sm top-1/4 mx-auto mt-16 shadow-md">
             <div className="information_bit p-8">
               <div className="top_bit flex justify-between items-center w-full text-lg pb-8">
@@ -181,15 +201,15 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         </div>}
         {/* <div className="cooming text-6xl h-28 bg-red-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-red-800">Coming soon...</div> */}
         <div className="navbar flex justify-between items-center pr-20 pl-20 pt-4">
-          <div className="logo w-32 ">
-            <img src="/logo.gif" alt="" />
+          <div className="logo w-28">
+            <img src="/logopn.png" alt="" />
           </div>
-          <div className="uppercase text-4xl text-white py-5 px-20">
+          <div className="uppercase text-4xl displayno text-white py-5 px-20">
             <div className="clasimg">
               Choose Your Lucky Card
             </div>
           </div>
-          <div className="user_name relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
+          <div className="user_name absluser relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
             {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 cursor-pointer hover:text-red-100">{name}</div>}
             {dropdown && <div className="dropdown absolute -left-10 top-11 w-44 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
               <ul>
@@ -206,15 +226,20 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             {user && user.value && <div className="saprator"></div>}
             {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span> <AiOutlinePlus className="ml-1 text-white" /></div></Link>}
           </div>
+          </div>
+          <div className="uppercasem text-4xl hidden displaout  text-white py-5 px-20">
+            <div className="clasimg">
+              Choose Your Lucky Card
+            </div>
         </div>
-        <div className="welc flex justify-between items-center text-white px-14 mt-5">
-          <div className="welc_text text-xl flex justify-center items-center flex-row">
-            Today&rsquo;s Lucky Number :
+        <div className="welc flex flexdis paddisp justify-between items-center text-white px-14 mt-5">
+          <div className="welc_text text-xl flex padingbtn flexdis justify-center items-center flex-row">
+            <p className="paditex">Today&rsquo;s Lucky Number :</p>
             <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
               {randomNum.card1}
             </div>
           </div>
-          <div className="random_no flex justify-between items-center text-xl">
+          <div className="random_no flex justify-between flexdis items-center text-xl">
             <div className="text pr-2">Today Numbers :  </div>
             <div className="R_number">
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
@@ -231,9 +256,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             </div>
           </div>
         </div>
-        <div className="card text-red-900 flex justify-center items-center p-5 text-lg mt-6">
+        <div className="card hidexontet cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-6">
           <div className="card_no flex justify-around items-center w-4/6 flexcolh">
-            <div className="card card_first h-min">
+            <div className="paddispace card card_first h-min">
               <div className="upperBody border border-white overflow-hidden relative">
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   1
@@ -246,7 +271,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 </button>
               </div>
             </div>
-            <div className="card card_second h-min">
+            <div className="paddispace card card_second h-min">
               <div className="upperBody border border-white overflow-hidden relative">
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   2
@@ -259,7 +284,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 </button>
               </div>
             </div>
-            <div className="card card_third h-min">
+            <div className="paddispace card card_third h-min">
               <div className="upperBody border border-white overflow-hidden relative">
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   3
@@ -274,12 +299,12 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             </div>
           </div>
         </div>
-        <div className="foooter w-full flex flex-col absolute bottom-0 left-0 justify-between">
-          <div className="ending uppercase text-lg mt-5 flex justify-between px-40 items-center bg-white text-red-900 font-bold p-2 text-center ">
+        <div className="foooter w-full flex  flex-col absolute bottom-0 left-0 justify-between">
+          <div className="ending uppercase text-lg mt-5 flex flexdis justify-between px-40 items-center bg-white text-red-900 font-bold p-2 text-center ">
             <p> Batting Start at - 9 AM </p>
             <p> Batting End at - 11 PM </p>
           </div>
-          <div className="footer w-full flex justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
+          <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
             <div className="webname">patticircle.com &#169;</div>
             <Link href={'./howtoplay'}><div className="term cursor-pointer">How to Play</div></Link>
             <Link href={'./terms'}><div className="term cursor-pointer">Terms & Conditions</div></Link>

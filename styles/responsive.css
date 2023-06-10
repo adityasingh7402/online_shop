@@ -2,476 +2,576 @@
 @tailwind components;
 @tailwind utilities;
 
-.productSize{
-    width: 212.400px;
+.productSize {
+  width: 212.4px;
 }
 
-.hightNav{
-    height: 50vh;
+.hightNav {
+  height: 50vh;
 }
 
-.login{
-    width: 370px;
+.login {
+  width: 370px;
 }
 
-.transitionn{
-    transition: 0.3s ease-in-out;
+.transitionn {
+  transition: 0.3s ease-in-out;
 }
 
-@media only screen and (max-width: 1105px){
-    .logo{
-        width: 100px;
-        height: 80px;
-        position: absolute;
-        left: 0;
-        margin-top: 5px;
-    }
-    .navbar{
+@media only screen and (max-width: 1105px) {
+  .logo {
+    width: 100px;
+    height: 80px;
+    position: absolute;
+    left: 0;
+    margin-top: 5px;
+  }
+  .navbar {
+    flex-direction: column;
+  }
+  .menubar {
+    align-items: start;
+    flex-direction: column;
+  }
+  .impLink {
+    height: 75.6px;
+  }
+  .marginZH {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .Nblock {
+    display: block;
+  }
+  .paddingM {
+    padding-bottom: 20px;
+  }
+  .menuR {
+    transition: 0.5s ease-in-out;
+    margin-top: 24rem;
+  }
+  .menuRs {
+    transition: 0.5s ease-in-out;
+  }
+  .prevewCol {
+    flex-direction: column;
+  }
+  .rightWidth {
+    margin-top: 2rem;
+  }
+}
+
+@media only screen and (max-width: 617px) {
+  .disNone {
+    display: none;
+  }
+  .headingT {
+    font-size: 4rem;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .maginIt {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+}
+@media only screen and (max-width: 552px) {
+  .widthIn {
+    width: 0px;
+    transition: 0.5s ease-in-out;
+    display: none;
+  }
+  .sertchB {
+    border-radius: 0.375rem;
+    background: none;
+    margin-right: 0;
+  }
+  .textSma {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 1448px) {
+  .productsIt {
+    grid-template-columns: auto auto auto auto auto;
+    gap: 2rem;
+  }
+  .cardWidth {
+    width: 45%;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .productsIt {
+    grid-template-columns: auto auto auto auto;
+    gap: 2.75rem;
+  }
+  .cardWidth {
+    width: 50%;
+  }
+  .textTitle {
+    font-size: 2rem;
+  }
+  .account-title {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .upperBody img {
+    width: 6rem;
+    height: 10rem;
+  }
+  .upperBody {
+    width: 6rem;
+    height: 10rem;
+  }
+  .cardNo{
+    left: 1.75rem;
+    top: 2.75rem;
+  }
+  .cardmrhon{
+    margin-top: .5rem;
+  }
+}
+
+@media only screen and (max-width: 1070px) {
+  .rightSideAccW {
+    width: 655px;
+  }
+  .leftSideAccW {
+    width: 246px;
+  }
+}
+
+@media only screen and (max-width: 1002px) {
+  .productsIt {
+    grid-template-columns: auto auto auto;
+    gap: 2.75rem;
+  }
+  .cardWidth {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 736px) {
+  .productsIt {
+    grid-template-columns: auto auto;
+    gap: 3.25rem;
+  }
+  .cardWidth {
+    width: 100%;
+  }
+  .chckoutDe {
+    padding-left: 0px;
+  }
+}
+@media only screen and (max-width: 495px) {
+  .productsIt {
+    grid-template-columns: auto;
+    gap: 0.74rem;
+  }
+  .productSize {
+    width: 300px;
+  }
+  .shopCat {
+    width: 21rem;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .flexCol-con {
+    flex-direction: column;
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  .margin-bot {
+    margin-bottom: 5rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .flexCol-con {
+    padding: 3rem 2rem;
+  }
+  .imageWidt {
+    width: 40%;
+  }
+}
+@media only screen and (max-width: 831px) {
+  .productFle {
+    flex-direction: column;
+  }
+  .propad {
+    padding: 0px;
+    justify-content: center;
+    width: 100%;
+  }
+  .productTP {
+    padding-top: 2rem;
+  }
+  .producDetail {
+    margin-left: 50%;
+  }
+  .services {
+    grid-template-columns: auto auto;
+    padding: 1rem;
+  }
+  .textTitle {
+    font-size: 1.7rem;
+  }
+  .yourOrderCol {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .product-text > h1 {
+    padding-bottom: 10px;
+  }
+  .product-text > p {
+    padding-bottom: 10px;
+  }
+  .yourOrderWT {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .order-d {
+    flex-direction: column;
+  }
+  .order-d > .leftOrd {
+    width: 100%;
+    border: none;
+    padding-bottom: 5rem;
+  }
+  .order-d > .rightOrd {
+    width: 100%;
+    padding-left: 0px;
+  }
+  .productIten {
+    flex-direction: column;
+  }
+  .productIten > .product-image,
+  .product-text,
+  .product-price {
+    width: 100%;
+    padding-bottom: 5px;
+  }
+
+  .productIten > .product-image {
+    justify-content: flex-start;
+  }
+
+  .productIten > .product-text {
+    padding-left: 0px;
+  }
+  .order-payment {
+    flex-direction: column;
+  }
+  .order-payment > .left,
+  .right {
+    width: 100%;
+    padding: 0px;
+  }
+  .orderLasPR {
+    width: 100%;
+  }
+
+  .sversti {
+    margin: 5px;
+  }
+  .sersbtn {
+    top: 3.2rem;
+    right: 10px;
+  }
+  .serycol {
+    flex-direction: column;
+  }
+  .sevpad {
+    padding: 5px;
+  }
+  .servbor {
+    border: none;
+  }
+  .phonesers {
+    height: 100%;
+  }
+  .btphonre {
+    top: 2px;
+    right: 5px;
+  }
+  .witchsev {
+    width: 100vw;
+    padding: 3rem;
+  }
+  .flexcolh {
+    flex-direction: column;
+  }
+  .screnfulln {
+    height: 100%;
+    overflow: auto;
+  }
+}
+@media only screen and (max-width: 591px) {
+  .producDetail {
+    margin-left: 40%;
+  }
+}
+@media only screen and (max-width: 545px) {
+  .producDetail {
+    margin-left: 30%;
+  }
+  .logoTitle {
+    width: 7rem;
+    height: 7rem;
+    padding-top: 0.5rem;
+  }
+  .textTitle {
+    font-size: 1.5rem;
+  }
+}
+@media only screen and (max-width: 460px) {
+  .producDetail {
+    margin-left: 10%;
+  }
+  .serviceP {
+    bottom: -2rem;
+  }
+}
+@media only screen and (max-width: 393px) {
+  .flexButton {
+    flex-direction: column;
+  }
+  .flexButtonBP {
+    padding-bottom: 1rem;
+  }
+  .paddiTop {
+    margin-top: 4rem;
+  }
+}
+
+@media only screen and (max-width: 1282px) {
+  .letfWidth {
+    width: 75%;
+  }
+  .rightWidth {
+    width: 25%;
+  }
+  .imageProd {
+    margin-right: 1rem;
+  }
+  .yourOrderW {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 1104px) {
+  .letfWidth {
+    width: 100%;
+  }
+
+  .rightWidth {
+    width: 100%;
+    margin-left: 0px;
+  }
+}
+@media only screen and (max-width: 547px) {
+  .letfWidth {
+    padding: 20px 0px 20px 0px;
+  }
+  .headingPr {
+    padding-left: 20px;
+  }
+}
+@media only screen and (max-width: 503px) {
+  .PreBox {
+    margin: 3px;
+  }
+}
+@media only screen and (max-width: 490px) {
+  .imageProd {
+    justify-content: flex-start;
+    width: 100%;
+    align-items: center;
+    margin-right: 1rem;
+  }
+  .headPre {
+    font-size: 1.3rem;
+  }
+  .displayno{
+    display: none;
+  }
+  .displaout{
+    display: block;
+    padding-top: 7rem;
+  }
+}
+@media only screen and (max-width: 1364px) {
+  .subJus {
+    padding-right: 10px;
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .orderImage {
+    width: 160px;
+    height: 110px;
+  }
+  .accFlexCo {
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .leftSideAccW {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .rightSideAccW {
+    margin-top: 20px;
+    width: 100%;
+  }
+  .leftSideAccW > .accLeftSideN {
+    width: 49%;
+    height: 110px;
+    margin-top: 0;
+  }
+  .ninersti {
+    margin: 5px;
+  }
+  .nivpad {
+    padding: 5px;
+  }
+  .nincol {
+    flex-direction: column;
+  }
+  .btnwithf {
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .poostioncet {
+    justify-content: center;
+  }
+}
+@media only screen and (max-width: 1174px) {
+  .OrderW {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media only screen and (max-width: 696px) {
+  .userGrid {
+    grid-template-columns: auto;
+  }
+  .w-ThreebyF {
+    width: 100%;
+    padding: 10px;
+  }
+  .personal-d {
+    grid-template-columns: auto;
+  }
+  .accountInpuW {
+    width: 100%;
+  }
+  .leftSideAccW {
+    flex-direction: column;
+  }
+  .leftSideAccW > .accLeftSideN {
+    width: 100%;
+  }
+  .accLeftSideNMB {
+    margin-bottom: 20px;
+  }
+  .persnalD > p {
+    font-size: 1.7rem;
+  }
+  .passwordChng > p {
+    font-size: 1.7rem;
+  }
+  .accountInpuW {
+    padding: 0;
+    margin-top: 1rem;
+  }
+}
+
+@media only screen and (max-width: 790px) {
+    .flexdis{
         flex-direction: column;
     }
-    .menubar{
-        align-items: start;
-        flex-direction: column;
+    .didgrid{
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto auto auto;
+        gap: 5px;
     }
-    .impLink{
-        height: 75.6px;
+    .hidexontet{
+        padding-bottom: 20rem;
     }
-    .marginZH{
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-    .Nblock{
-        display: block;
-    }
-    .paddingM{
+    .paddispace{
         padding-bottom: 20px;
     }
-    .menuR{
-        transition: 0.5s ease-in-out;
-        margin-top: 24rem;
-
-    }
-    .menuRs{
-        transition: 0.5s ease-in-out;
-    }
-    .prevewCol{
-        flex-direction: column;
-    }
-    .rightWidth{
-        margin-top: 2rem;
-    }
-}
-
-@media only screen and (max-width: 617px){
-    .disNone{
-        display: none;
-    }
-    .headingT{
-        font-size: 4rem;
-    }
-}
-@media only screen and (max-width: 650px){
-    .maginIt{
-        margin-left: 1.25rem;
-        margin-right: 1.25rem;
-    }
-}
-@media only screen and (max-width: 552px){
-    .widthIn{
-        width: 0px;
-        transition: 0.5s ease-in-out;
-        display: none;
-    }
-    .sertchB{
-        border-radius: 0.375rem;
-        background: none;
-        margin-right: 0;
-    }
-    .textSma{
-        font-size: 2rem;
-    }
-}
-
-
-
-@media only screen and (max-width: 1448px){
-    .productsIt{
-        grid-template-columns: auto auto auto auto auto;
-        gap: 2rem;
-    }
-    .cardWidth{
-        width: 45%;
-    }
-}
-
-@media only screen and (max-width: 1250px){
-    .productsIt{
-        grid-template-columns: auto auto auto auto;
-        gap: 2.75rem;
-    }
-    .cardWidth{
-        width: 50%;
-    }
-    .textTitle{
-        font-size: 2rem;
-    }
-    .account-title{
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    .screnfulln{
-        height: 100%;
-        overflow: auto;
-    }
-}
-
-@media only screen and (max-width: 1070px){
-    .rightSideAccW{
-        width: 655px;
-    }
-    .leftSideAccW{
-        width: 246px;
-    }
-}
-
-@media only screen and (max-width: 1002px){
-    .productsIt{
-        grid-template-columns: auto auto auto;
-        gap: 2.75rem;
-    }
-    .cardWidth{
-        width: 70%;
-    }
-}
-@media only screen and (max-width: 736px){
-    .productsIt{
-        grid-template-columns: auto auto;
-        gap: 3.25rem;
-    }
-    .cardWidth{
-        width: 100%;
-    }
-    .chckoutDe{
-        padding-left: 0px;
-    }
-}
-@media only screen and (max-width: 495px){
-    .productsIt{
-        grid-template-columns: auto;
-        gap: 0.74rem;
-    }
-    .productSize{
-        width: 300px;
-    }
-    .shopCat{
-        width: 21rem;
-    }
-}
-
-@media only screen and (max-width: 1024px){
-    .flexCol-con{
-        flex-direction: column;
-        padding-left: 5rem;
-        padding-right: 5rem;
-    }
-    .margin-bot{
-        margin-bottom: 5rem;
-    }
-}
-@media only screen and (max-width: 500px){
-    .flexCol-con{
-        padding: 3rem 2rem;
-    }
-    .imageWidt{
-        width: 40%;
-    }
-}
-@media only screen and (max-width: 831px){
-    .productFle{
-        flex-direction: column;
-    }
-    .propad{
-        padding: 0px;
-        justify-content: center;
-        width: 100%;
-    }
-    .productTP{
-        padding-top: 2rem;
-    }
-    .producDetail{
-        margin-left: 50%;
-    }
-    .services{
-        grid-template-columns: auto auto;
-        padding: 1rem;
-    }
-    .textTitle{
-        font-size: 1.7rem;
-    }
-    .yourOrderCol{
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
-    .product-text > h1{
-        padding-bottom: 10px;
-    }
-    .product-text > p{
-        padding-bottom: 10px;
-    }
-    .yourOrderWT{
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .order-d{
-        flex-direction: column;
-    }
-    .order-d > .leftOrd{
-        width: 100%;
-        border: none;
-        padding-bottom: 5rem;
-    }
-    .order-d > .rightOrd{
-        width: 100%;
-        padding-left: 0px;
-    }
-    .productIten{
-        flex-direction: column;
-    }
-    .productIten > .product-image , .product-text , .product-price{
-        width: 100%;
-        padding-bottom: 5px;
-    }
-
-    .productIten > .product-image{
-        justify-content: flex-start;
-    }
-
-    .productIten > .product-text{
-        padding-left: 0px;
-    }
-    .order-payment{
-        flex-direction: column;
-    }
-    .order-payment > .left , .right{
-        width: 100%;
-        padding: 0px;
-    }
-    .orderLasPR{
-        width: 100%;
-    }
-
-    .sversti{
-        margin: 5px;
-    }
-    .sersbtn{
-        top: 3.2rem;
-        right: 10px;
-    }
-    .serycol{
-        flex-direction: column;
-    }
-    .sevpad{
-        padding: 5px;
-    }
-    .servbor{
-        border: none;
-    }
-    .phonesers{
-        height: 100%;
-    }
-    .btphonre{
-        top: 2px;
-        right: 5px;
-    }
-    .witchsev{
-        width: 100vw;
-        padding: 3rem;
-    }
-    .flexcolh{
-        flex-direction: column;
-    }
-}
-@media only screen and (max-width: 591px){
-    .producDetail{
-        margin-left: 40%;
-    }
-}
-@media only screen and (max-width: 545px){
-    .producDetail{
-        margin-left: 30%;
-    }
-    .logoTitle{
-        width: 7rem;
-        height: 7rem;
-        padding-top: 0.5rem;
-    }
-    .textTitle{
-        font-size: 1.5rem;
-    }
-}
-@media only screen and (max-width: 460px){
-    .producDetail{
-        margin-left: 10%;
-    }
-    .serviceP{
-        bottom: -2rem;
-    }
-}
-@media only screen and (max-width: 393px){
-    .flexButton{
-        flex-direction: column;
-    }
-    .flexButtonBP{
-        padding-bottom: 1rem;
-    }
-    .paddiTop{
-        margin-top: 4rem;
-    }
-}
-
-
-@media only screen and (max-width: 1282px){
-    .letfWidth{
-        width: 75%;
-    }
-    .rightWidth{
-        width: 25%;
-    }
-    .imageProd{
-        margin-right: 1rem;
-    }
-    .yourOrderW{
-        width: 100%;
+    .upperBody img {
+        width: 9rem;
+        height: 13rem;
       }
-}
-@media only screen and (max-width: 1104px){
-    .letfWidth{
-        width: 100%;
-    }
-    
-    .rightWidth{
-        width: 100%;
-        margin-left: 0px;
-    }
-}
-@media only screen and (max-width: 547px){
-    .letfWidth{
-        padding: 20px 0px 20px 0px;
-    }
-    .headingPr{
-        padding-left: 20px;
-    }
-}
-@media only screen and (max-width: 503px){
-    .PreBox{
-        margin: 3px;
-    }
-}
-@media only screen and (max-width: 490px){
-    .imageProd{
-        justify-content: flex-start;
-        width: 100%;
-        align-items: center;
-        margin-right: 1rem;
-    }
-    .headPre{
-        font-size: 1.3rem;
-    }
-}
-@media only screen and (max-width: 1364px){
-    .subJus{
-        padding-right: 10px;
-    }
-}
-
-@media only screen and (max-width: 960px){
-    .orderImage{
-        width: 160px;
-        height: 110px;
-    }
-    .accFlexCo{
-        flex-direction: column;
-        margin-left: 10px;
-        margin-right: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    .leftSideAccW{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .rightSideAccW{
-        margin-top: 20px;
-        width: 100%;
-    }
-    .leftSideAccW > .accLeftSideN{
-        width: 49%;
-        height: 110px;
-        margin-top: 0;
-    }
-    .ninersti{
-        margin: 5px;
-    }
-    .nivpad{
-        padding: 5px;
-    }
-    .nincol{
-        flex-direction: column;
-    }
-    .btnwithf{
-        width: 100%;
+      .upperBody {
+        width: 9rem;
+        height: 13rem;
+      }
+      .cardNo{
+        left: 3.3rem;
+        top: 4.2rem;
+      }
+      .paddisp{
         padding-left: 5px;
         padding-right: 5px;
-    }
-    .poostioncet{
-        justify-content: center;
-    }
-}
-@media only screen and (max-width: 1174px){
-    .OrderW{
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-}
-
-@media only screen and (max-width: 696px){
-    .userGrid{
-        grid-template-columns: auto;
-    }
-    .w-ThreebyF{
-        width: 100%;
-        padding: 10px;
-    }
-    .personal-d{
-        grid-template-columns: auto;
-    }
-    .accountInpuW{
-        width: 100%;
-    }
-    .leftSideAccW{
-        flex-direction: column;
-    }
-    .leftSideAccW > .accLeftSideN{
-        width: 100%;
-    }
-    .accLeftSideNMB{
-        margin-bottom: 20px;
-    }
-    .persnalD > p{
-        font-size: 1.7rem;
-    }
-    .passwordChng > p{
-        font-size: 1.7rem;
-    }
-    .accountInpuW{
+      }
+      .padingbtn{
+        margin-bottom: 2rem;
+      }
+      .absluser{
+        position: absolute;
+        top: 40px;
+        right: 7px;
+      }
+      .logo{
+        margin-left: 5px;
+      }
+      .uppercasem{
+        margin: 0;
+        padding: 130px 0px 0px 22px;
+      }
+      .clasimg{
+        font-size: 2rem;
+      }
+      .paditex{
+        padding-bottom: 10px;
+      }
+      .ending{
+        margin: 0;
         padding: 0;
-        margin-top: 1rem;
-    }
+      }
+      .sabmainb{
+        height: 100%;
+      }
+      .sabmainb > .batInfo{
+        position: fixed;
+        top: 0;
+        height: 47%;
+      }
+      .botton_bit{
+        flex-direction: column;
+      }
+      .botton_bit > button{
+        margin: 0 0 10px 0;
+      }
+      .information_bit{
+        width: 100vw;
+      }
+      .top_bit{
+        flex-direction: column;
+      }
 }
