@@ -6,6 +6,7 @@ import { RiAccountCircleLine, RiCoinsLine } from "react-icons/ri";
 import "react-toastify/dist/ReactToastify.css";
 import { CgLogOff, CgClose } from "react-icons/cg";
 import { BsCashCoin } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlinePlus } from "react-icons/ai";
 import mongoose from "mongoose";
 import RandomNSchema from "../modal/randomCard";
@@ -148,7 +149,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
       </div>
     </div>}
     {!imageload && isSmallScreen && <div className="imageloadd">
-      <div className="imagess h-screen w-full overflow-hidden relative">
+      <div className="imagess hightspage w-full overflow-hidden relative">
           {/* <div className="logo w-40 absolute left-36 top-7">
             <img src="/logo.gif" alt="" />
           </div> */}
@@ -221,10 +222,11 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
               </ul>
             </div>}
             {user && !user.value && <Link href={"/login"}><a>
-              <button className="text-xl flex items-center px-4 rounded-md bg-red-900 cursor-pointer text-slate-50 hover:text-red-200 transition-all">Login</button>
+              <button className="text-xl btn-login flex items-center px-4 rounded-md bg-red-900 cursor-pointer text-slate-50 hover:text-red-200 transition-all">Login</button>
             </a></Link>}
+            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="pr-4 text-lg"><GiHamburgerMenu/></div>}
             {user && user.value && <div className="saprator"></div>}
-            {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span> <AiOutlinePlus className="ml-1 text-white" /></div></Link>}
+            {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span></div></Link>}
           </div>
           </div>
           <div className="uppercasem text-4xl hidden displaout  text-white py-5 px-20">

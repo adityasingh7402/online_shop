@@ -58,6 +58,7 @@ function MyApp({ Component, pageProps }) {
     localStorage.removeItem('myuser')
     setuser({ value: null })
     setKey(Math.random())
+    router.reload();
     router.push('/')
   }
 

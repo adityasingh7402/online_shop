@@ -403,6 +403,9 @@
     display: block;
     padding-top: 7rem;
   }
+  .hightspage{
+    height: 95vh;
+  }
 }
 @media only screen and (max-width: 1364px) {
   .subJus {
@@ -508,7 +511,7 @@
         gap: 5px;
     }
     .hidexontet{
-        padding-bottom: 20rem;
+        padding-bottom: 14rem;
     }
     .paddispace{
         padding-bottom: 20px;
@@ -535,10 +538,10 @@
       .absluser{
         position: absolute;
         top: 40px;
-        right: 7px;
+        right: 15px;
       }
       .logo{
-        margin-left: 5px;
+        margin-left: 12px;
       }
       .uppercasem{
         margin: 0;
