@@ -205,7 +205,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <div className="logo w-28">
             <img src="/logopn.png" alt="" />
           </div>
-          <div className="uppercase text-4xl displayno text-white py-5 px-20">
+          <div className="uppercase text-4xl margingr displayno text-white py-5 px-20">
             <div className="clasimg">
               Choose Your Lucky Card
             </div>
