@@ -24,7 +24,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
   const router = useRouter()
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-    if (!myuser || myuser.email !== "kingkong1738aj@gmail.com") {
+    if (!myuser || myuser.email !== "tradeonedelhi@gmail.com") {
       router.push('/');
     } else {
       setIsHidden(false);

@@ -25,7 +25,7 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
     if (myuser && myuser.token) {
       setusers(myuser.email)
     }
-    if (!myuser || myuser.email !== "kingkong1738aj@gmail.com") {
+    if (!myuser || myuser.email !== "tradeonedelhi@gmail.com") {
       router.push('/');
     } else {
       setIsHidden(false);
