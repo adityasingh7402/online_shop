@@ -82,7 +82,7 @@ const handler = async (req, res) => {
 
         // let myr = await requestAsync()
         // res.status(200).json(myr)
-        res.status(200).json({ success: "success" })
+        res.status(200).json({ success: "Coins Purchase Successfully" })
     }
     else {
         res.status(400).json({ error: "This method is not allowed" })

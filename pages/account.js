@@ -246,19 +246,9 @@ const Account = () => {
         <div className="account-title accFlexCo my-5 mx-20 w-full flex flex-row relative">
           <div className="right-side w-1/4 mr-5 leftSideAccW">
             <div className="flex accLeftSideN accLeftSideNMB flex-row bg-white justify-start border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-min">
-              <div className="image bg-red-500 rounded-full w-16 h-16 overflow-hidden mr-5"><div className="pt-1"><Image src={"/person.png"} width={60} height={60} /></div></div>
               <div className="Account">
                 <div className="text-base text-gray-800 flex">Hello,</div>
                 <div className="text-xl text-gray-800 flex">{dispayName}</div>
-              </div>
-            </div>
-            <div className="flex accLeftSideN flex-row bg-white justify-start border border-gray-200 rounded-sm mt-5 py-5 px-5 shadow-sm h-min">
-              <div className="Account">
-                <ul>
-                  <Link href={'/yourorder'}><a><li className="text-xl flex flex-row items-center pb-3"><BsCashCoin className="ml-2 mr-4 text-xl" /><span>Withdrawal Coin</span></li></a></Link>
-                  <Link href={'#changepassword'}><a><li className="text-xl flex cursor-pointer flex-row items-center"><AiOutlineLock className="ml-2 mr-4 text-xl" /><span>Change Password</span></li></a></Link>
-                  <Link href={'/'}><a><li className="flex cursor-pointer flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>Home Page</button></li></a></Link>                  
-                </ul>
               </div>
             </div>
           </div>
@@ -298,11 +288,11 @@ const Account = () => {
                     <input value={Re_accno} onChange={handleChange} type="number" name='Re_accno' id="Re_accno" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div> */}
                   <div className="flex flex-col relative">
-                    <label htmlFor="ifsc" className="text-base font-normal pl-1">Bank IFSC Code Number</label>
+                    <label htmlFor="ifsc" className="text-base font-normal pl-1">IFSC Code</label>
                     <input value={ifsc} onChange={handleChange} type="text" name='ifsc' id="ifsc" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">
-                    <label htmlFor="branch" className="text-base font-normal pl-1">Bank Branch Name</label>
+                    <label htmlFor="branch" className="text-base font-normal pl-1">Branch Name</label>
                     <input value={branch} onChange={handleChange} type="text" name='branch' id="branch" required className="p-2 input-bck text-gray-600 text-base border outline-none focus:border-red-700 border-gray-200" />
                   </div>
                   <div className="flex flex-col relative">

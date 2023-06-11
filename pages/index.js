@@ -185,7 +185,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             <div className="information_bit p-8">
               <div className="top_bit flex justify-between items-center w-full text-lg pb-8">
                 <div className="left_bit uppercase text-2xl">Start bit</div>
-                <div className="right_bit">You&rsquo;re Card is- <span className="text-3xl">{cart.cardno}</span>  & Number- <span className="text-3xl">{cart.randomNum}</span> </div>
+                <div className="right_bit">You Choose Card - <span className="text-3xl">{cart.cardno}</span>  & Lucky No.- <span className="text-3xl">{cart.randomNum}</span> </div>
               </div>
               <div className="bottom_pay_bit">
                 <div className="head_bit text-lg pb-2">Enter Coin of Bit</div>
@@ -211,7 +211,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             </div>
           </div>
           <div className="user_name absluser relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
-            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 cursor-pointer hover:text-red-100">{name}</div>}
+            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 paddingph cursor-pointer hover:text-red-100">{name}</div>}
             {dropdown && <div className="dropdown absolute -left-10 top-11 w-44 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
               <ul>
                 <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-red-300 text-red-700 py-2 hover:text-red-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
@@ -224,13 +224,13 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             {user && !user.value && <Link href={"/login"}><a>
               <button className="text-xl btn-login flex items-center px-4 rounded-md bg-red-900 cursor-pointer text-slate-50 hover:text-red-200 transition-all">Login</button>
             </a></Link>}
-            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="pr-4 text-lg"><GiHamburgerMenu/></div>}
+            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="pr-4 paddingph text-lg"><GiHamburgerMenu/></div>}
             {user && user.value && <div className="saprator"></div>}
             {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span></div></Link>}
           </div>
           </div>
           <div className="uppercasem text-4xl hidden displaout  text-white py-5 px-20">
-            <div className="clasimg">
+            <div className="clasimg asdasimng flex justify-center items-center">
               Choose Your Lucky Card
             </div>
         </div>

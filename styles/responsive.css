@@ -22,9 +22,10 @@
   .logo {
     width: 100px;
     height: 80px;
-    position: absolute;
-    left: 0;
-    margin-top: 5px;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
   }
   .navbar {
     flex-direction: column;
@@ -404,7 +405,10 @@
     padding-top: 7rem;
   }
   .hightspage{
-    height: 95vh;
+    height: 100vh;
+  }
+  .paddingph{
+    padding-right: 8px;
   }
 }
 @media only screen and (max-width: 1364px) {
@@ -537,18 +541,15 @@
       }
       .absluser{
         position: absolute;
-        top: 40px;
-        right: 15px;
-      }
-      .logo{
-        margin-left: 12px;
+        top: 130px;
+        right: 10px;
       }
       .uppercasem{
         margin: 0;
-        padding: 130px 0px 0px 22px;
+        padding: 130px 0px 0px 0px;
       }
-      .clasimg{
-        font-size: 2rem;
+      .asdasimng{
+        font-size: 1.5rem;
       }
       .paditex{
         padding-bottom: 10px;

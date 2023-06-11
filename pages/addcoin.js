@@ -154,6 +154,15 @@ const Addcoin = () => {
         let txnRes = await a.json()
         setlodingS(true)
         if(txnRes.success){
+            toast.success(txnRes.success, {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
             setamount('');
             settransId('');
         }else{
@@ -200,20 +209,20 @@ const Addcoin = () => {
             <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
           </div> */}
                 <div className='right-side nivpad mx-auto justify-center bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-3 px-20 shadow-sm'>
-                    <p className='flex justify-center items-center text-4xl py-2 text-gray-700'>Add Coin</p>
+                    <p className='flex justify-center items-center text-4xl py-2 text-gray-700'>Add Coins</p>
                     <div className="coin flex text-2xl poostioncet cursor-pointer text-yellow-700 pb-4 mt-3"><span className='mr-5'> Your Wallet : </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
                     <div className="collection_with nivpad coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-5 border-2  border-gray-300 py-3 px-10">
                         <div className="refrenceno text-xl mb-2">Ref. Number: <span className='text-2xl font-medium'>{oid}</span></div>
                         <div className="box_bank flex flex-row nincol items-start">
                             <div className="qrcode">
                                 <div className="payment-box w-52 border">
-                                    <img src="./payment.jpg" alt="" />
+                                    <img src="./payments.jpg" alt="" />
                                 </div>
                             </div>
                             <div className="divider w-20"></div>
                             <div className="detailss flex justify-start items-start flex-col mt-3">
                                 <div className="box_bank flex justify-center flex-col items-start">
-                                    <p className='text-base'>Enter Coin</p>
+                                    <p className='text-base'>Enter Coins</p>
                                     <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" name='amount' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
                                 </div>
                                 <div className="box_bank flex justify-center flex-col items-start">
@@ -235,10 +244,10 @@ const Addcoin = () => {
                     </div>
                     <div className="notes">
                         <p className='text-lg font-medium'>Note:</p>
-                        <p className='text-base'>1. Scan bar code to Purchase Coin.</p>
+                        <p className='text-base'>1. Scan bar code to Purchase Coins.</p>
                         <p className='text-base'>2. Fill Transaction ID.</p>
-                        <p className='text-base'>3. Send to us by clicking Purchase button.</p>
-                        <p className='text-base'>4. Coin will be added within one working day.</p>
+                        <p className='text-base'>3. Send to us by clicking Purchase Now button.</p>
+                        <p className='text-base'>4. Coins will be added within one working day.</p>
                     </div>
                     <div className="products flex flex-col overflow-scroll w-full text-sm mt-8">
                         <p className='flex justify-center items-center text-4xl py-8 text-gray-700'>Coin History</p>
@@ -247,17 +256,17 @@ const Addcoin = () => {
                         </div>} */}
                         <table>
                             <tr>
-                                <th className='text-left border p-4 border-slate-600'><div className="Date text-lg font-medium">Date</div></th>
-                                <th className='text-left border p-4 border-slate-600'><div className="Refrence text-lg font-medium">Refrence No</div></th>
-                                <th className='text-left border p-4 border-slate-600'><div className="Coin text-lg font-medium">Coin</div></th>
-                                <th className='text-left border p-4 border-slate-600'><div className="Status text-lg font-medium">Status</div></th>
+                                <th className='text-left border p-3 border-slate-600'><div className="Date text-base font-medium">Date</div></th>
+                                <th className='text-left border p-3 border-slate-600'><div className="Refrence text-base font-medium">Refrence No</div></th>
+                                <th className='text-left border p-3 border-slate-600'><div className="Coin text-base font-medium">Coin</div></th>
+                                <th className='text-left border p-3 border-slate-600'><div className="Status text-base font-medium">Status</div></th>
                             </tr>
                             {updatedOrders.map((item, index) => {
                                 return <tr key={item._id}>
-                                    <td className='text-left border p-4 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
-                                    <td className='text-left border p-4 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-                                    <td className='text-left border p-4 border-slate-600'><div className="Coin">{item.amount}</div></td>
-                                    <td className='text-left border p-4 border-slate-600'><div className="Status">{item.status}</div></td>
+                                    <td className='text-left border p-3 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
+                                    <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
+                                    <td className='text-left border p-3 border-slate-600'><div className="Coin">{item.amount}</div></td>
+                                    <td className='text-left border p-3 border-slate-600'><div className="Status">{item.status}</div></td>
                                 </tr>
                             })}
                         </table>

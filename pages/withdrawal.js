@@ -100,9 +100,10 @@ const Withdrawal = () => {
                 draggable: true,
                 progress: undefined,
             });
+            setamount('');
             let walletUp = wallet - amount;
             let data2 = { token: token, email: userInfi.email, walletUp }
-            let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateuser`, {
+            let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateWallet`, {
                 method: 'POST', // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',
@@ -121,6 +122,7 @@ const Withdrawal = () => {
                 draggable: true,
                 progress: undefined,
             });
+            setamount('');
         }
     }
     const updatedOrders = orders.map((item) => {
@@ -161,13 +163,13 @@ const Withdrawal = () => {
             <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
           </div> */}
                 <div className='right-side mx-auto bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-8 sevpad px-5 shadow-sm'>
-                    <p className='flex justify-center items-center text-4xl py-3 text-gray-700'>Withdraw Coin</p>
+                    <p className='flex justify-center items-center text-4xl py-3 text-gray-700'>Withdraw Coins</p>
                     <div className="collection_with coin_with product flex yourOrderCol justify-center items-center flex-col w-full sversti mb-5 mt-3 border-t-2 border-b-2 border-gray-300 p-9">
                         <div className="box_bank flex justify-center flex-row serycol items-center w-full">
                             <div className="coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-3  sversti  p-9">
                                 <div className="coin flex text-2xl poostioncet cursor-pointer text-yellow-700 pb-4 mt-5"><span className='mr-5'> Your Wallet </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
                                 <div className="amount_bit py-3 w-3/4 pt-5">
-                                    <p className='text-base pb-3'>Enter Coin want to Withdraw</p>
+                                    <p className='text-base pb-3'>Enter Coins to Withdraw</p>
                                     <input value={amount} onChange={handleChange} autoComplete="off" type="text" id="amount" name='amount' placeholder='Enter Coins' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border px-2" />
                                 </div>
                             </div>
@@ -189,8 +191,8 @@ const Withdrawal = () => {
                                 <button disabled={paymentVer} onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Withdraw</h6></button>
                             </div>
                             <div className="botton_bit flex justify-between items-center">
-                            {updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update</p></button></Link>}
-                            {!updated && <Link href={'./account'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update</p></button></Link>}
+                            {updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update Bank Details</p></button></Link>}
+                            {!updated && <Link href={'./account'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update Bank Details</p></button></Link>}
                             </div>
                         </div>
                     </div>
@@ -202,17 +204,17 @@ const Withdrawal = () => {
                         </div>}
                         <table>
                             <tr>
-                                <th className='text-left border p-4 border-slate-600'><div className="Date text-lg font-medium">Date</div></th>
-                                <th className='text-left border p-4 border-slate-600'><div className="Refrence text-lg font-medium">Refrence No</div></th>
-                                <th className='text-left border p-4 border-slate-600'><div className="Coin text-lg font-medium">Coin</div></th>
-                                <th className='text-left border p-4 border-slate-600'><div className="Status text-lg font-medium">Status</div></th>
+                                <th className='text-left border p-3 border-slate-600'><div className="Date text-base font-medium">Date</div></th>
+                                <th className='text-left border p-3 border-slate-600'><div className="Refrence text-base font-medium">Refrence No</div></th>
+                                <th className='text-left border p-3 border-slate-600'><div className="Coin text-base font-medium">Coins</div></th>
+                                <th className='text-left border p-3 border-slate-600'><div className="Status text-base font-medium">Status</div></th>
                             </tr>
                             {updatedOrders.map((item, index) => {
                                 return <tr key={item._id}>
-                                    <td className='text-left border p-4 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
-                                    <td className='text-left border p-4 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-                                    <td className='text-left border p-4 border-slate-600'><div className="Coin">{item.amount}</div></td>
-                                    <td className='text-left border p-4 border-slate-600'><div className="Status">
+                                    <td className='text-left border p-3 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
+                                    <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
+                                    <td className='text-left border p-3 border-slate-600'><div className="Coin">{item.amount}</div></td>
+                                    <td className='text-left border p-3 border-slate-600'><div className="Status">
                                         {item.status == "Pending" && <span className='font-medium text-yellow-500'>{item.status}</span>}
                                         {item.status == "Win" && <span className='font-medium text-red-700'>{item.status}</span>}
                                         {item.status == "Loss" && <span className='font-medium text-red-700'>{item.status}</span>}
