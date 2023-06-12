@@ -185,7 +185,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .containerr{
-  background-image: url(/back.jpg);
+  background-image: url(/back1.jpg);
   background-blend-mode: darken;
   background-repeat: no-repeat;
   background-size: cover;
@@ -212,7 +212,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-top-right-radius: 40px;
 }
 .logo img{
-  width: 200px;
+  width: 100px;
 }
 .saprator{
   width: 1px;

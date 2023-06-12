@@ -142,7 +142,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <div className="logo w-40 absolute left-36 top-7">
             <img src="/logopn.png" alt="" />
           </div>
-          <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"><img src="start.png" alt="" /></div>
+          <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-8 cursor-pointer justify-center items-start"><img src="StartGame.png" alt="" /></div>
           <div className="imgphoto w-full h-full overflow-hidden">
             <img src="./frontpage.png" alt="" />
           </div>
@@ -155,7 +155,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           </div> */}
           <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"></div>
           <div className="imgphoto w-full h-full overflow-hidden">
-            <img src="./mobres.jpg" alt="" />
+            <img src="./mobilesc.jpg" alt="" />
           </div>
       </div>
     </div>}
