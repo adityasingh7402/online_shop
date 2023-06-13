@@ -17,6 +17,8 @@ const Signup = () => {
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [lodingS, setlodingS] = useState(true)
+  const [ageVerified, setAgeVerified] = useState(false);
+  const [agefalse, setagefalse] = useState(true);
   const [mobilevalid, setmobilevalid] = useState(false)
 
   useEffect(() => {
@@ -24,6 +26,9 @@ const Signup = () => {
       router.push('/')
     }
   }, [])
+  const handleCheckboxChange = (e) => {
+    setAgeVerified(e.target.checked);
+  };
 
   const handleChange = (e) => {
     if (e.target.name == 'name') {
@@ -49,9 +54,11 @@ const Signup = () => {
   }
 
   const handleSubmit = async (e) => {
-    setlodingS(false)
     e.preventDefault()
-    const data = { name, email, phone, password }
+    setagefalse(false)
+    if(ageVerified){
+    setlodingS(false)
+    const data = { name, email, phone, password, ageVerified }
     let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -91,14 +98,17 @@ const Signup = () => {
         progress: undefined,
       });
     }
+    }else{
+      return 0;
+    }
   }
   return (
     <div>
       <Head>
-        <title>Patti Circle- Signup</title>
+        <title>Patti Winner- Signup</title>
         <meta
           name="description"
-          content="Patti Circle win win Game"
+          content="Patti Winner win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -136,6 +146,18 @@ const Signup = () => {
                 <label htmlFor="password" className="text-base font-normal pl-1 pb-1">Password</label>
                 <input value={password} onChange={handleChange} type="password" name='password' id="password" required autoComplete="password" placeholder='At least 6 characters' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
               </div>
+              {agefalse && <div className="flex flex-row pb-2 items-center">
+                <input type="checkbox" name="ageVerification" className="w-4 h-4" id="ageVerification" checked={ageVerified} onChange={handleCheckboxChange}/>
+                <label htmlFor="ageVerification" className="font-normal pl-2 text-xs">
+                Please confirm that you are 21+ years old
+                </label>
+              </div>}
+              {!agefalse && <div className="flex flex-row pb-2 items-center">
+                <input type="checkbox" name="ageVerification" className="w-4 h-4" id="ageVerification" checked={ageVerified} onChange={handleCheckboxChange}/>
+                <label htmlFor="ageVerification" className="font-bold pl-2 text-xs text-red-700">
+                Please confirm that you are 21+ years old
+                </label>
+              </div>}
               <p className='text-gray-500 pt-4 text-xs'>We will send you a text to verify your phone.
                 Message and Data rates may apply</p>
               <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" disabled={mobilevalid} className=" relative disabled:bg-red-500 flex text-white font-medium text-sm rounded-full bg-red-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-red-700">

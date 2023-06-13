@@ -138,33 +138,41 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
 
   return (<>
     {!imageload && !isSmallScreen && <div className="imageloadd containerr">
+      <Head>
+        <title>Patti Winner- Win Win Game</title>
+        <meta
+          name="description"
+          content="Patti Winner win win Game"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="imagess h-screen w-full overflow-hidden relative">
-          <div className="logo w-40 absolute left-36 top-7">
-            <img src="/logopn.png" alt="" />
-          </div>
-          <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-8 cursor-pointer justify-center items-start"><img src="StartGame.png" alt="" /></div>
-          <div className="imgphoto w-full h-full overflow-hidden">
-            <img src="./frontpage.png" alt="" />
-          </div>
+        <div className="logo w-40 absolute left-36 top-7">
+          <img src="/logopn.png" alt="" />
+        </div>
+        <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-8 cursor-pointer justify-center items-start"><img src="StartGame.png" alt="" /></div>
+        <div className="imgphoto w-full h-full overflow-hidden">
+          <img src="./frontpage.png" alt="" />
+        </div>
       </div>
     </div>}
     {!imageload && isSmallScreen && <div className="imageloadd">
       <div className="imagess hightspage w-full overflow-hidden relative">
-          {/* <div className="logo w-40 absolute left-36 top-7">
+        {/* <div className="logo w-40 absolute left-36 top-7">
             <img src="/logo.gif" alt="" />
           </div> */}
-          <div onClick={()=> setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"></div>
-          <div className="imgphoto w-full h-full overflow-hidden">
-            <img src="./mobilesc.jpg" alt="" />
-          </div>
+        <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"></div>
+        <div className="imgphoto w-full h-full overflow-hidden">
+          <img src="./mobilescr.jpg" alt="" />
+        </div>
       </div>
     </div>}
     {imageload && <div>
       <Head>
-        <title>Patti Circle- Win Win Game</title>
+        <title>Patti Winner- Win Win Game</title>
         <meta
           name="description"
-          content="Patti Circle win win Game"
+          content="Patti Winner win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -188,7 +196,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div className="right_bit">You Choose Card - <span className="text-3xl">{cart.cardno}</span>  & Lucky No.- <span className="text-3xl">{cart.randomNum}</span> </div>
               </div>
               <div className="bottom_pay_bit">
-                <div className="head_bit text-lg pb-2">Enter Coin of Bit</div>
+                <div className="head_bit text-lg pb-2">Enter Coins of Bit</div>
                 <div className="amount_bit">
                   <input value={amount} onChange={handleChange} type="Number" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border " />
                 </div>
@@ -212,27 +220,27 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           </div>
           <div className="user_name absluser relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
             {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 paddingph cursor-pointer hover:text-red-100">{name}</div>}
-            {dropdown && <div className="dropdown absolute -left-10 top-11 w-44 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
+            {dropdown && <div className="dropdown absolute -left-10 top-11 w-48 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
               <ul>
                 <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-red-300 text-red-700 py-2 hover:text-red-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
                 <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Bitting Details</span></li></a></Link>
-                <Link href={'/addcoin'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Add Coin</span></li></a></Link>
-                <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdrawal Coin</span></li></a></Link>
+                <Link href={'/addcoin'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Add Coins</span></li></a></Link>
+                <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdrawal Coins</span></li></a></Link>
                 <li onClick={logout} className="text-base border-t flex flex-row items-center cursor-pointer border-red-300 text-red-700 py-2 hover:text-red-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
               </ul>
             </div>}
             {user && !user.value && <Link href={"/login"}><a>
               <button className="text-xl btn-login flex items-center px-4 rounded-md bg-red-900 cursor-pointer text-slate-50 hover:text-red-200 transition-all">Login</button>
             </a></Link>}
-            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="pr-4 paddingph text-lg"><GiHamburgerMenu/></div>}
+            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="pr-4 paddingph text-lg"><GiHamburgerMenu /></div>}
             {user && user.value && <div className="saprator"></div>}
             {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span></div></Link>}
           </div>
+        </div>
+        <div className="uppercasem text-4xl hidden displaout  text-white py-5 px-20">
+          <div className="clasimg asdasimng flex justify-center items-center">
+            Choose Your Lucky Card
           </div>
-          <div className="uppercasem text-4xl hidden displaout  text-white py-5 px-20">
-            <div className="clasimg asdasimng flex justify-center items-center">
-              Choose Your Lucky Card
-            </div>
         </div>
         <div className="welc flex flexdis paddisp justify-between items-center text-white px-14 mt-5">
           <div className="welc_text text-xl flex padingbtn flexdis justify-center items-center flex-row">

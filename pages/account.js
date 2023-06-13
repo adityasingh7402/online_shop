@@ -212,10 +212,10 @@ const Account = () => {
   return (
     <>
       <Head>
-        <title>Patti Circle- Account</title>
+        <title>Patti Winner- Account</title>
         <meta
           name="description"
-          content="Patti Circle win win Game"
+          content="Patti Winner win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

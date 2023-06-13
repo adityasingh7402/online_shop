@@ -74,10 +74,10 @@ const Contact = () => {
   return (
     <div>
       <Head>
-        <title>Patti Circle- Contact</title>
+        <title>Patti Winner- Contact</title>
         <meta
           name="description"
-          content="Patti Circle win win Game"
+          content="Patti Winner win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

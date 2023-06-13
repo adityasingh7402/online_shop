@@ -25,7 +25,7 @@ const Withdrawal = ({ withdrawals }) => {
   return (
     <>
       <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
-        Orders - Admin Panel
+        Withdrawal Coins - Admin Panel
       </div>
       {/* <div className="box p-5">
         {orders.map((item) => {
@@ -44,33 +44,33 @@ const Withdrawal = ({ withdrawals }) => {
       <div className="tables p-5 w-full overflow-y-scroll">
       <table className="mx-auto">
         <tr>
-          <th className='text-left border p-3 border-slate-600'><div className="Date text-lg font-medium">Order Id</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Refrence text-lg font-medium">Name</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="card text-lg font-medium">Email</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Coin text-lg font-medium">Mobile</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Amount text-lg font-medium">Amount</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="ifsc text-lg font-medium">IFSC</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">B Name</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">B Branch</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">Acc No</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">UPI</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Win text-lg font-medium">Status</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Loss text-lg font-medium">Date on Buy</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Date text-base font-medium">Order Id</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Refrence text-base font-medium">Name</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="card text-base font-medium">Email</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Coin text-base font-medium">Mobile</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Amount text-base font-medium">Amount</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="ifsc text-base font-medium">IFSC</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Name</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Branch</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">Acc No</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">UPI</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Win text-base font-medium">Status</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Loss text-base font-medium">Date on Buy</div></th>
         </tr>
         {withdrawals.map((item) => {
           return <tr key={item._id}>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.name}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.email}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.phone}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.amount}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.ifsc}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.bankName}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.bankBranch}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.accno}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.upino}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.status}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.name}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.email}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.phone}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.amount}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.ifsc}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.bankName}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.bankBranch}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.accno}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.upino}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.status}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
           </tr>
         })}
       </table>

@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
     accountHN: {type: String, default: ''},
     accno: {type: String, default: ''},
     UPINo: {type: String, default: ''},
+    ageVerified: {type: Boolean, required: true},
     updated: {type: Boolean, default: false},
 }, {timestamps: true});
 

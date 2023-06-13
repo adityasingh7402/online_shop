@@ -11,7 +11,7 @@ const terms = () => {
             <div className="containerterm text-white w-3/4 mx-auto pt-20">
                 <div className="headingss pb-10">
                     <h1 className='text-5xl font-medium pb-3'>Terms & Conditions:</h1>
-                    <p className='text-lg'>Here are Patti Circle rules and a step-by-step guide on how to play Patti Circle game:</p>
+                    <p className='text-lg'>Here are Patti Winner rules and a step-by-step guide on how to play Patti Winner game:</p>
                 </div>
                 <ul className="points list-disc">
                     <li className="pointlis pb-4">
@@ -24,16 +24,19 @@ const terms = () => {
                         <span className='font-medium pr-2 text-lg'>Guess the Card:</span>For the game to begin, the player has to guess the lucky card from the given three cards.
                     </li>
                     <li className="pointlis pb-4">
-                        <span className='font-medium pr-2 text-lg'>Winner:</span>After winning the game player will be credited winning amount in their Patti Circle’s account. 10% service charge will be debited from the winning amount.
+                        <span className='font-medium pr-2 text-lg'>Winner:</span>After winning the game player will be credited winning amount in their Patti Winner’s account. 10% service charge will be debited from the winning amount.
                     </li>
                     <li className="pointlis pb-4">
-                        <span className='font-medium pr-2 text-lg'>Transfers:</span>Players can cash anytime their coins by giving request to Patti Circle. Within 24 Hours their coins in cash will be credited in their given account to Patti Circle. Request minimum of 500 Coins or more will be acceptable and not less than 500 coins.
+                        <span className='font-medium pr-2 text-lg'>Transfers:</span>Players can cash anytime their coins by giving request to Patti Winner. Within 24 Hours their coins in cash will be credited in their given account to Patti Winner. Request minimum of 500 Coins or more will be acceptable and not less than 500 coins.
                     </li>
                     <li className="pointlis pb-4">
                         <span className='font-medium pr-2 text-lg'>Refund:</span>One bet started no refund will be entertained.
                     </li>
                     <li className="pointlis pb-4">
                         <span className='font-medium pr-2 text-lg'>Contact:</span>Objectives may contact by sent mail if any quarry they have in Contact us link.
+                    </li>
+                    <li className="pointlis font-medium pb-4">
+                        <span className='font-medium pr-2 text-lg'>Age Factor:</span>Strictly not for under age of 21 Years....
                     </li>
                 </ul>
             </div>

@@ -136,10 +136,10 @@ const Withdrawal = () => {
     return (
         <div className='containerr catoBack flex relative'>
             <Head>
-                <title>Patti Circle - Withdrawal</title>
+                <title>Patti Winner - Withdrawal</title>
                 <meta
                     name="description"
-                    content="Patti Circle win win Game"
+                    content="Patti Winner win win Game"
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>

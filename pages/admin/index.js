@@ -35,12 +35,12 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
     return null;
   }
   return (
-    <div className="overflow-hidden h-screen">
+    <div className="overflow-hidden h-screen containerr">
       <Head>
-        <title>Patti Circle- Win Win Game</title>
+        <title>Patti Winner- Win Win Game</title>
         <meta
           name="description"
-          content="Patti Circle win win Game"
+          content="Patti Winner win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -55,19 +55,19 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
         draggable
         pauseOnHover
       />
-      <Link href={'/'}><div className="gotoHome right-10 top-10 fixed cursor-pointer text-white p-2 bg-green-900 font-bold text-4xl"><AiOutlineClose /></div></Link>
+      <Link href={'/'}><div className="gotoHome right-10 top-10 fixed cursor-pointer text-white p-2 bg-red-900 font-bold text-4xl"><AiOutlineClose /></div></Link>
       <div className="my-8 px-5 w-full flex flex-row">
-        <div className=" bg-green-800 w-56 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-min">
+        <div className=" bg-red-800 w-56 border border-gray-200 rounded-sm py-8 px-5 shadow-sm h-min">
           <ul className="flex flex-col">
             <li className="text-xl pb-5 font-medium text-white flex items-center"><span className="text-2xl pr-5"><HiChartPie /></span> Inventory</li>
-            <li onClick={() => setActive("Order")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Order</li>
-            <li onClick={() => setActive("ChangeNum")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Change Card No</li>
-            <li onClick={() => setActive("WinnerSelect")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Winner Select</li>
-            <li onClick={() => setActive("Withdrawal")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Withdrawal</li>
-            <li onClick={() => setActive("AddCoin")} className="text-base pb-5 font-medium cursor-pointer hover:text-green-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Add Coin</li>
+            <li onClick={() => setActive("Order")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Orders</li>
+            <li onClick={() => setActive("ChangeNum")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Change Card No</li>
+            <li onClick={() => setActive("WinnerSelect")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Winner Select</li>
+            <li onClick={() => setActive("Withdrawal")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Withdrawal Coins</li>
+            <li onClick={() => setActive("AddCoin")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Adding Coins</li>
           </ul>
           <ul className="flex flex-col mt-2">
-            <Link href={'/'}><li className="text-base pb-4 cursor-pointer hover:text-green-200 text-white flex items-center"><button className="px-5 py-2 border broder-white w-full rounded-full hover:bg-green-900"><p>Logout</p></button></li></Link>
+            <Link href={'/'}><li className="text-base pb-4 cursor-pointer hover:text-red-200 text-white flex items-center"><button className="px-5 py-2 border broder-white w-full rounded-full hover:bg-red-900"><p>Logout</p></button></li></Link>
           </ul>
         </div>
         <div className=" bg-white w-5/6 text-sm text-gray-800 ml-5 border border-gray-200 rounded-sm py-3 px-2 shadow-sm overflow-scroll h-screen">

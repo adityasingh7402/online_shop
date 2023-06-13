@@ -184,10 +184,10 @@ const Addcoin = () => {
             </div>
             <Head>
                 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
-                <title>Patti Circle - Purchase Coin</title>
+                <title>Patti Winner - Purchase Coin</title>
                 <meta
                     name="description"
-                    content="Patti Circle win win Game"
+                    content="Patti Winner win win Game"
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>

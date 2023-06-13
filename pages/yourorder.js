@@ -76,10 +76,10 @@ const YourOrder = () => {
   return (
     <div className='containerr h-screen catoBack flex relative'>
       <Head>
-        <title>Patti Circle- Your Orders</title>
+        <title>Patti Winner- Your Orders</title>
         <meta
           name="description"
-          content="Patti Circle win win Game"
+          content="Patti Winner win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

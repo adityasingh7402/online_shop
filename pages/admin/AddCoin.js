@@ -25,7 +25,7 @@ const AddCoin = ({ addcoins }) => {
   return (
     <>
       <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
-        Orders - Admin Panel
+        Adding Coins - Admin Panel
       </div>
       {/* <div className="box p-5">
         {orders.map((item) => {
@@ -44,29 +44,32 @@ const AddCoin = ({ addcoins }) => {
       <div className="tables p-5 w-full overflow-y-scroll">
       <table className="mx-auto">
         <tr>
-          <th className='text-left border p-3 border-slate-600'><div className="Date text-lg font-medium">Order Id</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Refrence text-lg font-medium">Name</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="card text-lg font-medium">Email</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Coin text-lg font-medium">Mobile</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Amount text-lg font-medium">Amount</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="ifsc text-lg font-medium">Transaction ID</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">Payment Info</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="bankName text-lg font-medium">Pay Trans ID</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Win text-lg font-medium">Status</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Loss text-lg font-medium">Date on Buy</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Date text-sm font-medium">Order Id</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Refrence text-sm font-medium">Name</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="card text-sm font-medium">Email</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Coin text-sm font-medium">Mobile</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Amount text-sm font-medium">Amount</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="ifsc text-sm font-medium">Transaction ID</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Payment Info</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Pay Trans ID</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Win text-sm font-medium">Status</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Date on Buy</div></th>
+          <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Paid</div></th>
         </tr>
         {addcoins.map((item) => {
           return <tr key={item._id}>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.name}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.email}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.phone}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.amount}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.transId}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.paymentInfo}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.transactionId}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.status}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">#{item.orderId}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.name}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.email}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs
+            ">{item.phone}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.amount}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transId}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.paymentInfo}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transactionId}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.status}</div></td>
+            <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.createdAt}</div></td>
+            <td className='text-left border p-2 border-slate-600'><button className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Paid</p></button></td>
           </tr>
         })}
       </table>
