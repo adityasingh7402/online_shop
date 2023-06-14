@@ -564,7 +564,7 @@
       .sabmainb > .batInfo{
         position: fixed;
         top: 0;
-        height: 47%;
+        height: 390px;
       }
       .botton_bit{
         flex-direction: column;

@@ -14,6 +14,7 @@ const Signup = () => {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [state, setState] = useState('')
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [lodingS, setlodingS] = useState(true)
@@ -37,6 +38,9 @@ const Signup = () => {
     if (e.target.name == 'email') {
       setEmail(e.target.value.toLowerCase())
     }
+    if (e.target.name == 'state') {
+      setState(e.target.value)
+    }
     if (e.target.name == 'phone') {
       setPhone(e.target.value)
       setTimeout(() => {
@@ -58,7 +62,7 @@ const Signup = () => {
     setagefalse(false)
     if(ageVerified){
     setlodingS(false)
-    const data = { name, email, phone, password, ageVerified }
+    const data = { name, email, phone, password, ageVerified, state }
     let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -70,6 +74,7 @@ const Signup = () => {
 
     setName('')
     setEmail('')
+    setState('')
     setPhone('')
     setPassword('')
     setlodingS(true)
@@ -126,23 +131,27 @@ const Signup = () => {
       <div className='flex relative containerr h-screen'>
         {lodingS === false && <span className="fixed flex justify-center items-center z-40 text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <div className="login flex justify-center border-2 bg-white border-gray-300 shadow-md rounded-sm my-9 mx-auto">
-          <div className="client-data flex flex-col w-full px-6 py-4">
+          <div className="client-datas flex flex-col w-full px-6 py-4">
             <p className="text-3xl pb-3 font-normal">Create Account</p>
             <form onSubmit={handleSubmit} method="POST">
-              <div className="flex flex-col pb-5">
+              <div className="flex flex-col pb-3">
                 <label htmlFor="name" className="text-base font-normal pl-1 pb-1">Your name</label>
                 <input value={name} onChange={handleChange} type="text" name='name' id="name" required autoComplete="name" placeholder='First and last name' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
               </div>
-              <div className="flex flex-col pb-5">
+              <div className="flex flex-col pb-3">
                 <label htmlFor="email" className="text-base font-normal pl-1 pb-1">Email</label>
                 <input value={email} onChange={handleChange} type="email" name='email' id="email" required autoComplete="email" placeholder='Email' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
               </div>
-              <div className="flex flex-col relative pb-5">
+              <div className="flex flex-col relative pb-3">
                 <label htmlFor="phone" className="text-base font-normal pl-1 pb-1">Mobile phone</label>
                 <input value={phone} onChange={handleChange} type="number" name='phone' id="phone" required autoComplete="phone" placeholder='Mobile phone' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
                 {mobilevalid === true && <span className="text-red-700 text-sm absolute -bottom-2 right-0">Enter a valid Mobile number</span>}
               </div>
-              <div className="flex flex-col pb-5">
+              <div className="flex flex-col pb-3">
+                <label htmlFor="v" className="text-base font-normal pl-1 pb-1">State</label>
+                <input value={state} onChange={handleChange} type="text" name='state' id="state" required autoComplete="state" placeholder='State' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
+              </div>
+              <div className="flex flex-col pb-3">
                 <label htmlFor="password" className="text-base font-normal pl-1 pb-1">Password</label>
                 <input value={password} onChange={handleChange} type="password" name='password' id="password" required autoComplete="password" placeholder='At least 6 characters' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
               </div>
@@ -158,8 +167,6 @@ const Signup = () => {
                 Please confirm that you are 21+ years old
                 </label>
               </div>}
-              <p className='text-gray-500 pt-4 text-xs'>We will send you a text to verify your phone.
-                Message and Data rates may apply</p>
               <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" disabled={mobilevalid} className=" relative disabled:bg-red-500 flex text-white font-medium text-sm rounded-full bg-red-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-red-700">
                 {lodingS === false ? <p>WAIT</p> : <p>CONTINUE</p>}
                 <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>

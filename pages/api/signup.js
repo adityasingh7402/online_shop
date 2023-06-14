@@ -5,13 +5,13 @@ var CryptoJS = require("crypto-js");
 
 const handler = async (req, res)=>{
     if(req.method == 'POST'){
-        const {name, email, phone, ageVerified} = req.body;
+        const {name, email, phone, ageVerified, state} = req.body;
         const existingUser = await User.findOne({ email });
         if(existingUser){
             res.status(400).json({ error: "This email is already registered" });
         }
         else{
-        let u = new User({name, email,phone, ageVerified, password: CryptoJS.AES.encrypt(req.body.password, process.env.AES_SECRET).toString()})
+        let u = new User({name, email,phone, ageVerified, state, password: CryptoJS.AES.encrypt(req.body.password, process.env.AES_SECRET).toString()})
         await u.save()
         res.status(200).json({ success: "success" })
         }

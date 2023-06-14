@@ -38,6 +38,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
     const now = new Date();
     const hours = now.getHours();
 
+    
     if (hours >= 6 && hours <= 23) {
       settimeBit(false);
     } else {
@@ -65,6 +66,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
     }
   }
 
+  const handleDownload = () => {
+    window.open('/PattiWinner.apk');
+  };
   const fetchdata = async (token) => {
     let data = { token: token, email, wallet }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
@@ -150,7 +154,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         <div className="logo w-40 absolute left-36 top-7">
           <img src="/logopn.png" alt="" />
         </div>
-        <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-8 cursor-pointer justify-center items-start"><img src="StartGame.png" alt="" /></div>
+        <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-7 pl-8 cursor-pointer justify-center items-start"><img src="StartGame.png" alt="" /></div>
+        <div onClick={handleDownload} className="downloadapk absolute z-50 w-60 cursor-pointer top-20 right-5"><img src="downloadmo.png" alt="" /></div>
         <div className="imgphoto w-full h-full overflow-hidden">
           <img src="./frontpage.png" alt="" />
         </div>
@@ -163,8 +168,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           </div> */}
         <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"></div>
         <div className="imgphoto w-full h-full overflow-hidden">
-          <img src="./mobilescr.jpg" alt="" />
+          <img src="./homemo.jpg" alt="" />
         </div>
+        <div onClick={handleDownload} className="downloadapk absolute z-50 w-28 cursor-pointer bottom-10 right-5"><img src="downloadmo.png" alt="" /></div>
       </div>
     </div>}
     {imageload && <div>
