@@ -38,7 +38,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
     const now = new Date();
     const hours = now.getHours();
 
-    if (hours >= 9 && hours <= 23) {
+    if (hours >= 6 && hours <= 23) {
       settimeBit(false);
     } else {
       settimeBit(true);
@@ -311,7 +311,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         </div>
         <div className="foooter w-full flex  flex-col absolute bottom-0 left-0 justify-between">
           <div className="ending uppercase text-lg mt-5 flex flexdis justify-between px-40 items-center bg-white text-red-900 font-bold p-2 text-center ">
-            <p> Batting Start at - 9 AM </p>
+            <p> Batting Start at - 6 AM </p>
             <p> Batting End at - 11 PM </p>
           </div>
           <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">

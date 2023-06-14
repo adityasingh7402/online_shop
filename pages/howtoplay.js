@@ -9,35 +9,39 @@ const Howtoplay = () => {
                 <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full sversti bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
             </div>
             <div className="containerterm text-white p-20 w-3/4 witchsev mx-auto">
-                <div className="headingss pb-10">
-                    <h1 className='text-5xl font-medium pb-2'>How to Play PattiCircle.Com</h1>
-                </div>
-                <div className="pointss pb-6">
-                    <h1 className='text-xl font-medium pb-2'>What is Patti Winner Game?</h1>
-                    <p className='text-sm'>Patti Winner is probably one of the easiest and most entertaining card game. Patti Winner is known for its simple and easy-to-understand rules. The Patti Winner online game, also known as Indian flush, is one of the popular card games in India. It is played using standard 3-card without jokers by yourself only. This is totally base on one lucky card which you have to choose from given 3 cards.</p>
-                </div>
-                <div className="pointss pb-6">
-                    <h1 className='text-xl font-medium pb-2'>Patti Winner Game for Real Cash Online</h1>
-                    <p className='text-sm'>In Patti Winner, the player with the lucky card number wins the pot. Remember that Patti Winner is a game of skill, experience & luck. These basic Patti Winner rules can help you understand the game but it will take a lot of practice and skills to win. Therefore, it is recommended that you play responsibly and within your limits.</p>
-                </div>
-                <div className="pointss pb-6">
-                    <h1 className='text-xl font-medium pb-2'>Why Patti Winner is Better than Others Games</h1>
-                    <p className='text-sm'>Games have their own unique features and appeal to different audiences. Reasons why some people prefer Patti Winner over all:</p>
-                </div>
-                <ul className="points w-3/4 list-disc ml-5 pb-6">
-                    <li className="pointlis pb-4">
-                        <span className='font-medium pr-2 text-lg'>Skill-based: </span>Patti Winner is considered to be a more skill-based game than others. Patti Winner provides players with a platform to understand strategy well and make decisions based on the cards they are dealt.
+                    <div className="headingss pb-10">
+                        <h1 className='text-5xl font-medium pb-2'>How to Play Pattiwinner.Com</h1>
+                    </div>
+                <ul className='list-disc'>
+                    <li className="pointss pb-6">
+                        <h1 className='text-xl font-medium pb-2'>The Objective:</h1>
+                        <ul className='list-disc pl-10'>
+                            <li className='text-base'>Patti Winner is once in a day Bit game. The bit starts daily from 6am early in the morning to 11pm Midnight. The bet result will be shown in your account after one hour from the bit time closed.</li>
+                            <li className='text-base'>To start the bit, Player has to invest their Coins in bit. Players can take coins as much as they want from Patti Winner by making request of it on. The coins are safe and may be redeemed any time by giving request to Patti Winner.</li>
+                            <li className='text-base'>In Patti Winner game, the objective has to guess which one is lucky card with the best 3 cards given by Patti Winner. Players bet on the strength of their mind/experience/luck and skill. The player with hit lucky card wins the game.</li>
+                        </ul>
                     </li>
-                    <li className="pointlis pb-4">
-                        <span className='font-medium pr-2 text-lg'>More Widely Played: </span>Patti Winner is a more widely played game than others, particularly in India because of it simple & easy given task. Everybody can play easily this and no need of any kind of special tricks.
+                    <li className="pointss pb-6">
+                        <h1 className='text-xl font-medium pb-2'>Choose Your Lucky Card Number:</h1>
+                        <p className='text-base pl-5'>Select lucky card from the given three cards. The player click with lucky number becomes winner.</p>
+                    </li>
+                    <li className="pointss pb-6">
+                        <h1 className='text-xl font-medium pb-2'>Place the Bet Amount:</h1>
+                        <p className='text-base pl-5'>Before the bet start, each player contributes a predetermined number of coins to the pot. The pot is the central area where all wagers are placed.</p>
+                    </li>
+                    <li className="pointss pb-6">
+                        <h1 className='text-xl font-medium pb-2'>Guess the Card:</h1>
+                        <p className='text-base pl-5'>The player has to guess the lucky card from the given three cards. </p>
+                    </li>
+                    <li className="pointss pb-6">
+                        <h1 className='text-xl font-medium pb-2'>Winner:</h1>
+                        <p className='text-base pl-5'>After winning the game, coins will be credited their Patti Winner’s account.</p>
+                    </li>
+                    <li className="pointss pb-6">
+                        <h1 className='text-xl font-medium pb-2'>Cancellation:</h1>
+                        <p className='text-base pl-5'>Once bit done, cancellation will not do in any condition.</p>
                     </li>
                 </ul>
-                <div className="pointss pb-6">
-                    <h1 className='text-xl font-medium pb-2'>The Objective:</h1>
-                    <p className='text-sm'>Patti Winner is a once in a day bet game. The bet starts daily from 12pm midnight to 11pm Midnight. The bet result will be shown in your account after one hour from the bet time closed.<br /> To start the bet, Player has to purchase Coins. One Coin cost is Re.1/-. Players can purchase as much as they want from Patti Winner. The coins are safe and may be redeemed any time from Patti Winner to Players bank account by given request to Patti Winner and within 24 Hours the Coins will be credited in their given bank account.
-                        In Patti Winner game, the objective has to guess which one is lucky card with the best 3 cards given by Patti Winner. Players bet on the strength of their mind/experience/luck and skill. The player with hit lucky card wins the game.
-                    </p>
-                </div>
             </div>
         </div>
     )

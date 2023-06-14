@@ -216,7 +216,7 @@ const Addcoin = () => {
                         <div className="box_bank flex flex-row nincol items-start">
                             <div className="qrcode">
                                 <div className="payment-box w-52 border">
-                                    <img src="./payments.jpg" alt="" />
+                                    <img src="./payment.jpg" alt="" />
                                 </div>
                             </div>
                             <div className="divider w-20"></div>

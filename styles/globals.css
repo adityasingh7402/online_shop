@@ -191,6 +191,10 @@ input[type=number]::-webkit-outer-spin-button {
   background-size: cover;
 }
 
+ol.listyle{
+  list-style-type: lower-alpha;
+}
+
 /* .imageloadd{
   background-image: linear-gradient(rgba(0, 0, 0, 0.247),rgba(0, 0, 0, 0.273)),url(/backg.webp);
   background-blend-mode: darken;
