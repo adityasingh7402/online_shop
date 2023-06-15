@@ -128,7 +128,7 @@ const Signup = () => {
         draggable
         pauseOnHover
       />
-      <div className='flex relative containerr h-screen'>
+      <div className='flex relative containerr h-screen sabmainb'>
         {lodingS === false && <span className="fixed flex justify-center items-center z-40 text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <div className="login flex justify-center border-2 bg-white border-gray-300 shadow-md rounded-sm my-9 mx-auto">
           <div className="client-datas flex flex-col w-full px-6 py-4">
