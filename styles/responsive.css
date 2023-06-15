@@ -580,7 +580,7 @@
       }
 }
 
-@media only screen and (max-height: 540px){
+@media only screen and (max-height: 640px){
   .sabmainbs{
     height: 100%;
   }
