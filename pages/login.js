@@ -83,7 +83,7 @@ const Login = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='flex relative containerr h-screen sabmainb justify-center items-center'>
+      <div className='flex relative containerr h-screen sabmainbs justify-center items-center'>
         {lodingS === false && <span className="fixed z-40 flex justify-center items-center text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
         <ToastContainer
           position="top-right"
