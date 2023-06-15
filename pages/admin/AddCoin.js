@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 import addCoin from "../../modal/Addcoin";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import mongoose from "mongoose";
 
 
@@ -21,9 +23,55 @@ const AddCoin = ({ addcoins }) => {
   if (isHidden) {
     return null;
   }
+  const handlePaidButtonClick = async (item) => {
+    let data = { Orderid:item.orderId, Orderamount:item.amount, Orderemail:item.email}
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateAdd`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    let res = await a.json()
+    if(res.success){
+    toast.success(res.success, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    router.reload();
+  }else{
+    toast.error(res.error, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    router.reload();
+  }
+  }
 
   return (
     <>
+      <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+    <div className="containerr p-10 overflow-hidden">
       <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
         Adding Coins - Admin Panel
       </div>
@@ -41,8 +89,8 @@ const AddCoin = ({ addcoins }) => {
           </div>)
         })}
       </div> */}
-      <div className="tables p-5 w-full overflow-y-scroll">
-      <table className="mx-auto">
+      <div className="tables p-5 w-full h-screen">
+      <table className="mx-auto bg-white p-5">
         <tr>
           <th className='text-left border p-2 border-slate-600'><div className="Date text-sm font-medium">Order Id</div></th>
           <th className='text-left border p-2 border-slate-600'><div className="Refrence text-sm font-medium">Name</div></th>
@@ -69,10 +117,11 @@ const AddCoin = ({ addcoins }) => {
             <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transactionId}</div></td>
             <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.status}</div></td>
             <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.createdAt}</div></td>
-            <td className='text-left border p-2 border-slate-600'><button className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Paid</p></button></td>
+            <td className='text-left border p-2 border-slate-600'>{item.status == "Initiated" && <button onClick={() => handlePaidButtonClick(item)} className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Paid</p></button>}</td>
           </tr>
         })}
       </table>
+      </div>
       </div>
     </>
   );

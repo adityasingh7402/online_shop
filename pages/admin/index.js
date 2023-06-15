@@ -67,7 +67,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
             <li onClick={() => setActive("ChangeNum")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Change Card No</li>
             <li onClick={() => setActive("WinnerSelect")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Winner Select</li>
             <li onClick={() => setActive("Withdrawal")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Withdrawal Coins</li>
-            <li onClick={() => setActive("AddCoin")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Adding Coins</li>
+            <Link href={"/admin/AddCoin"}><li className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Adding Coins</li></Link>
           </ul>
           <ul className="flex flex-col mt-2">
             <Link href={'/'}><li className="text-base pb-4 cursor-pointer hover:text-red-200 text-white flex items-center"><button className="px-5 py-2 border broder-white w-full rounded-full hover:bg-red-900"><p>Logout</p></button></li></Link>
@@ -77,7 +77,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
           {active === "Users" && <Userss userss={userss} />}
           {active === "Order" && <Orderr orders={orders} />}
           {active === "Withdrawal" && <Withdrawal withdrawals={withdrawals} />}
-          {active === "AddCoin" && <AddCoin addcoins={addcoins} />}
+          {/* {active === "AddCoin" && <AddCoin addcoins={addcoins} />} */}
           {active === "ChangeNum" && <ChangeNum randomNum={randomNum} />}
           {active === "WinnerSelect" && <WinnerSelect winnOrder={winnOrder} randomNum={randomNum} selectUser={selectUser} selectUsers={selectUsers} />}
         </div>
