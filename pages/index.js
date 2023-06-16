@@ -155,7 +155,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <img src="/logopn.png" alt="" />
         </div>
         <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-7 pl-8 cursor-pointer justify-center items-start"><img src="StartGame.png" alt="" /></div>
-        <div onClick={handleDownload} className="downloadapk absolute z-50 w-40 cursor-pointer top-20 right-5"><img src="downloadmo.png" alt="" /></div>
+        <div onClick={handleDownload} className="downloadapk absolute z-50 w-40 cursor-pointer top-10 right-10"><img src="downloadmo.png" alt="" /></div>
         <div className="imgphoto w-full h-full overflow-hidden">
           <img src="./frontpage.png" alt="" />
         </div>
