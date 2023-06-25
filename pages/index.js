@@ -199,7 +199,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             <div className="information_bit p-8">
               <div className="top_bit flex justify-between items-center w-full text-lg pb-8">
                 <div className="left_bit uppercase text-2xl">Start bit</div>
-                <div className="right_bit">You Choose Card - <span className="text-3xl">{cart.cardno}</span>  & Lucky No.- <span className="text-3xl">{cart.randomNum}</span> </div>
+                <div className="right_bit">You Choose Card - <span className="text-3xl">{cart.cardno}</span></div>
               </div>
               <div className="bottom_pay_bit">
                 <div className="head_bit text-lg pb-2">Enter Coins of Bit</div>
@@ -274,7 +274,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         </div>
         <div className="card hidexontet cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-6">
           <div className="card_no flex justify-around items-center w-4/6 flexcolh">
-            <div className="paddispace card card_first h-min">
+            <div onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_first h-min">
               <div className="upperBody border border-white overflow-hidden relative">
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   1
@@ -287,7 +287,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 </button>
               </div>
             </div>
-            <div className="paddispace card card_second h-min">
+            <div onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_second h-min">
               <div className="upperBody border border-white overflow-hidden relative">
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   2
@@ -300,7 +300,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 </button>
               </div>
             </div>
-            <div className="paddispace card card_third h-min">
+            <div onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_third h-min">
               <div className="upperBody border border-white overflow-hidden relative">
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   3
