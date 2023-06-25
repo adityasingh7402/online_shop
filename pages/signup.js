@@ -173,7 +173,7 @@ const Signup = () => {
               </button></div>
             </form>
             <p className='text-gray-500 pt-2 text-sm'>Already have an account? <span className='text-red-700 font-medium'><Link href={"/login"}>Sign in</Link></span></p>
-            <Link href={'/'}><a><li className="cursor-pointer flex justify-center flex-row items-center"><button className='rounded-full bg-blue-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>Home Page</button></li></a></Link>
+            <li className="cursor-pointer flex justify-center flex-row items-center mt-8"><Link href={'/'}><a><button className='rounded-full bg-blue-700 text-lg px-12 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>Home Page</button></a></Link></li>
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ import RandomNSchema from "../modal/randomCard";
 import { useRouter } from 'next/router';
 
 export default function Home({ logout, user, buyNow, randomNum, cart, clearCart }) {
+  const router = useRouter()
   const [dropdown, setdropdown] = useState(false)
   const [name, setname] = useState("")
   const [email, setemail] = useState("")
@@ -23,6 +24,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   const [imageload, setimageload] = useState(false)
   const [token, settoken] = useState("")
   var [closeScr, setcloseScr] = useState(false)
+  var [loginout, setloginout] = useState(false)
   const [wallet, setwallet] = useState(0)
   const [users, setusers] = useState({ value: null })
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -30,6 +32,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
     if (myuser && myuser.token) {
+      setloginout(true);
       setusers(myuser)
       fetchdata(myuser.token)
       settoken(myuser.token)
@@ -38,7 +41,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
     const now = new Date();
     const hours = now.getHours();
 
-    
+
     if (hours >= 6 && hours <= 23) {
       settimeBit(false);
     } else {
@@ -87,6 +90,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
 
 
   const initiatePayment = async () => {
+    if(loginout){
     setpaymentVer(true);
     let oid = Math.floor(Math.random() * Date.now());
     const data = {
@@ -138,6 +142,10 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
       setamount();
     }
     setpaymentVer(false)
+  }
+  else{
+    router.push('/login');
+  }
   }
 
   return (<>
