@@ -329,7 +329,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             <p> Bitting End at - 11 PM </p>
           </div>
           <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
-            <div className="webname">patticircle.com &#169;</div>
+            <div className="webname">pattiwinner.com &#169;</div>
             <Link href={'./howtoplay'}><div className="term cursor-pointer">How to Play</div></Link>
             <Link href={'./terms'}><div className="term cursor-pointer">Terms & Conditions</div></Link>
             <Link href={'./faq'}><div className="term cursor-pointer">FAQ</div></Link>

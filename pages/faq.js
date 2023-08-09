@@ -13,7 +13,7 @@ const faq = () => {
                     <h1 className='text-4xl font-medium pb-2'>FAQ About Patti Winner Game</h1>
                 </div>
                 <div className="pointss pb-6">
-                    <h1 className='text-xl font-medium pb-2'>What is Patti Circle Game?</h1>
+                    <h1 className='text-xl font-medium pb-2'>What is Patti Winner Game?</h1>
                     <p className='pl-2 paddisp text-base'>Patti Winner is probably one of the easiest and most entertaining card game. Patti Winner is known for its simple and easy-to-understand rules. It is played using standard 3-card without jokers by yourself only. This is totally base on one lucky card which you have to choose from given 3 cards.</p>
                 </div>
                 <div className="pointss pb-6">
