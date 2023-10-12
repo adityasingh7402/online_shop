@@ -73,7 +73,7 @@ const Addcoin = () => {
     const handleChange = async (e) => {
         if (e.target.name == 'amount') {
             setamount(e.target.value)
-            if (e.target.value > 0) {
+            if (e.target.value >= 500) {
               setpaymentVer(false)
             }
             else {
@@ -223,7 +223,7 @@ const Addcoin = () => {
                             <div className="detailss flex justify-start items-start flex-col mt-3">
                                 <div className="box_bank flex justify-center flex-col items-start">
                                     <p className='text-base'>Enter Coins</p>
-                                    <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" name='amount' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
+                                    <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" placeholder='500 or Above' name='amount' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
                                 </div>
                                 <div className="box_bank flex justify-center flex-col items-start">
                                     <p className='text-base'>Enter Transaction ID</p>

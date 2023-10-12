@@ -5,6 +5,9 @@ import Link from "next/link";
 import Head from "next/head";
 import withdrawal from "../../modal/Withdrawal";
 import mongoose from "mongoose";
+import { AiOutlineClose } from "react-icons/ai";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Withdrawal = ({ withdrawals }) => {
@@ -21,13 +24,60 @@ const Withdrawal = ({ withdrawals }) => {
   if (isHidden) {
     return null;
   }
+  const handlePaidButtonClick = async (item) => {
+    let data = { Orderid: item.orderId }
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updatewith`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    let res = await a.json()
+    if (res.success) {
+      toast.success(res.success, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      router.reload();
+    } else {
+      toast.error(res.error, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      router.reload();
+    }
+  }
 
   return (
     <>
-      <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
-        Withdrawal Coins - Admin Panel
-      </div>
-      {/* <div className="box p-5">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Link href={'/admin'}><div className="gotoHome right-10 top-10 fixed cursor-pointer text-red-900 p-2 bg-white font-bold text-4xl"><AiOutlineClose /></div></Link>
+      <div className="containerr p-10 h-full">
+        <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
+          Withdrawal Coins - Admin Panel
+        </div>
+        {/* <div className="box p-5">
         {orders.map((item) => {
           return (<div key={item._id} className="userOrderss border-2 border-gray-200 mt-2 w-full flex flex-col overflow-x-scroll p-5">
             <p className="font-medium">Order Id : <span className="font-normal">{item.orderId}</span></p>
@@ -41,39 +91,42 @@ const Withdrawal = ({ withdrawals }) => {
           </div>)
         })}
       </div> */}
-      <div className="tables p-5 w-full overflow-y-scroll">
-      <table className="mx-auto">
-        <tr>
-          <th className='text-left border p-2 border-slate-600'><div className="Date text-base font-medium">Order Id</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="Refrence text-base font-medium">Name</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="card text-base font-medium">Email</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="Coin text-base font-medium">Mobile</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="Amount text-base font-medium">Amount</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="ifsc text-base font-medium">IFSC</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Name</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Branch</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">Acc No</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">UPI</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="Win text-base font-medium">Status</div></th>
-          <th className='text-left border p-2 border-slate-600'><div className="Loss text-base font-medium">Date on Buy</div></th>
-        </tr>
-        {withdrawals.map((item) => {
-          return <tr key={item._id}>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.name}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.email}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.phone}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.amount}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.ifsc}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.bankName}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.bankBranch}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.accno}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.upino}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.status}</div></td>
-            <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
-          </tr>
-        })}
-      </table>
+        <div className="tables p-5 w-full containerr">
+          <table className="mx-auto bg-white p-5">
+            <tr>
+              <th className='text-left border p-2 border-slate-600'><div className="Date text-base font-medium">Order Id</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="Refrence text-base font-medium">Name</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="card text-base font-medium">Email</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="Coin text-base font-medium">Mobile</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="Amount text-base font-medium">Amount</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="ifsc text-base font-medium">IFSC</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Name</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Branch</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">Acc No</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">UPI</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="Win text-base font-medium">Status</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="Loss text-base font-medium">Date on Buy</div></th>
+              <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Paid</div></th>
+            </tr>
+            {withdrawals.map((item) => {
+              return <tr key={item._id}>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.name}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.email}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.phone}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.amount}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.ifsc}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.bankName}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.bankBranch}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.accno}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.upino}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.status}</div></td>
+                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
+                <td className='text-left border p-2 border-slate-600'>{item.status == "Pending" && <button onClick={() => handlePaidButtonClick(item)} className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Paid</p></button>}</td>
+              </tr>
+            })}
+          </table>
+        </div>
       </div>
     </>
   );
