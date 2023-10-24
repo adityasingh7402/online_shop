@@ -75,19 +75,8 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  const yesterdayStart = new Date();
-  yesterdayStart.setDate(yesterdayStart.getDate() - 1);
-  yesterdayStart.setHours(0, 0, 0, 0);
-
-  const yesterdayEnd = new Date();
-  yesterdayEnd.setDate(yesterdayEnd.getDate() - 1);
-  yesterdayEnd.setHours(23, 59, 59, 999);
 
   const orders = await Orderr.find({
-    createdAt: {
-      $gte: yesterdayStart,
-      $lt: yesterdayEnd
-    }
   });
   return {
     props: { orders: JSON.parse(JSON.stringify(orders)) },

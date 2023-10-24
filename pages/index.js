@@ -29,6 +29,28 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   const [users, setusers] = useState({ value: null })
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  const [time, setTime] = useState(calculateRemainingTime());
+
+  function calculateRemainingTime() {
+    const now = new Date();
+    const secondsUntilNextHour = 3600 - now.getMinutes() * 60 - now.getSeconds();
+    return secondsUntilNextHour;
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(calculateRemainingTime());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+  };
+
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
     if (myuser && myuser.token) {
@@ -60,7 +82,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   const handleChange = async (e) => {
     if (e.target.name == 'amount') {
       setamount(e.target.value)
-      if (e.target.value > 0) {
+      if (e.target.value >= 50) {
         setpaymentVer(false)
       }
       else {
@@ -147,6 +169,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
     router.push('/login');
   }
   }
+  
 
   return (<>
     {!imageload && !isSmallScreen && <div className="imageloadd containerr">
@@ -324,9 +347,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           </div>
         </div>
         <div className="foooter w-full flex  flex-col absolute bottom-0 left-0 justify-between">
-          <div className="ending uppercase text-lg mt-5 flex flexdis justify-between px-40 items-center bg-white text-red-900 font-bold p-2 text-center ">
-            <p> Bitting Start at - 6 AM </p>
-            <p> Bitting End at - 11 PM </p>
+          <div className="ending uppercase text-lg mt-5 flex flexdis justify-end px-40 items-center bg-white text-red-900 font-bold p-2 text-center ">
+            <p> Result Shows in - {formatTime(time)}</p>
           </div>
           <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
             <div className="webname">pattiwinner.com &#169;</div>

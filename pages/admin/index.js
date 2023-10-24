@@ -93,13 +93,6 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  const yesterdayStart = new Date();
-  yesterdayStart.setDate(yesterdayStart.getDate() - 1);
-  yesterdayStart.setHours(0, 0, 0, 0);
-
-  const yesterdayEnd = new Date();
-  yesterdayEnd.setDate(yesterdayEnd.getDate() - 1);
-  yesterdayEnd.setHours(23, 59, 59, 999);
 
   const orders = await Order.find();
   const withdrawals = await OrderrWi.find();
@@ -107,10 +100,7 @@ export async function getServerSideProps(context) {
   const userss = await Usersss.find();
   const Querys = await Query.find();
   const winnOrder = await Order.find({
-    createdAt: {
-      $gte: yesterdayStart,
-      $lt: yesterdayEnd
-    }, winning: "Pending"
+     winning: "Pending"
   });
   let randomNum = await RandomNSchema.findOne();
   return {

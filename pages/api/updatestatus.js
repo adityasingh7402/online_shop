@@ -4,10 +4,10 @@ import User from "../../modal/User"
 import connectDb from "../../middleware/mongoose"
 
 const handler = async (req, res) => {
-    const startOfYesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-    startOfYesterday.setHours(0, 0, 0, 0);
-    const endOfYesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-    endOfYesterday.setHours(23, 59, 59, 999);
+    // const startOfYesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    // startOfYesterday.setHours(0, 0, 0, 0);
+    // const endOfYesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    // endOfYesterday.setHours(23, 59, 59, 999);
 
     if (req.method == "POST") {
         try {
@@ -16,10 +16,10 @@ const handler = async (req, res) => {
                 randomNum: req.body.randomNum,
                 cardno: req.body.cardno,
                 winning: "Pending",
-                createdAt: {
-                    $gte: startOfYesterday,
-                    $lte: endOfYesterday
-                }
+                // createdAt: {
+                //     $gte: startOfYesterday,
+                //     $lte: endOfYesterday
+                // }
             });
 
             // Group the orders by email
@@ -50,10 +50,10 @@ const handler = async (req, res) => {
         }
         let dbusers = await Order.updateMany({
             winning: "Pending",
-            createdAt: {
-                $gte: startOfYesterday,
-                $lte: endOfYesterday
-            },
+            // createdAt: {
+            //     $gte: startOfYesterday,
+            //     $lte: endOfYesterday
+            // },
             $or: [
                 { randomNum: { $ne: req.body.randomNum } },
                 { cardno: { $ne: req.body.cardno } }
@@ -64,10 +64,11 @@ const handler = async (req, res) => {
 
         let dbuser = await Order.updateMany({
             winning: "Pending",
-            createdAt: {
-                $gte: startOfYesterday,
-                $lte: endOfYesterday
-            }, randomNum: req.body.randomNum, cardno: req.body.cardno
+            // createdAt: {
+            //     $gte: startOfYesterday,
+            //     $lte: endOfYesterday
+            // },
+             randomNum: req.body.randomNum, cardno: req.body.cardno
         },
             {
                 winning: "Win",
