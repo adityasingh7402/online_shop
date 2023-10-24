@@ -69,6 +69,10 @@
   .headingT {
     font-size: 4rem;
   }
+  .logo-mob{
+    margin-left: 0;
+    margin-top: 4rem;
+  }
 }
 @media only screen and (max-width: 650px) {
   .maginIt {

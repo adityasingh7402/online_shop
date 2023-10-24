@@ -10,9 +10,12 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlinePlus } from "react-icons/ai";
 import mongoose from "mongoose";
 import RandomNSchema from "../modal/randomCard";
+import Orderr from "../modal/Order";
 import { useRouter } from 'next/router';
+import moment from 'moment';
+import Preloader from '../pages/componenat/Preloader';
 
-export default function Home({ logout, user, buyNow, randomNum, cart, clearCart }) {
+export default function Home({ logout, user, buyNow, randomNum, cart, clearCart, orders }) {
   const router = useRouter()
   const [dropdown, setdropdown] = useState(false)
   const [name, setname] = useState("")
@@ -28,6 +31,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   const [wallet, setwallet] = useState(0)
   const [users, setusers] = useState({ value: null })
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [time, setTime] = useState(calculateRemainingTime());
 
@@ -38,6 +42,16 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
   }
 
   useEffect(() => {
+    const hasVisitedInSession = sessionStorage.getItem('hasVisitedInSession');
+
+    if (hasVisitedInSession) {
+      setIsLoading(false);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+        sessionStorage.setItem('hasVisitedInSession', 'true');
+      }, 6000);
+    }
     const interval = setInterval(() => {
       setTime(calculateRemainingTime());
     }, 1000);
@@ -112,66 +126,67 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
 
 
   const initiatePayment = async () => {
-    if(loginout){
-    setpaymentVer(true);
-    let oid = Math.floor(Math.random() * Date.now());
-    const data = {
-      cart, oid, amount, email, name, phone, wallet, randomNum: cart.randomNum,
-      cardno: cart.cardno,
-    };
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    let txnRes = await a.json()
-    if (txnRes.success) {
-      toast.success(txnRes.success, {
-        position: "top-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      let walletUp = wallet - amount;
-      let data2 = { token: token, email, walletUp }
-      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateWallet`, {
+    if (loginout) {
+      setpaymentVer(true);
+      let oid = Math.floor(Math.random() * Date.now());
+      const data = {
+        cart, oid, amount, email, name, phone, wallet, randomNum: cart.randomNum,
+        cardno: cart.cardno,
+      };
+      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data2),
+        body: JSON.stringify(data),
       })
-      setwallet(wallet - amount)
-      setcloseScr(false)
-      setamount();
+      let txnRes = await a.json()
+      if (txnRes.success) {
+        toast.success(txnRes.success, {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        let walletUp = wallet - amount;
+        let data2 = { token: token, email, walletUp }
+        let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateWallet`, {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data2),
+        })
+        setwallet(wallet - amount)
+        setcloseScr(false)
+        setamount();
+      }
+      else {
+        toast.error(txnRes.error, {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setcloseScr(false)
+        setamount();
+      }
+      setpaymentVer(false)
     }
     else {
-      toast.error(txnRes.error, {
-        position: "top-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      setcloseScr(false)
-      setamount();
+      router.push('/login');
     }
-    setpaymentVer(false)
   }
-  else{
-    router.push('/login');
-  }
-  }
-  
+
 
   return (<>
+    {isLoading && <Preloader />}
     {!imageload && !isSmallScreen && <div className="imageloadd containerr">
       <Head>
         <title>Patti Winner- Win Win Game</title>
@@ -201,6 +216,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
         <div className="imgphoto w-full h-full overflow-hidden">
           <img src="./homemo.jpg" alt="" />
         </div>
+        <div className="shs absolute -left-28">
+          <img src="/card-ace.png" alt="" />
+        </div>
         {/* <div onClick={handleDownload} className="downloadapk absolute z-50 w-28 cursor-pointer bottom-10 right-5"><img src="downloadmo.png" alt="" /></div> */}
       </div>
     </div>}
@@ -229,11 +247,11 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <div className="batInfo bg-white h-72 rounded-sm top-1/4 mx-auto mt-16 shadow-md">
             <div className="information_bit p-8">
               <div className="top_bit flex justify-between items-center w-full text-lg pb-8">
-                <div className="left_bit uppercase text-2xl">Start bit</div>
+                <div className="left_bit uppercase text-2xl">Start Odd</div>
                 <div className="right_bit">You Choose Card - <span className="text-3xl">{cart.cardno}</span></div>
               </div>
               <div className="bottom_pay_bit">
-                <div className="head_bit text-lg pb-2">Enter Coins of Bit</div>
+                <div className="head_bit text-lg pb-2">Enter Coins of Odd</div>
                 <div className="amount_bit">
                   <input value={amount} onChange={handleChange} type="Number" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border " />
                 </div>
@@ -250,9 +268,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           <div className="logo w-28">
             <img src="/logopn.png" alt="" />
           </div>
-          <div className="uppercase text-4xl margingr displayno text-white py-5 px-20">
-            <div className="clasimg">
-              Choose Your Lucky Card
+          <div className="uppercase text-5xl font-semibold margingr displayno text-white py-5 px-20">
+            <div className="clasimg font-serif animate-charcter m-auto">
+              Choose Your ODDS
             </div>
           </div>
           <div className="user_name absluser relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
@@ -260,9 +278,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             {dropdown && <div className="dropdown absolute -left-10 top-11 w-48 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
               <ul>
                 <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-red-300 text-red-700 py-2 hover:text-red-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
-                <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Bitting Details</span></li></a></Link>
+                <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>History</span></li></a></Link>
                 <Link href={'/addcoin'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Add Coins</span></li></a></Link>
-                <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdrawal Coins</span></li></a></Link>
+                <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdraw Coins</span></li></a></Link>
                 <li onClick={logout} className="text-base border-t flex flex-row items-center cursor-pointer border-red-300 text-red-700 py-2 hover:text-red-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
               </ul>
             </div>}
@@ -274,19 +292,19 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
             {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span></div></Link>}
           </div>
         </div>
-        <div className="uppercasem text-4xl hidden displaout  text-white py-5 px-20">
-          <div className="clasimg asdasimng flex justify-center items-center">
-            Choose Your Lucky Card
+        <div className="uppercasem text-3xl hidden displaout font-semibold text-white py-5 px-20">
+          <div className="clasimg font-serif flex justify-center animate-charcter">
+            Choose Your ODDS
           </div>
         </div>
-        <div className="welc flex flexdis paddisp justify-between items-center text-white px-14 mt-5">
+        <div className="welc flex flexdis paddisp justify-between items-center text-white px-14 mt-10">
           <div className="welc_text text-xl flex padingbtn flexdis justify-center items-center flex-row">
             <p className="paditex">Today&rsquo;s Lucky Number :</p>
             <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
               {randomNum.card1}
             </div>
           </div>
-          <div className="random_no flex justify-between flexdis items-center text-xl">
+          {/* <div className="random_no flex justify-between flexdis items-center text-xl">
             <div className="text pr-2">Today Numbers :  </div>
             <div className="R_number">
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
@@ -301,7 +319,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="card hidexontet cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-6">
           <div className="card_no flex justify-around items-center w-4/6 flexcolh">
@@ -310,7 +328,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   1
                 </div>
-                <img src="/card1.png" alt="" />
+                <img src="/card-ace.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -323,7 +341,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   2
                 </div>
-                <img src="/card1.png" alt="" />
+                <img src="/card-ace.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -336,7 +354,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
                 <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   3
                 </div>
-                <img src="/card1.png" alt="" />
+                <img src="/card-ace.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -347,8 +365,15 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart 
           </div>
         </div>
         <div className="foooter w-full flex  flex-col absolute bottom-0 left-0 justify-between">
-          <div className="ending uppercase text-lg mt-5 flex flexdis justify-end px-40 items-center bg-white text-red-900 font-bold p-2 text-center ">
-            <p> Result Shows in - {formatTime(time)}</p>
+          <div className="ending uppercase text-lg mt-5 flex flexdis justify-end px-10 items-center bg-white text-red-900 font-bold p-2 text-center ">
+            {/* <p> Result Shows in - {formatTime(time)}</p> */}
+            <marquee direction="left" scrollamount="10">
+              <ol className="flex flex-row">
+                {orders.map((order, index) => (
+                  <li className="mr-40" key={index}>{order.name}-₹{order.amount * 2 - 0.2 * order.amount}</li>
+                ))}
+              </ol>
+            </marquee>
           </div>
           <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
             <div className="webname">pattiwinner.com &#169;</div>
@@ -368,8 +393,17 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
+  const startOfToday = moment().startOf('day'); // Midnight today
+  const endOfToday = moment().endOf('day');
+
   let randomNum = await RandomNSchema.findOne();
+  const orders = await Orderr.find({
+    winner: "Win", updatedAt: {
+      $gte: startOfToday.toDate(),
+      $lt: endOfToday.toDate()
+    }
+  });
   return {
-    props: { randomNum: JSON.parse(JSON.stringify(randomNum)) },
+    props: { randomNum: JSON.parse(JSON.stringify(randomNum)), orders: JSON.parse(JSON.stringify(orders)) },
   };
 }

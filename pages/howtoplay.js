@@ -6,7 +6,7 @@ const Howtoplay = () => {
     return (
         <div className='containerr w-full phonesers h-full relative'>
             <div className="gotoHome right-10 btphonre top-10 fixed cursor-pointer font-bold text-4xl">
-                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full sversti bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
+                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full sversti bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go Back</button></div></a></Link>
             </div>
             <div className="containerterm text-white p-20 w-3/4 witchsev mx-auto">
                     <div className="headingss pb-10">
@@ -16,8 +16,8 @@ const Howtoplay = () => {
                     <li className="pointss pb-6">
                         <h1 className='text-xl font-medium pb-2'>The Objective:</h1>
                         <ul className='list-disc pl-10 paddisp'>
-                            <li className='text-base'>Patti Winner is once in a day Bit game. The bit starts daily from 6am early in the morning to 11pm Midnight. The bet result will be shown in your account after one hour from the bit time closed.</li>
-                            <li className='text-base'>To start the bit, Player has to invest their Coins in bit. Players can take coins as much as they want from Patti Winner by making request of it on. The coins are safe and may be redeemed any time by giving request to Patti Winner.</li>
+                            <li className='text-base'>Patti Winner is once in a day Bet game. The Bet starts daily from 6am early in the morning to 11pm Midnight. The bet result will be shown in your account after one hour from the Bet time closed.</li>
+                            <li className='text-base'>To start the Bet, Player has to invest their Coins in Bet. Players can take coins as much as they want from Patti Winner by making request of it on. The coins are safe and may be redeemed any time by giving request to Patti Winner.</li>
                             <li className='text-base'>In Patti Winner game, the objective has to guess which one is lucky card with the best 3 cards given by Patti Winner. Players bet on the strength of their mind/experience/luck and skill. The player with hit lucky card wins the game.</li>
                         </ul>
                     </li>
@@ -39,7 +39,7 @@ const Howtoplay = () => {
                     </li>
                     <li className="pointss pb-6">
                         <h1 className='text-xl font-medium pb-2'>Cancellation:</h1>
-                        <p className='text-base pl-5 paddisp'>Once bit done, cancellation will not do in any condition.</p>
+                        <p className='text-base pl-5 paddisp'>Once Bet done, cancellation will not do in any condition.</p>
                     </li>
                 </ul>
             </div>

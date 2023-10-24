@@ -82,7 +82,7 @@ const Contact = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="gotoHome btphonre right-10 top-10 z-10 fixed cursor-pointer  p-3  font-bold text-4xl">
-      <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
+      <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go Back</button></div></a></Link>
       </div>
       <ToastContainer
         position="top-right"

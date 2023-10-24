@@ -237,7 +237,7 @@ const Addcoin = () => {
                         <div className="box_button flex justify-around flex-row items-center w-full mt-7">
                             <div className="botton_bit btnwithf flex justify-between items-center w-1/2">
                                 {/* <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button> */}
-                                <Link href={'./'}><button className='font-medium text-base rounded-full  hover:bg-red-700 w-40 px-2 py-3 bg-white hover:text-white text-gray-800 border transition-all border-red-700'><h6>Go To Back</h6></button></Link>
+                                <Link href={'./'}><button className='font-medium text-base rounded-full  hover:bg-red-700 w-40 px-2 py-3 bg-white hover:text-white text-gray-800 border transition-all border-red-700'><h6>Go Back</h6></button></Link>
                                 <button disabled={paymentVer} onClick={initiatePaymentdemo} className='font-medium text-base rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-40 px-2 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button>
                             </div>
                         </div>

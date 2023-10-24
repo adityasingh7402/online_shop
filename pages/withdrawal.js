@@ -155,7 +155,7 @@ const Withdrawal = () => {
                 pauseOnHover
             />
             <div className="gotoHome right-10 sersbtn top-10 fixed cursor-pointer font-bold text-4xl">
-                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go To Back</button></div></a></Link>
+                <Link href={'/'}><a><div className="flex cursor-pointer justify-center items-center"><button className='rounded-full bg-red-900 text-lg px-12 mt-8 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-800'>Go Back</button></div></a></Link>
             </div>
             {lodingS === false && <span className="fixed flex justify-center items-center text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
             <div className="checkout-title my-8 sversti mx-5 w-full flex flex-row">
@@ -198,9 +198,9 @@ const Withdrawal = () => {
                     </div>
 
                     <div className="products flex flex-col w-full text-sm mt-8 overflow-scroll">
-                        <p className='flex justify-center items-center text-4xl py-8 text-gray-700'>Withdrawal List</p>
+                        <p className='flex justify-center items-center text-4xl py-8 text-gray-700'>Withdraw List</p>
                         {orders.length == 0 && <div className="flex justify-center text-4xl text-red-700 py-20 items-center border-t border-b border-gray-200">
-                            Your Order List is Empty....
+                            Your Withdraw List is Empty....
                         </div>}
                         <table>
                             <tr>
