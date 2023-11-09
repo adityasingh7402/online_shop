@@ -374,9 +374,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           <div className="card_no flex justify-around items-center w-4/6 flexcolh">
             <div onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_first h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-7xl left-11 top-12 text-white">
+                {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   1
-                </div>
+                </div> */}
                 <img src="/card-ace.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
@@ -387,9 +387,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             </div>
             <div onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_second h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-7xl left-11 top-12 text-white">
+                {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   2
-                </div>
+                </div> */}
                 <img src="/card-ace.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
@@ -400,9 +400,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             </div>
             <div onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_third h-min">
               <div className="upperBody border border-white overflow-hidden relative">
-                <div className="cardNo absolute text-7xl left-11 top-12 text-white">
+                {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   3
-                </div>
+                </div> */}
                 <img src="/card-ace.png" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
