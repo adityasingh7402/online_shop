@@ -206,6 +206,9 @@ ol.listyle{
   width: 8rem;
   height: 12rem;
 }
+.carNo{
+  width: 8rem;
+}
 .upperBody{
   border-radius: 4px;
   width: 8rem;

@@ -106,21 +106,24 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
         <div className="grid_random flex flex-row justify-around items-center">
           <div className="fircol flex justify-between items-center mt-8">
             <div onClick={() => { selectUser(randomNum.card1, 1); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
-              <div className="cardno">Card no- 1,  Random No- {randomNum.card1}</div>
+              {/* <div className="cardno">Card no- 1,  Random No- {randomNum.card1}</div> */}
+              <div className="cardno">Card no- 1</div>
               <div className="noOfCard">Total Users: {firstCf}</div>
               <div className="noOfCard">Total Bit Amount:  ₹{amountFfitst}</div>
             </div>
           </div>
           <div className="fircol flex justify-between items-center mt-8">
             <div onClick={() => { selectUser(randomNum.card1, 2); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
-              <div className="cardno">Card no- 2,  Random No- {randomNum.card1}</div>
+              {/* <div className="cardno">Card no- 2,  Random No- {randomNum.card1}</div> */}
+              <div className="cardno">Card no- 2</div>
               <div className="noOfCard">Total Users: {secondCf}</div>
               <div className="noOfCard">Total Bit Amount: ₹{amountSfitst}</div>
             </div>
           </div>
           <div className="fircol flex justify-between items-center mt-8">
             <div onClick={() => { selectUser(randomNum.card1, 3); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
-              <div className="cardno">Card no- 3,  Random No- {randomNum.card1}</div>
+              {/* <div className="cardno">Card no- 3,  Random No- {randomNum.card1}</div> */}
+              <div className="cardno">Card no- 3</div>
               <div className="noOfCard">Total Users: {thirdCf}</div>
               <div className="noOfCard">Total Bit Amount:  ₹{amountTfitst}</div>
             </div>
@@ -129,7 +132,8 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
         <div className="btnn flex justify-center items-center pt-10">
         <div className="fircol flex justify-between items-center mt-8">
             <div className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
-              <div className="cardno">Card no- {selectUsers.cardno},  Random No- {selectUsers.randomNum}</div>
+              {/* <div className="cardno">Card no- {selectUsers.cardno},  Random No- {selectUsers.randomNum}</div> */}
+              <div className="cardno">Card no- {selectUsers.cardno}</div>
             </div>
           </div>
         </div>

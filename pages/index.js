@@ -32,6 +32,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   const [users, setusers] = useState({ value: null })
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [ordersIn, setordersIn] = useState([])
 
   const [time, setTime] = useState(calculateRemainingTime());
 
@@ -64,6 +65,54 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     const remainingSeconds = seconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
   };
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getwinnerinfo`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: JSON.parse(localStorage.getItem('myuser')).token }),
+      })
+      let res = await a.json()
+      
+      res.OrdersInfo.forEach(item => {
+        console.log(item)
+        if (item.winning === 'Win') {
+          toast.success(`You Win ${2 * item.amount - 0.2 * item.amount} Coins `, {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }
+        else{
+          toast.error(`You Loss ${item.amount} Coins`, {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }
+      });
+    }
+    if (!localStorage.getItem('myuser')) {
+      router.push('/')
+    }
+    else {
+      fetchOrders()
+    }
+
+  }, [])
 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
@@ -233,7 +282,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
       </Head>
       <ToastContainer
         position="top-right"
-        autoClose={1000}
+        autoClose={false}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -298,12 +347,12 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           </div>
         </div>
         <div className="welc flex flexdis paddisp justify-between items-center text-white px-14 mt-10">
-          <div className="welc_text text-xl flex padingbtn flexdis justify-center items-center flex-row">
+          {/* <div className="welc_text text-xl flex padingbtn flexdis justify-center items-center flex-row">
             <p className="paditex">Today&rsquo;s Lucky Number :</p>
             <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
               {randomNum.card1}
             </div>
-          </div>
+          </div> */}
           {/* <div className="random_no flex justify-between flexdis items-center text-xl">
             <div className="text pr-2">Today Numbers :  </div>
             <div className="R_number">
@@ -321,7 +370,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             </div>
           </div> */}
         </div>
-        <div className="card hidexontet cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-6">
+        <div className="card hidexontet cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-12">
           <div className="card_no flex justify-around items-center w-4/6 flexcolh">
             <div onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_first h-min">
               <div className="upperBody border border-white overflow-hidden relative">
@@ -332,7 +381,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  {randomNum.card1}
+                  1
                 </button>
               </div>
             </div>
@@ -345,7 +394,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  {randomNum.card1}
+                  2
                 </button>
               </div>
             </div>
@@ -358,7 +407,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  {randomNum.card1}
+                  3
                 </button>
               </div>
             </div>
