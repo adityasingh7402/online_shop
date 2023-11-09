@@ -387,7 +387,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             </div>
             <div onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_second h-min">
               <div className="upperBody overflow-hidden relative">
-                {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
+                {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white"> /
                   2
                 </div> */}
                 <img src="/card-2.jpg" alt="" />
