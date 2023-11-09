@@ -85,6 +85,14 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
         progress: undefined,
       });
     }
+    let data2 = { cardno: selectUsers.cardno}
+        let a2 = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateCardN`, {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data2),
+        })
   }
   if (isHidden) {
     return null;

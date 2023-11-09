@@ -6,7 +6,7 @@ const handler = async (req, res) => {
         let dbrandomCard = await randomCard.findOneAndUpdate(
             {
                 card1: req.body.first_no,
-                card2: req.body.second_no,
+                card2: req.body.cardno,
                 card3: req.body.third_no,
             }
         )
