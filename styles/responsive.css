@@ -333,6 +333,12 @@
   .textTitle {
     font-size: 1.5rem;
   }
+  .winnershow{
+    flex-direction: column;
+  }
+  .winnershow > .left{
+    margin-bottom: 3rem;
+  }
 }
 @media only screen and (max-width: 460px) {
   .producDetail {
@@ -471,6 +477,9 @@
     margin-left: 20px;
     margin-right: 20px;
   }
+  .winnershow{
+    padding-bottom: 11rem;
+  }
 }
 
 @media only screen and (max-width: 696px) {
@@ -519,7 +528,7 @@
         gap: 5px;
     }
     .hidexontet{
-        padding-bottom: 14rem;
+        padding-bottom: 2rem;
     }
     .paddispace{
         padding-bottom: 20px;
