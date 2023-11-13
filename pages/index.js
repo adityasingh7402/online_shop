@@ -416,7 +416,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         <div className="winnershow w-full flex justify-between items-center px-4 -mt-5">
           <div className="left">
             <div className="left-item flex flex-col justify-center items-center">
-              <p className="text-white pb-2 text-xl">Last hour's winning card :</p>
+              <p className="text-white pb-2 text-xl font-serif">Last hour's winning card :</p>
               <div className="resImg w-16 h-16">
                 <img src={`/card-${randomNum.card2}.jpg`} alt="" />
               </div>
@@ -424,7 +424,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           </div>
           <div className="right">
             <div className="right-items rounded-sm">
-            <p className="text-xl text-white mx-4 py-3 font-medium flex justify-center items-center"> Winner Announcement - <span className="w-14">{formatTime(time)}</span></p>
+            <p className="text-xl text-white mx-4 py-3 font-medium flex justify-center items-center font-serif"> Winner Announcement - <span className="w-14">{formatTime(time)}</span></p>
             </div>
           </div>
         </div>
