@@ -138,9 +138,6 @@
   .cardmrhon{
     margin-top: .5rem;
   }
-  .welc{
-    margin-top: 6rem;
-  }
 }
 
 @media only screen and (max-width: 1070px) {
@@ -173,6 +170,11 @@
     padding-left: 0px;
   }
 }
+@media only screen and (max-width: 1380px) {
+  .welc{
+    margin-top: 1rem;
+  }
+}
 @media only screen and (max-width: 495px) {
   .productsIt {
     grid-template-columns: auto;
@@ -183,6 +185,9 @@
   }
   .shopCat {
     width: 21rem;
+  }
+  .welc{
+    margin-top: 40px;
   }
 }
 
