@@ -377,7 +377,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   1
                 </div> */}
-                <img src="/card-1.jpg" alt="" />
+                <img src="/card/card-1.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -390,7 +390,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white"> /
                   2
                 </div> */}
-                <img src="/card-2.jpg" alt="" />
+                <img src="/card/card-2.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -403,7 +403,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   3
                 </div> */}
-                <img src="/card-3.jpg" alt="" />
+                <img src="/card/card-3.jpg" alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -418,7 +418,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             <div className="left-item flex flex-col justify-center items-center">
               <p className="text-white pb-2 text-xl font-serif">Last hour's winning card :</p>
               <div className="resImg w-16 h-16">
-                <img src={`/card-${randomNum.card2}.jpg`} alt="" />
+                <img src={`/card/card-${randomNum.card2}.jpg`} alt="" />
               </div>
             </div>
           </div>
