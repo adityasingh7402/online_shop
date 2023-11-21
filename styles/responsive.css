@@ -175,6 +175,11 @@
     margin-top: 1rem;
   }
 }
+@media only screen and (max-width: 1344px) {
+  .uppercase{
+    font-size: 2.3rem;
+  }
+}
 @media only screen and (max-width: 495px) {
   .productsIt {
     grid-template-columns: auto;
