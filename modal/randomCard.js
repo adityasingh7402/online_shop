@@ -4,6 +4,7 @@ const RandomNSchema = new mongoose.Schema({
     card1: { type: Number, required: true },
     card2: { type: Number, required: true },
     card3: { type: Number, required: true },
+    wiinerCard: { type: Number, required: true },
 }, { timestamps: true });
 
 // mongoose.models = {}

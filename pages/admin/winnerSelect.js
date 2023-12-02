@@ -85,7 +85,7 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
         progress: undefined,
       });
     }
-    let data2 = { cardno: selectUsers.cardno}
+    let data2 = { randomNum: selectUsers.randomNum}
         let a2 = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateCardN`, {
           method: 'POST', // or 'PUT'
           headers: {

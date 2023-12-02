@@ -76,7 +76,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         body: JSON.stringify({ token: JSON.parse(localStorage.getItem('myuser')).token }),
       })
       let res = await a.json()
-      
+
       res.OrdersInfo.forEach(item => {
         console.log(item)
         if (item.winning === 'Win') {
@@ -89,9 +89,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             draggable: true,
             progress: undefined,
             theme: "light",
-            });
+          });
         }
-        else{
+        else {
           toast.error(`You Loss ${item.amount} Coins`, {
             position: "top-right",
             autoClose: false,
@@ -101,7 +101,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             draggable: true,
             progress: undefined,
             theme: "light",
-            });
+          });
         }
       });
     }
@@ -377,7 +377,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   1
                 </div> */}
-                <img src="/card/card-1.jpg" alt="" />
+                <img src={`/card/card-${randomNum.card1}.png`} alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -390,7 +390,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white"> /
                   2
                 </div> */}
-                <img src="/card/card-2.jpg" alt="" />
+                <img src={`/card/card-${randomNum.card2}.png`} alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -403,7 +403,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   3
                 </div> */}
-                <img src="/card/card-3.jpg" alt="" />
+                <img src={`/card/card-${randomNum.card3}.png`} alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                 <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
@@ -413,24 +413,27 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             </div>
           </div>
         </div>
-        <div className="winnershow w-full flex justify-between items-center px-4 -mt-5">
+        <div className="winnershow w-full flex justify-between items-center px-8 -mt-20">
           <div className="left">
-            <div className="left-item flex flex-col justify-center items-center">
-              <p className="text-white pb-2 text-xl font-serif">Last hour's winning card :</p>
-              <div className="resImg w-16 h-16">
-                <img src={`/card/card-${randomNum.card2}.jpg`} alt="" />
+            <div className="left-item flex flex-row justify-center items-center">
+              <div className="leftwinner flex justify-center items-center flex-col">
+                <p className="text-white text-xl font-serif">Last hour's</p>
+                <p className="text-white text-xl font-serif">winning card</p>
+              </div>
+              <div className="resImg w-16 h-16 ml-3">
+                <img src={`/card/card-${randomNum.wiinerCard}.png`} alt="" />
               </div>
             </div>
           </div>
           <div className="right">
             <div className="right-items rounded-sm">
-            <p className="text-xl text-white mx-4 py-3 font-medium flex justify-center items-center font-serif"> Winner Announcement - <span className="w-14">{formatTime(time)}</span></p>
+              <p className="text-xl text-white mx-4 py-3 flex-col font-medium flex justify-center items-center font-serif"> Winner Announcement  <span className="text-3xl">-{formatTime(time)}</span></p>
             </div>
           </div>
         </div>
         <div className="foooter w-full flex  flex-col absolute bottom-0 left-0 justify-between">
           <div className="ending uppercase text-lg mt-5 flex flexdis justify-end px-10 items-center bg-white text-red-900 font-bold p-2 text-center ">
-            
+
             <marquee direction="left" scrollamount="10">
               <ol className="flex flex-row">
                 {orders.map((order, index) => (

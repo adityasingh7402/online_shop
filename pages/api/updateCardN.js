@@ -6,8 +6,9 @@ const handler = async (req, res) => {
         let dbrandomCard = await randomCard.findOneAndUpdate(
             {
                 card1: req.body.first_no,
-                card2: req.body.cardno,
+                card2: req.body.second_no,
                 card3: req.body.third_no,
+                wiinerCard: req.body.randomNum,
             }
         )
         res.status(200).json({ success: true })
