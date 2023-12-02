@@ -213,6 +213,12 @@
   .imageWidt {
     width: 40%;
   }
+  .winnershow{
+    margin: 0;
+  }
+  .winnershow > .left > .left-item{
+    flex-direction: column;
+  }
 }
 @media only screen and (max-width: 831px) {
   .productFle {

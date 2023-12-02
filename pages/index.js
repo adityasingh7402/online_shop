@@ -437,7 +437,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             <marquee direction="left" scrollamount="10">
               <ol className="flex flex-row">
                 {orders.map((order, index) => (
-                  <li className="mr-40" key={index}>{order.name}-₹{order.amount * 2 - 0.2 * order.amount}</li>
+                  <li className="mr-40 text-base font-serif" key={index}>{order.name}-₹{order.amount * 2 - 0.2 * order.amount}</li>
                 ))}
               </ol>
             </marquee>
