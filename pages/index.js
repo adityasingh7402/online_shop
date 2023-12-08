@@ -38,8 +38,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
   function calculateRemainingTime() {
     const now = new Date();
-    const secondsUntilNextHour = 3600 - now.getMinutes() * 60 - now.getSeconds();
-    return secondsUntilNextHour;
+    const secondsUntilNextDay = 24 * 60 * 60 - (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds());
+    return secondsUntilNextDay;
   }
 
   useEffect(() => {
@@ -61,9 +61,10 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   }, []);
 
   const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
   };
 
   useEffect(() => {
@@ -380,8 +381,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 <img src={`/card/card-${randomNum.card1}.png`} alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  1
+                <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
+                  Select
                 </button>
               </div>
             </div>
@@ -393,8 +394,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 <img src={`/card/card-${randomNum.card2}.png`} alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  2
+                <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
+                  Select
                 </button>
               </div>
             </div>
@@ -406,8 +407,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 <img src={`/card/card-${randomNum.card3}.png`} alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-full w-9 h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  3
+                <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
+                  Select
                 </button>
               </div>
             </div>
