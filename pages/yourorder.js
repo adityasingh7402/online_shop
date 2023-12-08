@@ -114,7 +114,7 @@ const YourOrder = () => {
                 return <tr key={item._id}>
                   <td className='text-left border p-3 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
                   <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-                  <td className='text-left border p-3 border-slate-600'><div className="Card">Card No - {item.cardno}, Lucky No- {item.randomNum}</div></td>
+                  <td className='text-left border p-3 border-slate-600'><div className="Card">Card No - {item.randomNum}</div></td>
                   <td className='text-left border p-3 border-slate-600'><div className="Coin">{item.amount}</div></td>
                   <td className='text-left border p-3 border-slate-600'><div className="Status">
                     {item.winning == "Pending" && <span className='font-medium text-yellow-500'>{item.winning}</span>}

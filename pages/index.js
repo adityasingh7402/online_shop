@@ -386,7 +386,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 </button>
               </div>
             </div>
-            <div onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_second h-min">
+            <div onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_second h-min">
               <div className="upperBody overflow-hidden relative">
                 {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white"> /
                   2
@@ -394,12 +394,12 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 <img src={`/card/card-${randomNum.card2}.png`} alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
+                <button onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   Select
                 </button>
               </div>
             </div>
-            <div onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_third h-min">
+            <div onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_third h-min">
               <div className="upperBody overflow-hidden relative">
                 {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
                   3
@@ -407,7 +407,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 <img src={`/card/card-${randomNum.card3}.png`} alt="" />
               </div>
               <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
+                <button onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
                   Select
                 </button>
               </div>

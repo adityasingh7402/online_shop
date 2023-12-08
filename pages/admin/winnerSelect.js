@@ -30,32 +30,31 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
     } else {
       setIsHidden(false);
     }
-    
+
   }, [])
   let amountFfitst = 0;
   let amountSfitst = 0;
   let amountTfitst = 0;
   winnOrder.forEach((obj) => {
-      const objj = obj.cardDetails;
-      const amounts = obj.amount;
-      console.log(amounts + "amount")
-      const randomNumValue = objj.randomNum;
-      const cardnoValue = objj.cardno;
-      if (randomNumValue == randomNum.card1 && cardnoValue == 1) {
-        firstCf++;
-        amountFfitst = amountFfitst + amounts;
-      }
-      if (randomNumValue == randomNum.card1 && cardnoValue == 2) {
-        secondCf++;
-        amountSfitst = amountSfitst + amounts;
-      }
-      if (randomNumValue == randomNum.card1 && cardnoValue == 3) {
-        thirdCf++;
-        amountTfitst = amountTfitst + amounts;
-      }
-    });
+    const objj = obj.cardDetails;
+    const amounts = obj.amount;
+    console.log(amounts + "amount")
+    const randomNumValue = objj.randomNum;
+    if (randomNumValue == randomNum.card1) {
+      firstCf++;
+      amountFfitst = amountFfitst + amounts;
+    }
+    if (randomNumValue == randomNum.card2) {
+      secondCf++;
+      amountSfitst = amountSfitst + amounts;
+    }
+    if (randomNumValue == randomNum.card3) {
+      thirdCf++;
+      amountTfitst = amountTfitst + amounts;
+    }
+  });
   const handleUserSubmit = async () => {
-    let data = { randomNum: selectUsers.randomNum, cardno: selectUsers.cardno}
+    let data = { randomNum: selectUsers.randomNum, cardno: selectUsers.cardno }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updatestatus`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -85,14 +84,28 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
         progress: undefined,
       });
     }
-    let data2 = { randomNum: selectUsers.randomNum}
-        let a2 = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateCardN`, {
-          method: 'POST', // or 'PUT'
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data2),
-        })
+    if (res.success) {
+      let randomNo1 = 0, randomNo2 = 0, randomNo3 = 0;
+      while (randomNo1 === 0 || randomNo2 === 0 || randomNo3 === 0) {
+        let randoRand = Math.floor(Math.random() * 13) + 1;
+
+        if (randomNo1 === 0 && randoRand !== randomNum.card1) {
+          randomNo1 = randoRand;
+        } else if (randomNo2 === 0 && randoRand !== randomNum.card2 && randoRand !== randomNo1) {
+          randomNo2 = randoRand;
+        } else if (randomNo3 === 0 && randoRand !== randomNum.card3 && randoRand !== randomNo1 && randoRand !== randomNo2) {
+          randomNo3 = randoRand;
+        }
+      }
+      let data2 = { randomNum: selectUsers.randomNum, first_no: randomNo1, second_no: randomNo2, third_no: randomNo3,}
+      let a2 = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateCardN`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data2),
+      })
+    }
   }
   if (isHidden) {
     return null;
@@ -115,30 +128,30 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
           <div className="fircol flex justify-between items-center mt-8">
             <div onClick={() => { selectUser(randomNum.card1, 1); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
               {/* <div className="cardno">Card no- 1,  Random No- {randomNum.card1}</div> */}
-              <div className="cardno">Card no- 1</div>
+              <div className="cardno">Card no- {randomNum.card1}</div>
               <div className="noOfCard">Total Users: {firstCf}</div>
               <div className="noOfCard">Total Bit Amount:  ₹{amountFfitst}</div>
             </div>
           </div>
           <div className="fircol flex justify-between items-center mt-8">
-            <div onClick={() => { selectUser(randomNum.card1, 2); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
+            <div onClick={() => { selectUser(randomNum.card2, 2); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
               {/* <div className="cardno">Card no- 2,  Random No- {randomNum.card1}</div> */}
-              <div className="cardno">Card no- 2</div>
+              <div className="cardno">Card no- {randomNum.card2}</div>
               <div className="noOfCard">Total Users: {secondCf}</div>
               <div className="noOfCard">Total Bit Amount: ₹{amountSfitst}</div>
             </div>
           </div>
           <div className="fircol flex justify-between items-center mt-8">
-            <div onClick={() => { selectUser(randomNum.card1, 3); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
+            <div onClick={() => { selectUser(randomNum.card3, 3); }} className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
               {/* <div className="cardno">Card no- 3,  Random No- {randomNum.card1}</div> */}
-              <div className="cardno">Card no- 3</div>
+              <div className="cardno">Card no- {randomNum.card3}</div>
               <div className="noOfCard">Total Users: {thirdCf}</div>
               <div className="noOfCard">Total Bit Amount:  ₹{amountTfitst}</div>
             </div>
           </div>
         </div>
         <div className="btnn flex justify-center items-center pt-10">
-        <div className="fircol flex justify-between items-center mt-8">
+          <div className="fircol flex justify-between items-center mt-8">
             <div className="card_box flex cursor-pointer text-lg hover:bg-gray-200 active:bg-gray-200 justify-center items-center flex-col border border-gray-300 p-10">
               {/* <div className="cardno">Card no- {selectUsers.cardno},  Random No- {selectUsers.randomNum}</div> */}
               <div className="cardno">Card no- {selectUsers.cardno}</div>
@@ -164,7 +177,7 @@ export async function getServerSideProps(context) {
   let randomNum = await RandomNSchema.findOne();
   return {
     props: { winnOrder: JSON.parse(JSON.stringify(winnOrder)), randomNum: JSON.parse(JSON.stringify(randomNum)) },
-  };s
+  }; s
 }
 
 export default WinnerSelect
