@@ -3,13 +3,14 @@ import connectDb from "../../middleware/mongoose";
 
 const handler = async (req, res) => {
     if (req.method === "POST") {
+        console.log(req.body.Orderid)
         try {
             const updatedOrder = await Withdrawal.findOneAndUpdate(
-                { Orderid: req.body.Orderid },
+                { orderId: req.body.Orderid },
                 { status: "Transferred" },
                 { new: true } // This option returns the updated document
             );
-            console.log(updatedOrder,"helooo")
+            console.log(updatedOrder)
             if (updatedOrder) {
                 res.status(200).json({ success: "Status updated to Transferred successfully" });
             } else {

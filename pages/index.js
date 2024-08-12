@@ -79,7 +79,6 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
       let res = await a.json()
 
       res.OrdersInfo.forEach(item => {
-        console.log(item)
         if (item.winning === 'Win') {
           toast.success(`You Win ${2 * item.amount - 0.2 * item.amount} Coins `, {
             position: "top-right",
@@ -294,7 +293,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
       />
       <div className="containerr relative w-full h-screen screnfulln overflow-hidden">
         {closeScr == true && <div className="bittingPop w-full absolute h-screen sabmainb z-40">
-          <div className="batInfo bg-white h-72 rounded-sm top-1/4 mx-auto mt-16 shadow-md">
+          <div className="batInfo bg-white h-72 rounded-2xl top-1/4 mx-auto mt-16 shadow-md">
             <div className="information_bit p-8">
               <div className="top_bit flex justify-between items-center w-full text-lg pb-8">
                 <div className="left_bit uppercase text-2xl">Start Odd</div>
@@ -303,7 +302,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               <div className="bottom_pay_bit">
                 <div className="head_bit text-lg pb-2">Enter Coins of Odd</div>
                 <div className="amount_bit">
-                  <input value={amount} onChange={handleChange} type="Number" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none w-full border-red-700 mb-5  text-gray-600 text-base border " />
+                  <input value={amount} onChange={handleChange} type="Number" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none rounded-3xl pl-5 w-full border-red-700 mb-5  text-gray-600 text-base border " />
                 </div>
               </div>
               <div className="botton_bit flex justify-between items-center">

@@ -13,7 +13,7 @@ const Users = ({ userss }) => {
   const router = useRouter()
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-    
+
     const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
 
     if (!myuser || !allowedEmails.includes(myuser.email)) {
@@ -83,36 +83,40 @@ const Users = ({ userss }) => {
       </div> */}
         <div className="tables p-5 w-full containerr">
           <table className="mx-auto bg-white p-10">
-            <tr>
-              <th className='text-left border p-2 border-slate-600'><div className="Refrence text-base font-medium">Name</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="card text-base font-medium">Email</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Coin text-base font-medium">Mobile</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Amount text-base font-medium">Wallet</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="ifsc text-base font-medium">IFSC</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Name</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Branch</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">Acc No</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">UPI</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Win text-base font-medium">Age</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Loss text-base font-medium">Date on Create</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Remove</div></th>
-            </tr>
-            {userss.map((item) => {
-              return <tr key={item._id}>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.name}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.email}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.phone}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.wallet}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.ifsc}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.bankName}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.branch}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.accno}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.UPINo}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.ageVerified && <p>True</p>}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
-                <td className='text-left border p-2 border-slate-600'>{item.email && <button onClick={() => handlePaidButtonClick(item)} className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Del</p></button>}</td>
+            <thead>
+              <tr>
+                <th className='text-left border p-2 border-slate-600'><div className="Refrence text-base font-medium">Name</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="card text-base font-medium">Email</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Coin text-base font-medium">Mobile</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Amount text-base font-medium">Wallet</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="ifsc text-base font-medium">IFSC</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Name</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">B Branch</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">Acc No</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="bankName text-base font-medium">UPI</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Win text-base font-medium">Age</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Loss text-base font-medium">Date on Create</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Remove</div></th>
               </tr>
-            })}
+            </thead>
+            <tbody>
+              {userss.map((item) => {
+                return <tr key={item._id}>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.name}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.email}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.phone}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.wallet}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.ifsc}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.bankName}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.branch}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.accno}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.UPINo}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.ageVerified && <p>True</p>}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
+                  <td className='text-left border p-2 border-slate-600'>{item.email && <button onClick={() => handlePaidButtonClick(item)} className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Del</p></button>}</td>
+                </tr>
+              })}
+            </tbody>
           </table>
         </div>
       </div>

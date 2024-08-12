@@ -12,7 +12,7 @@ const Order = ({ orders }) => {
   const router = useRouter()
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-    
+
     const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
 
     if (!myuser || !allowedEmails.includes(myuser.email)) {
@@ -45,30 +45,34 @@ const Order = ({ orders }) => {
         })}
       </div> */}
       <div className="tables p-5 w-full">
-      <table className="mx-auto">
-        <tr>
-          <th className='text-left border p-3 border-slate-600'><div className="Date text-lg font-medium">Order Id</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Refrence text-lg font-medium">Name</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="card text-lg font-medium">Email</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Coin text-lg font-medium">Mobile</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Status text-lg font-medium">Amount</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Pending text-lg font-medium">Card</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Win text-lg font-medium">Status</div></th>
-          <th className='text-left border p-3 border-slate-600'><div className="Loss text-lg font-medium">Date on Buy</div></th>
-        </tr>
-        {orders.map((item) => {
-          return <tr key={item._id}>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.name}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.email}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.phone}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.amount}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{` C - ${item.cardno}`}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.winning}</div></td>
-            <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
-          </tr>
-        })}
-      </table>
+        <table className="mx-auto">
+          <thead>
+            <tr>
+              <th className='text-left border p-3 border-slate-600'><div className="Date text-lg font-medium">Order Id</div></th>
+              <th className='text-left border p-3 border-slate-600'><div className="Refrence text-lg font-medium">Name</div></th>
+              <th className='text-left border p-3 border-slate-600'><div className="card text-lg font-medium">Email</div></th>
+              <th className='text-left border p-3 border-slate-600'><div className="Coin text-lg font-medium">Mobile</div></th>
+              <th className='text-left border p-3 border-slate-600'><div className="Status text-lg font-medium">Amount</div></th>
+              <th className='text-left border p-3 border-slate-600'><div className="Pending text-lg font-medium">Card</div></th>
+              <th className='text-left border p-3 border-slate-600'><div className="Win text-lg font-medium">Status</div></th>
+              <th className='text-left border p-3 border-slate-600'><div className="Loss text-lg font-medium">Date on Buy</div></th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((item) => {
+              return <tr key={item._id}>
+                <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
+                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.name}</div></td>
+                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.email}</div></td>
+                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.phone}</div></td>
+                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.amount}</div></td>
+                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{` C - ${item.cardno}`}</div></td>
+                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.winning}</div></td>
+                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
+              </tr>
+            })}
+          </tbody>
+        </table>
       </div>
     </>
   );

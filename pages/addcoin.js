@@ -74,12 +74,12 @@ const Addcoin = () => {
         if (e.target.name == 'amount') {
             setamount(e.target.value)
             if (e.target.value >= 500) {
-              setpaymentVer(false)
+                setpaymentVer(false)
             }
             else {
-              setpaymentVer(true)
+                setpaymentVer(true)
             }
-          }
+        }
         else if (e.target.name == 'transId') {
             settransId(parseInt(e.target.value))
         }
@@ -153,7 +153,7 @@ const Addcoin = () => {
         })
         let txnRes = await a.json()
         setlodingS(true)
-        if(txnRes.success){
+        if (txnRes.success) {
             toast.success(txnRes.success, {
                 position: "top-left",
                 autoClose: 3000,
@@ -165,7 +165,7 @@ const Addcoin = () => {
             });
             setamount('');
             settransId('');
-        }else{
+        } else {
             setamount('');
             settransId('');
         }
@@ -254,22 +254,27 @@ const Addcoin = () => {
                         {/* {orders.length == 0 && <div className="flex justify-center text-4xl text-red-700 py-20 items-center border-t border-b border-gray-200">
                             Your Order List is Empty....
                         </div>} */}
-                        <table>
-                            <tr>
-                                <th className='text-left border p-3 border-slate-600'><div className="Date text-base font-medium">Date</div></th>
-                                <th className='text-left border p-3 border-slate-600'><div className="Refrence text-base font-medium">Refrence No</div></th>
-                                <th className='text-left border p-3 border-slate-600'><div className="Coin text-base font-medium">Coin</div></th>
-                                <th className='text-left border p-3 border-slate-600'><div className="Status text-base font-medium">Status</div></th>
-                            </tr>
-                            {updatedOrders.map((item, index) => {
-                                return <tr key={item._id}>
-                                    <td className='text-left border p-3 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
-                                    <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-                                    <td className='text-left border p-3 border-slate-600'><div className="Coin">{item.amount}</div></td>
-                                    <td className='text-left border p-3 border-slate-600'><div className="Status">{item.status}</div></td>
+                        <table className=" bg-white p-5">
+                            <thead>
+                                <tr>
+                                    <th className='text-left border p-3 border-slate-600'><div className="Date text-base font-medium">Date</div></th>
+                                    <th className='text-left border p-3 border-slate-600'><div className="Refrence text-base font-medium">Refrence No</div></th>
+                                    <th className='text-left border p-3 border-slate-600'><div className="Coin text-base font-medium">Coin</div></th>
+                                    <th className='text-left border p-3 border-slate-600'><div className="Status text-base font-medium">Status</div></th>
                                 </tr>
-                            })}
+                            </thead>
+                            <tbody>
+                                {updatedOrders.map((item, index) => (
+                                    <tr key={item._id}>
+                                        <td className='text-left border p-3 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
+                                        <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
+                                        <td className='text-left border p-3 border-slate-600'><div className="Coin">{item.amount}</div></td>
+                                        <td className='text-left border p-3 border-slate-600'><div className="Status">{item.status}</div></td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>

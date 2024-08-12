@@ -15,7 +15,7 @@ const AddCoin = ({ addcoins }) => {
   const router = useRouter()
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-    
+
     const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
 
     if (!myuser || !allowedEmails.includes(myuser.email)) {
@@ -96,35 +96,39 @@ const AddCoin = ({ addcoins }) => {
       </div> */}
         <div className="tables p-5 w-full containerr">
           <table className="mx-auto bg-white p-5">
-            <tr>
-              <th className='text-left border p-2 border-slate-600'><div className="Date text-sm font-medium">Order Id</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Refrence text-sm font-medium">Name</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="card text-sm font-medium">Email</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Coin text-sm font-medium">Mobile</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Amount text-sm font-medium">Amount</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="ifsc text-sm font-medium">Transaction ID</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Payment Info</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Pay Trans ID</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Win text-sm font-medium">Status</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Date on Buy</div></th>
-              <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Paid</div></th>
-            </tr>
-            {addcoins.map((item) => {
-              return <tr key={item._id}>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">#{item.orderId}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.name}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.email}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs
-            ">{item.phone}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.amount}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transId}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.paymentInfo}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transactionId}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.status}</div></td>
-                <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.createdAt}</div></td>
-                <td className='text-left border p-2 border-slate-600'>{item.status == "Initiated" && <button onClick={() => handlePaidButtonClick(item)} className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Paid</p></button>}</td>
+            <thead>
+              <tr>
+                <th className='text-left border p-2 border-slate-600'><div className="Date text-sm font-medium">Order Id</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Refrence text-sm font-medium">Name</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="card text-sm font-medium">Email</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Coin text-sm font-medium">Mobile</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Amount text-sm font-medium">Amount</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="ifsc text-sm font-medium">Transaction ID</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Payment Info</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Pay Trans ID</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Win text-sm font-medium">Status</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Date on Buy</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Paid</div></th>
               </tr>
-            })}
+            </thead>
+            <tbody>
+              {addcoins.map((item) => {
+                return <tr key={item._id}>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">#{item.orderId}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.name}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.email}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs
+            ">{item.phone}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.amount}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transId}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.paymentInfo}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transactionId}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.status}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.createdAt}</div></td>
+                  <td className='text-left border p-2 border-slate-600'>{item.status == "Initiated" && <button onClick={() => handlePaidButtonClick(item)} className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Paid</p></button>}</td>
+                </tr>
+              })}
+            </tbody>
           </table>
         </div>
       </div>
