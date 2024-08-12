@@ -25,7 +25,8 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
   const router = useRouter()
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-    if (!myuser || myuser.email !== "tradeonedelhi@gmail.com") {
+    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
+    if (!myuser || !allowedEmails.includes(myuser.email)) {
       router.push('/');
     } else {
       setIsHidden(false);
@@ -100,7 +101,7 @@ export async function getServerSideProps(context) {
   const userss = await Usersss.find();
   const Querys = await Query.find();
   const winnOrder = await Order.find({
-     winning: "Pending"
+    winning: "Pending"
   });
   let randomNum = await RandomNSchema.findOne();
   return {

@@ -11,7 +11,10 @@ const ChangeNum = ({randomNum}) => {
   const router = useRouter()
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-    if (!myuser || myuser.email !== "tradeonedelhi@gmail.com") {
+    
+    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
+
+    if (!myuser || !allowedEmails.includes(myuser.email)) {
       router.push('/');
     } else {
       setIsHidden(false);

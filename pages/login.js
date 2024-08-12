@@ -108,8 +108,7 @@ const Login = () => {
                 <label htmlFor="password" className="text-base font-normal pl-1 pb-1">Password</label>
                 <input value={password} onChange={handleChange} type="password" name='password' id="password" required autoComplete="password" placeholder='At least 6 characters' className="p-1 shadow-inner text-gray-600 text-base border outline-none focus:border-red-700 border-gray-300" />
               </div>
-              <Link href={'/forget'}><a><p className='flex justify-end text-red-700 pb-2 font-medium pr-1'>Forgot Password</p></a></Link>
-              <p className='text-gray-500 pt-4 text-xs'>By continuing, you agree to FreshFrveg&apos;s Conditions of Use and Privacy Notice.</p>
+              <p className='text-gray-500 pt-4 text-xs'>By continuing, you agree to Pattiwinner Conditions of Use and Privacy Notice.</p>
               <div className="text-3xl text-gray-800 flex justify-end border-b pb-2 border-gray-300 pt-3"><button type="submit" className="flex relative text-white font-medium text-sm rounded-full bg-red-700 w-full justify-center  py-2 hover:text-gray-800 hover:bg-white border transition-all border-red-700">
                 {lodingS === false ? <p>WAIT</p> : <p>CONTINUE</p>}
                 <span className="lock absolute flex justify-start text-lg pl-6 items-center w-full"><VscLock /></span>

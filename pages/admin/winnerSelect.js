@@ -21,17 +21,21 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
   const [users, setusers] = useState("")
   const [isHidden, setIsHidden] = useState(true);
   useEffect(() => {
-    const myuser = JSON.parse(localStorage.getItem("myuser"))
+    const myuser = JSON.parse(localStorage.getItem("myuser"));
+    
     if (myuser && myuser.token) {
-      setusers(myuser.email)
+      setusers(myuser.email);
     }
-    if (!myuser || myuser.email !== "tradeonedelhi@gmail.com") {
+
+    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
+
+    if (!myuser || !allowedEmails.includes(myuser.email)) {
       router.push('/');
     } else {
       setIsHidden(false);
     }
+  }, []);
 
-  }, [])
   let amountFfitst = 0;
   let amountSfitst = 0;
   let amountTfitst = 0;

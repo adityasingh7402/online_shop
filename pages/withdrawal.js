@@ -47,12 +47,12 @@ const Withdrawal = () => {
         if (e.target.name == 'amount') {
             setamount(e.target.value)
             if (e.target.value >= 500) {
-              setpaymentVer(false)
+                setpaymentVer(false)
             }
             else {
-              setpaymentVer(true)
+                setpaymentVer(true)
             }
-          }
+        }
     }
     useEffect(() => {
         const fetchOrders = async () => {
@@ -80,7 +80,7 @@ const Withdrawal = () => {
         let oid = Math.floor(Math.random() * Date.now());
         const data = {
             email: userInfi.email, name: userInfi.name, phone: userInfi.phone, amount, accno: userInfi.accno,
-            branch: userInfi.branch,bankName: userInfi.bankName,UPINo: userInfi.UPINo, ifsc: userInfi.ifsc, oid, wallet: userInfi.wallet
+            branch: userInfi.branch, bankName: userInfi.bankName, UPINo: userInfi.UPINo, ifsc: userInfi.ifsc, oid, wallet: userInfi.wallet
         };
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addWithdrawal`, {
             method: 'POST', // or 'PUT'
@@ -191,8 +191,8 @@ const Withdrawal = () => {
                                 <button disabled={paymentVer} onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Withdraw</h6></button>
                             </div>
                             <div className="botton_bit flex justify-between items-center">
-                            {updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update Bank Details</p></button></Link>}
-                            {!updated && <Link href={'./account'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update Bank Details</p></button></Link>}
+                                {updated && <Link href={'./contact'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update Bank Details</p></button></Link>}
+                                {!updated && <Link href={'./account'}><button className='rounded-full bg-red-700 text-lg px-12 mt-8 py-2 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Update Bank Details</p></button></Link>}
                             </div>
                         </div>
                     </div>
@@ -202,26 +202,53 @@ const Withdrawal = () => {
                         {orders.length == 0 && <div className="flex justify-center text-4xl text-red-700 py-20 items-center border-t border-b border-gray-200">
                             Your Withdraw List is Empty....
                         </div>}
-                        <table>
-                            <tr>
-                                <th className='text-left border p-3 border-slate-600'><div className="Date text-base font-medium">Date</div></th>
-                                <th className='text-left border p-3 border-slate-600'><div className="Refrence text-base font-medium">Refrence No</div></th>
-                                <th className='text-left border p-3 border-slate-600'><div className="Coin text-base font-medium">Coins</div></th>
-                                <th className='text-left border p-3 border-slate-600'><div className="Status text-base font-medium">Status</div></th>
-                            </tr>
-                            {updatedOrders.map((item, index) => {
-                                return <tr key={item._id}>
-                                    <td className='text-left border p-3 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
-                                    <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-                                    <td className='text-left border p-3 border-slate-600'><div className="Coin">{item.amount}</div></td>
-                                    <td className='text-left border p-3 border-slate-600'><div className="Status">
-                                        {item.status == "Pending" && <span className='font-medium text-yellow-500'>{item.status}</span>}
-                                        {item.status == "Win" && <span className='font-medium text-red-700'>{item.status}</span>}
-                                        {item.status == "Loss" && <span className='font-medium text-red-700'>{item.status}</span>}
-                                    </div></td>
+                        <table className="min-w-full bg-white border-collapse">
+                            <thead>
+                                <tr>
+                                    <th className="text-left border p-3 border-slate-600">
+                                        <div className="text-base font-medium">Date</div>
+                                    </th>
+                                    <th className="text-left border p-3 border-slate-600">
+                                        <div className="text-base font-medium">Reference No</div>
+                                    </th>
+                                    <th className="text-left border p-3 border-slate-600">
+                                        <div className="text-base font-medium">Coins</div>
+                                    </th>
+                                    <th className="text-left border p-3 border-slate-600">
+                                        <div className="text-base font-medium">Status</div>
+                                    </th>
                                 </tr>
-                            })}
+                            </thead>
+                            <tbody>
+                                {updatedOrders.map((item) => (
+                                    <tr key={item._id}>
+                                        <td className="text-left border p-3 border-slate-600">
+                                            <div className="text-sm">{item.createdAt.substring(0, 10)}, {item.time}</div>
+                                        </td>
+                                        <td className="text-left border p-3 border-slate-600">
+                                            <div className="text-sm">#{item.orderId}</div>
+                                        </td>
+                                        <td className="text-left border p-3 border-slate-600">
+                                            <div className="text-sm">{item.amount}</div>
+                                        </td>
+                                        <td className="text-left border p-3 border-slate-600">
+                                            <div className="text-sm">
+                                                {item.status === "Pending" && (
+                                                    <span className="font-medium text-yellow-500">{item.status}</span>
+                                                )}
+                                                {item.status === "Transferred" && (
+                                                    <span className="font-medium text-green-700">{item.status}</span>
+                                                )}
+                                                {item.status === "Loss" && (
+                                                    <span className="font-medium text-red-700">{item.status}</span>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
