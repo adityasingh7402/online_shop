@@ -80,7 +80,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
       res.OrdersInfo.forEach(item => {
         if (item.winning === 'Win') {
-          toast.success(`You Win ${2 * item.amount - 0.2 * item.amount} Coins `, {
+          toast.success(`You Win ${2 * item.amount - 0.2 * item.amount} Coins`, {
             position: "top-right",
             autoClose: false,
             hideProgressBar: true,
@@ -91,7 +91,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             theme: "light",
           });
         }
-        else {
+
+        if (item.winning === 'Loss') {
           toast.error(`You Loss ${item.amount} Coins`, {
             position: "top-right",
             autoClose: false,
@@ -436,9 +437,13 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
             <marquee direction="left" scrollamount="10">
               <ol className="flex flex-row">
-                {orders.map((order, index) => (
-                  <li className="mr-40 text-base font-serif" key={index}>{order.name}-₹{order.amount * 2 - 0.2 * order.amount}</li>
-                ))}
+                {orders
+                  .filter((order) => order.winning === 'Win') // Filter orders with winning == 'Win'
+                  .map((order, index) => (
+                    <li className="mr-40 text-base font-serif" key={index}>
+                      {order.name} - ₹{order.amount * 2 - 0.2 * order.amount}
+                    </li>
+                  ))}
               </ol>
             </marquee>
           </div>
