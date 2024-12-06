@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import Image from 'next/image';
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import { RiAccountCircleLine, RiCoinsLine } from "react-icons/ri";
@@ -24,6 +25,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   const [phone, setphone] = useState("")
   const [amount, setamount] = useState()
   const [timeBit, settimeBit] = useState(true)
+  const [lodingS, setlodingS] = useState(true)
   const [paymentVer, setpaymentVer] = useState(true)
   const [imageload, setimageload] = useState(false)
   const [token, settoken] = useState("")
@@ -160,6 +162,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     window.open('/PattiCircle.apk');
   };
   const fetchdata = async (token) => {
+    setlodingS(false)
     let data = { token: token, email, wallet }
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
       method: 'POST', // or 'PUT'
@@ -173,6 +176,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     setname(res.name)
     setemail(res.email)
     setphone(res.phone)
+    setlodingS(true)
   }
 
 
@@ -294,6 +298,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         pauseOnHover
       />
       <div className="containerr relative w-full h-screen screnfulln overflow-hidden">
+      {lodingS === false && <span className="fixed flex justify-center z-50 items-center text-red-900 text-lg h-screen w-full"><Image src={"/loader.gif"} width={100} height={100} /></span>}
         {closeScr == true && <div className="bittingPop w-full absolute h-screen sabmainb z-40">
           <div className="batInfo bg-white h-72 rounded-2xl top-1/4 mx-auto mt-16 shadow-md">
             <div className="information_bit p-8">
@@ -373,7 +378,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             </div>
           </div> */}
         </div>
-        <div className="card hidexontet cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-9">
+        <div className="card hidexontet relative cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-9">
           <div className="card_no flex justify-around items-center w-4/6 flexcolh">
             <div onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_first h-min">
               <div className="upperBody overflow-hidden relative">

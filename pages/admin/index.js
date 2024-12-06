@@ -26,6 +26,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
     const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
+    console.log(allowedEmails)
     if (!myuser || !allowedEmails.includes(myuser.email)) {
       router.push('/');
     } else {
