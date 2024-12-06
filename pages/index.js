@@ -8,6 +8,7 @@ import { CgLogOff, CgClose } from "react-icons/cg";
 import { BsCashCoin } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlinePlus } from "react-icons/ai";
+import { GiCardAceHearts } from "react-icons/gi";
 import mongoose from "mongoose";
 import RandomNSchema from "../modal/randomCard";
 import Orderr from "../modal/Order";
@@ -156,7 +157,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   }
 
   const handleDownload = () => {
-    window.open('/PattiWinner.apk');
+    window.open('/PattiCircle.apk');
   };
   const fetchdata = async (token) => {
     let data = { token: token, email, wallet }
@@ -331,6 +332,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>History</span></li></a></Link>
                 <Link href={'/addcoin'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Add Coins</span></li></a></Link>
                 <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdraw Coins</span></li></a></Link>
+                <li onClick={handleDownload} className="text-base border-t flex flex-row items-center cursor-pointer border-red-300 text-red-700 py-2 hover:text-red-500"><GiCardAceHearts className="mx-2 text-lg" /><span>Download App</span></li>
                 <li onClick={logout} className="text-base border-t flex flex-row items-center cursor-pointer border-red-300 text-red-700 py-2 hover:text-red-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
               </ul>
             </div>}
