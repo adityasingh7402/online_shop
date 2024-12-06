@@ -71,19 +71,30 @@ const Addcoin = () => {
         setuserInfi(res)
     }
     const handleChange = async (e) => {
-        if (e.target.name == 'amount') {
-            setamount(e.target.value)
-            if (e.target.value >= 500) {
-                setpaymentVer(false)
+        const { name, value } = e.target;
+    
+        if (name === 'amount') {
+            setamount(value);
+    
+            // Update payment verification based on both conditions
+            if (value >= 500 && transId.trim() !== '') {
+                setpaymentVer(false); // Allow payment verification
+            } else {
+                setpaymentVer(true); // Block payment verification
             }
-            else {
-                setpaymentVer(true)
+        } else if (name === 'transId') {
+            settransId(value);
+    
+            // Update payment verification based on both conditions
+            if (value.trim() !== '' && amount >= 500) {
+                setpaymentVer(false); // Allow payment verification
+            } else {
+                setpaymentVer(true); // Block payment verification
             }
         }
-        else if (e.target.name == 'transId') {
-            settransId(parseInt(e.target.value))
-        }
-    }
+    };
+    
+    
 
 
 

@@ -44,16 +44,18 @@ const Withdrawal = () => {
         setupdated(res.updated)
     }
     const handleChange = async (e) => {
-        if (e.target.name == 'amount') {
-            setamount(e.target.value)
-            if (e.target.value >= 500) {
-                setpaymentVer(false)
-            }
-            else {
-                setpaymentVer(true)
+        if (e.target.name === 'amount') {
+            setamount(e.target.value);
+    
+            // Check if amount is >= 500 and accno is not empty
+            if (e.target.value >= 500 && userInfi.accno.trim() !== '') {
+                setpaymentVer(false); // Allow payment verification if both conditions are met
+            } else {
+                setpaymentVer(true); // Block payment verification if either condition fails
             }
         }
-    }
+    };
+    
     useEffect(() => {
         const fetchOrders = async () => {
             setlodingS(false)
