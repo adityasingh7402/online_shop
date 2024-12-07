@@ -8,6 +8,7 @@ import { RiCoinsLine } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import QRCode from "react-qr-code";
 
 const Addcoin = () => {
     const [wallet, setwallet] = useState(0)
@@ -22,6 +23,9 @@ const Addcoin = () => {
     const [curdate, setcurdate] = useState('')
     const [userInfi, setuserInfi] = useState({})
     const [paymentVer, setpaymentVer] = useState(true)
+    const [qrVisible, setQrVisible] = useState(false);
+    const [qrUrl, setQrUrl] = useState("");
+    const [timer, setTimer] = useState(null);
 
     useEffect(() => {
         const myuser = JSON.parse(localStorage.getItem("myuser"))
@@ -72,10 +76,10 @@ const Addcoin = () => {
     }
     const handleChange = async (e) => {
         const { name, value } = e.target;
-    
+
         if (name === 'amount') {
             setamount(value);
-    
+
             // Update payment verification based on both conditions
             if (value >= 500 && transId.trim() !== '') {
                 setpaymentVer(false); // Allow payment verification
@@ -84,7 +88,7 @@ const Addcoin = () => {
             }
         } else if (name === 'transId') {
             settransId(value);
-    
+
             // Update payment verification based on both conditions
             if (value.trim() !== '' && amount >= 500) {
                 setpaymentVer(false); // Allow payment verification
@@ -93,65 +97,109 @@ const Addcoin = () => {
             }
         }
     };
-    
-    
+    useEffect(() => {
+        const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
+        const currentDate = new Date().toLocaleDateString("en-US", options);
+        setcurdate(currentDate);
+    }, []);
 
+    const handleAmountChange = (e) => {
+        setamount(e.target.value);
+        setQrVisible(false); // Hide QR when amount changes
+    };
 
-
-    const initiatePayment = async () => {
-        setlodingS(false)
-        let oid = Math.floor(Math.random() * Date.now());
-        const data = { email: userInfi.email, name: userInfi.name, phone: userInfi.phone, amount, oid, };
-        let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addCoin`, {
-            method: 'POST', // or 'PUT'
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        let txnRes = await a.json()
-        if (txnRes.success) {
-            let txnToken = txnRes.txnToken
-            var config = {
-                "root": "",
-                "flow": "DEFAULT",
-                "data": {
-                    "orderId": oid, /* update order id */
-                    "token": txnToken, /* update token value */
-                    "tokenType": "TXN_TOKEN",
-                    "amount": amount /* update amount */
-                },
-                "handler": {
-                    "notifyMerchant": function (eventName, data) {
-                        console.log("notifyMerchant handler function called");
-                        console.log("eventName => ", eventName);
-                        console.log("data => ", data);
-                    }
-                }
-            };
-            window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
-                // after successfully updating configuration, invoke JS Checkout
-                window.Paytm.CheckoutJS.invoke();
-            }).catch(function onError(error) {
-                console.log("error => ", error);
-            });
-        }
-        else {
-            if (txnRes.cardClear) {
-                clearCart()
-            }
-            toast.error(txnRes.error, {
+    const generateQR = () => {
+        if (!amount || amount < 1) {
+            toast.error("Please enter a valid amount!", {
                 position: "top-left",
                 autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
             });
+            return;
         }
-        setlodingS(true)
-    }
+
+        // Generate UPI payment URL
+        const upiId = process.env.NEXT_PUBLIC_UPI_ID;
+        const url = `upi://pay?pa=${upiId}&pn=YourName&am=${amount}&cu=INR`;
+        setQrUrl(url);
+        setQrVisible(true);
+
+        // Set a timeout of 10 minutes for QR code visibility
+        if (timer) clearTimeout(timer);
+        const newTimer = setTimeout(() => {
+            setQrVisible(false);
+            toast.warning("QR code expired. Please generate a new one.", {
+                position: "top-left",
+                autoClose: 3000,
+            });
+        }, 600000); // 10 minutes in milliseconds
+        setTimer(newTimer);
+    };
+
+    const clearFields = () => {
+        setamount("");
+        settransId("");
+        setQrVisible(false);
+        if (timer) clearTimeout(timer);
+    };
+
+
+
+
+
+    // const initiatePayment = async () => {
+    //     setlodingS(false)
+    //     let oid = Math.floor(Math.random() * Date.now());
+    //     const data = { email: userInfi.email, name: userInfi.name, phone: userInfi.phone, amount, oid, };
+    //     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addCoin`, {
+    //         method: 'POST', // or 'PUT'
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(data),
+    //     })
+    //     let txnRes = await a.json()
+    //     if (txnRes.success) {
+    //         let txnToken = txnRes.txnToken
+    //         var config = {
+    //             "root": "",
+    //             "flow": "DEFAULT",
+    //             "data": {
+    //                 "orderId": oid, /* update order id */
+    //                 "token": txnToken, /* update token value */
+    //                 "tokenType": "TXN_TOKEN",
+    //                 "amount": amount /* update amount */
+    //             },
+    //             "handler": {
+    //                 "notifyMerchant": function (eventName, data) {
+    //                     console.log("notifyMerchant handler function called");
+    //                     console.log("eventName => ", eventName);
+    //                     console.log("data => ", data);
+    //                 }
+    //             }
+    //         };
+    //         window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
+    //             // after successfully updating configuration, invoke JS Checkout
+    //             window.Paytm.CheckoutJS.invoke();
+    //         }).catch(function onError(error) {
+    //             console.log("error => ", error);
+    //         });
+    //     }
+    //     else {
+    //         if (txnRes.cardClear) {
+    //             clearCart()
+    //         }
+    //         toast.error(txnRes.error, {
+    //             position: "top-left",
+    //             autoClose: 3000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //         });
+    //     }
+    //     setlodingS(true)
+    // }
     const initiatePaymentdemo = async () => {
         setlodingS(false)
         const data = { email: userInfi.email, name: userInfi.name, phone: userInfi.phone, amount, oid, transId };
@@ -176,9 +224,11 @@ const Addcoin = () => {
             });
             setamount('');
             settransId('');
+            clearFields()
         } else {
             setamount('');
             settransId('');
+            clearFields()
         }
     }
     const updatedOrders = orders.map((item) => {
@@ -195,14 +245,14 @@ const Addcoin = () => {
             </div>
             <Head>
                 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
-                <title>Patti Winner - Purchase Coin</title>
+                <title>Patti Circle - Purchase Coin</title>
                 <meta
                     name="description"
-                    content="Patti Winner win win Game"
+                    content="Patti Circle win win Game"
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Script type="application/javascript" crossorigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`} />
+            {/* <Script type="application/javascript" crossorigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`} /> */}
             <ToastContainer
                 position="top-right"
                 autoClose={1000}
@@ -225,21 +275,48 @@ const Addcoin = () => {
                     <div className="collection_with nivpad coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-5 border-2  border-gray-300 py-3 px-10">
                         <div className="refrenceno text-xl mb-2">Ref. Number: <span className='text-2xl font-medium'>{oid}</span></div>
                         <div className="box_bank flex flex-row nincol items-start">
-                            <div className="qrcode">
+                            {!qrVisible && (<div className="qrcode relative">
                                 <div className="payment-box w-52 border">
                                     <img src="./payment.jpg" alt="" />
                                 </div>
-                            </div>
+                                <div className="click-gene absolute bottom-20 left-5">
+                                    <div
+                                        className="w-full bg-white text-base text-center text-black py-2 px-2"
+                                    >
+                                         Click on Generate QR Code
+                                    </div>
+                                </div>
+                            </div>)}
+                            {qrVisible && (
+                                <div className="payment-box">
+                                    <div className="boc-forqr">
+                                        <QRCode value={qrUrl} size={180} />
+                                    </div>
+                                    <p className="text-gray-600 text-lg mt-2">Scan the QR to pay</p>
+                                    <button
+                                        className="bg-red-500 text-white py-1 px-2 text-lg mx-auto rounded hover:bg-red-600"
+                                        onClick={clearFields}
+                                    >
+                                        Clear
+                                    </button>
+                                </div>
+                            )}
                             <div className="divider w-20"></div>
                             <div className="detailss flex justify-start items-start flex-col mt-3">
                                 <div className="box_bank flex justify-center flex-col items-start">
                                     <p className='text-base'>Enter Coins</p>
                                     <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" placeholder='500 or Above' name='amount' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
                                 </div>
-                                <div className="box_bank flex justify-center flex-col items-start">
+                                {!qrVisible && (<button
+                                    onClick={generateQR}
+                                    className="w-full bg-blue-500 text-lg text-white py-2 px-2 rounded mb-4 hover:bg-blue-600"
+                                >
+                                    Generate QR Code
+                                </button>)}
+                                {qrVisible && (<div className="box_bank flex justify-center flex-col items-start">
                                     <p className='text-base'>Enter Transaction ID</p>
                                     <input value={transId} onChange={handleChange} autoComplete="off" type="number" id="transId" name='transId' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
-                                </div>
+                                </div>)}
                                 <div className="box_bank flex justify-center flex-col items-start">
                                     <p className='text-base'>Date : {curdate}</p>
                                 </div>

@@ -244,10 +244,10 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     {isLoading && <Preloader />}
     {!imageload && !isSmallScreen && <div className="imageloadd containerr">
       <Head>
-        <title>Patti Winner- Win Win Game</title>
+        <title>Patti Circle- Win Win Game</title>
         <meta
           name="description"
-          content="Patti Winner win win Game"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -279,10 +279,10 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     </div>}
     {imageload && <div>
       <Head>
-        <title>Patti Winner- Win Win Game</title>
+        <title>Patti Circle- Win Win Game</title>
         <meta
           name="description"
-          content="Patti Winner win win Game"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -303,11 +303,11 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           <div className="batInfo bg-white h-72 rounded-2xl top-1/4 mx-auto mt-16 shadow-md">
             <div className="information_bit p-8">
               <div className="top_bit flex justify-between items-center w-full text-lg pb-8">
-                <div className="left_bit uppercase text-2xl">Start Odd</div>
-                <div className="right_bit">You Choose Card - <span className="text-3xl">{cart.cardno}</span></div>
+                <div className="left_bit uppercase text-2xl">Start</div>
+                <div className="right_bit">Selected Card - <span className="text-3xl">{cart.cardno}</span></div>
               </div>
               <div className="bottom_pay_bit">
-                <div className="head_bit text-lg pb-2">Enter Coins of Odd</div>
+                <div className="head_bit text-lg pb-2">Enter Coins</div>
                 <div className="amount_bit">
                   <input value={amount} onChange={handleChange} type="Number" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none rounded-3xl pl-5 w-full border-red-700 mb-5  text-gray-600 text-base border " />
                 </div>
@@ -326,7 +326,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           </div>
           <div className="uppercase text-5xl font-semibold margingr displayno text-white py-5 px-20">
             <div className="clasimg font-serif animate-charcter m-auto">
-              Choose Your ODDS
+              Choose Your Card
             </div>
           </div>
           <div className="user_name absluser relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
@@ -351,7 +351,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         </div>
         <div className="uppercasem text-3xl hidden displaout font-semibold text-white py-5 px-20">
           <div className="clasimg font-serif flex justify-center animate-charcter">
-            Choose Your ODDS
+            Choose Your Card
           </div>
         </div>
         <div className="welc flex flexdis paddisp justify-between items-center text-white px-14 mt-10">

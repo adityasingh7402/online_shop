@@ -16,9 +16,9 @@ const Howtoplay = () => {
                     <li className="pointss pb-6">
                         <h1 className='text-xl font-medium pb-2'>The Objective:</h1>
                         <ul className='list-disc pl-10 paddisp'>
-                            <li className='text-base'>Patti Winner is once in a day Bet game. The Bet starts daily from 6am early in the morning to 11pm Midnight. The bet result will be shown in your account after one hour from the Bet time closed.</li>
-                            <li className='text-base'>To start the Bet, Player has to invest their Coins in Bet. Players can take coins as much as they want from Patti Winner by making request of it on. The coins are safe and may be redeemed any time by giving request to Patti Winner.</li>
-                            <li className='text-base'>In Patti Winner game, the objective has to guess which one is lucky card with the best 3 cards given by Patti Winner. Players bet on the strength of their mind/experience/luck and skill. The player with hit lucky card wins the game.</li>
+                            <li className='text-base'>Patti Circle is once in a day Bet game. The Bet starts daily from 6am early in the morning to 11pm Midnight. The bet result will be shown in your account after one hour from the Bet time closed.</li>
+                            <li className='text-base'>To start the Bet, Player has to invest their Coins in Bet. Players can take coins as much as they want from Patti Circle by making request of it on. The coins are safe and may be redeemed any time by giving request to Patti Circle.</li>
+                            <li className='text-base'>In Patti Circle game, the objective has to guess which one is lucky card with the best 3 cards given by Patti Circle. Players bet on the strength of their mind/experience/luck and skill. The player with hit lucky card wins the game.</li>
                         </ul>
                     </li>
                     <li className="pointss pb-6">
@@ -35,7 +35,7 @@ const Howtoplay = () => {
                     </li>
                     <li className="pointss pb-6">
                         <h1 className='text-xl font-medium pb-2'>Winner:</h1>
-                        <p className='text-base pl-5 paddisp'>After winning the game, coins will be credited their Patti Winner’s account.</p>
+                        <p className='text-base pl-5 paddisp'>After winning the game, coins will be credited their Patti Circle’s account.</p>
                     </li>
                     <li className="pointss pb-6">
                         <h1 className='text-xl font-medium pb-2'>Cancellation:</h1>

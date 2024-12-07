@@ -76,10 +76,10 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Patti Winner- Login</title>
+        <title>Patti Circle- Login</title>
         <meta
           name="description"
-          content="Patti Winner win win Game"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -15,10 +15,10 @@ const Forget = () => {
   return (
     <div>
       <Head>
-        <title>Patti Winner- Forgot</title>
+        <title>Patti Circle- Forgot</title>
         <meta
           name="description"
-          content="Patti Winner win win Game"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

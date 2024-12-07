@@ -599,7 +599,7 @@
         height: 390px;
       }
       .botton_bit{
-        flex-direction: column;
+        flex-direction: column-reverse;
       }
       .botton_bit > button{
         margin: 0 0 10px 0;

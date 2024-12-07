@@ -40,10 +40,10 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
   return (
     <div className="overflow-hidden h-screen containerr">
       <Head>
-        <title>Patti Winner- Win Win Game</title>
+        <title>Patti Circle- Win Win Game</title>
         <meta
           name="description"
-          content="Patti Winner win win Game"
+          content="Patti Circle win win Game"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
