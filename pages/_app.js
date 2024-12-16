@@ -5,9 +5,11 @@ import { useRef } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from './componenat/Preloader';
 
 
 function MyApp({ Component, pageProps }) {
+  const [loading, setLoading] = useState(false);
   const router = useRouter()
   const toggleCart = () => {
     if (ref.current.classList.contains("translate-x-full")) {
@@ -21,6 +23,20 @@ function MyApp({ Component, pageProps }) {
     }
   };
   const ref = useRef();
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => setLoading(false);
+
+    router.events.on('routeChangeStart', handleStart); // Show loader on route change
+    router.events.on('routeChangeComplete', handleComplete); // Hide loader on complete
+    router.events.on('routeChangeError', handleComplete); // Hide loader on error
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+    };
+  }, [router]);
 
   const [cart, setCart] = useState({});
   const [selectUserss, setselectUserss] = useState({});
@@ -105,6 +121,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      {loading && <Loader />}
       <Component
         cart={cart}
         buyNow={buyNow}

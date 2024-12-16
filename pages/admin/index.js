@@ -65,7 +65,8 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
             <li className="text-xl pb-5 font-medium text-white flex items-center"><span className="text-2xl pr-5"><HiChartPie /></span> Inventory</li>
             {/* <li onClick={() => setActive("Users")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Users</li> */}
             <Link href={"/admin/Users"}><li className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Users</li></Link>
-            <li onClick={() => setActive("Order")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Orders</li>
+            <li onClick={() => setActive("Order")} className="text-base font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Orders</li>
+            <div className="line-braker h-1 w-full bg-white rounded-full my-10"></div>
             <li onClick={() => setActive("ChangeNum")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Change Card No</li>
             <li onClick={() => setActive("WinnerSelect")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Winner Select</li>
             {/* <li onClick={() => setActive("Withdrawal")} className="text-base pb-5 font-medium cursor-pointer hover:text-red-200 text-white flex items-center"><span className="text-xl pr-5"><RiSendPlane2Fill /></span> Withdrawal Coins</li> */}

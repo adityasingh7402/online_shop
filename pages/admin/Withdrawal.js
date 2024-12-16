@@ -95,8 +95,8 @@ const Withdrawal = ({ withdrawals }) => {
           </div>)
         })}
       </div> */}
-        <div className="tables p-5 w-full containerr">
-          <table className="bg-white p-5">
+        <div className="tables p-5 w-full min-h-screen containerr">
+          <table className="bg-white p-5 mx-auto">
             <thead>
               <tr>
                 <th className='text-left border p-2 border-slate-600'><div className="Date text-base font-medium">Order Id</div></th>

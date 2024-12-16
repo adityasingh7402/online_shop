@@ -15,7 +15,7 @@ import RandomNSchema from "../modal/randomCard";
 import Orderr from "../modal/Order";
 import { useRouter } from 'next/router';
 import moment from 'moment';
-import Preloader from '../pages/componenat/Preloader';
+// import Preloader from '../pages/componenat/Preloader';
 
 export default function Home({ logout, user, buyNow, randomNum, cart, clearCart, orders }) {
   const router = useRouter()
@@ -34,7 +34,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   const [wallet, setwallet] = useState(0)
   const [users, setusers] = useState({ value: null })
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [ordersIn, setordersIn] = useState([])
 
   const [time, setTime] = useState(calculateRemainingTime());
@@ -45,23 +45,23 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     return secondsUntilNextDay;
   }
 
-  useEffect(() => {
-    const hasVisitedInSession = sessionStorage.getItem('hasVisitedInSession');
+  // useEffect(() => {
+  //   const hasVisitedInSession = sessionStorage.getItem('hasVisitedInSession');
 
-    if (hasVisitedInSession) {
-      setIsLoading(false);
-    } else {
-      setTimeout(() => {
-        setIsLoading(false);
-        sessionStorage.setItem('hasVisitedInSession', 'true');
-      }, 6000);
-    }
-    const interval = setInterval(() => {
-      setTime(calculateRemainingTime());
-    }, 1000);
+  //   if (hasVisitedInSession) {
+  //     setIsLoading(false);
+  //   } else {
+  //     setTimeout(() => {
+  //       setIsLoading(false);
+  //       sessionStorage.setItem('hasVisitedInSession', 'true');
+  //     }, 6000);
+  //   }
+  //   const interval = setInterval(() => {
+  //     setTime(calculateRemainingTime());
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -241,7 +241,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
 
   return (<>
-    {isLoading && <Preloader />}
+    {/* {isLoading && <Preloader />} */}
     {!imageload && !isSmallScreen && <div className="imageloadd containerr">
       <Head>
         <title>Patti Circle- Win Win Game</title>
@@ -455,7 +455,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             </marquee>
           </div>
           <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
-            <div className="webname">pattiwinner.com &#169;</div>
+            <div className="webname">patticircle.com &#169;</div>
             <Link href={'./howtoplay'}><div className="term cursor-pointer">How to Play</div></Link>
             <Link href={'./terms'}><div className="term cursor-pointer">Terms & Conditions</div></Link>
             <Link href={'./faq'}><div className="term cursor-pointer">FAQ</div></Link>
