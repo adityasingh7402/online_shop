@@ -162,22 +162,46 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     window.open('/PattiCircle.apk');
   };
   const fetchdata = async (token) => {
-    setlodingS(false)
-    let data = { token: token, email, wallet }
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    let res = await a.json()
-    setwallet(res.wallet)
-    setname(res.name)
-    setemail(res.email)
-    setphone(res.phone)
-    setlodingS(true)
-  }
+    setlodingS(false);
+  
+    try {
+      let data = { token };
+      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      let res = await a.json();
+  
+      if (res.success) {
+        // Update state with user data
+        setwallet(res.wallet);
+        setname(res.name);
+        setemail(res.email);
+        setphone(res.phone);
+      } else {
+        // If user is not found, clear local storage and reload the page
+        console.error(res.error);
+        localStorage.removeItem("myuser");
+        setloginout(false);
+        setusers(null);
+        alert("Session expired or user does not exist. Please log in again.");
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error("Error fetching user data:", err);
+      localStorage.removeItem("myuser");
+      setloginout(false);
+      setusers(null);
+      alert("An error occurred. Please log in again.");
+      window.location.reload();
+    }
+  
+    setlodingS(true);
+  };
 
 
   const initiatePayment = async () => {
@@ -258,7 +282,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-7 pl-8 cursor-pointer justify-center items-start"><img src="StartGame.png" alt="" /></div>
         <div onClick={handleDownload} className="downloadapk absolute z-50 w-40 cursor-pointer top-10 right-10"><img src="downloadmo.png" alt="" /></div>
         <div className="imgphoto w-full h-full overflow-hidden">
-          <img src="./frontpage1.png" alt="" />
+          <img src="./frontpage1.jpg" alt="" />
         </div>
       </div>
     </div>}

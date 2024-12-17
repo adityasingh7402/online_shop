@@ -90,7 +90,7 @@ const Addcoin = () => {
             settransId(value);
 
             // Update payment verification based on both conditions
-            if (value.trim() !== '' && amount >= 500) {
+            if (value.trim() !== '' && amount >= 100) {
                 setpaymentVer(false); // Allow payment verification
             } else {
                 setpaymentVer(true); // Block payment verification
@@ -288,8 +288,8 @@ const Addcoin = () => {
                                 </div>
                             </div>)}
                             {qrVisible && (
-                                <div className="payment-box">
-                                    <div className="boc-forqr">
+                                <div className="payment-box flex justify-center items-center flex-col">
+                                    <div className="boc-forqr flex justify-center items-center">
                                         <QRCode value={qrUrl} size={180} />
                                     </div>
                                     <p className="text-gray-600 text-lg mt-2">Scan the QR to pay</p>
@@ -305,7 +305,7 @@ const Addcoin = () => {
                             <div className="detailss flex justify-start items-start flex-col mt-3">
                                 <div className="box_bank flex justify-center flex-col items-start">
                                     <p className='text-base'>Enter Coins</p>
-                                    <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" placeholder='500 or Above' name='amount' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
+                                    <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" placeholder='100 or Above' name='amount' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
                                 </div>
                                 {!qrVisible && (<button
                                     onClick={generateQR}
