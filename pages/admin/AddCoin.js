@@ -28,39 +28,64 @@ const AddCoin = ({ addcoins }) => {
     return null;
   }
   const handlePaidButtonClick = async (item) => {
-    let data = { Orderid: item.orderId, Orderamount: item.amount, Orderemail: item.email }
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateAdd`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    let res = await a.json()
-    if (res.success) {
-      toast.success(res.success, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      router.reload();
-    } else {
-      toast.error(res.error, {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      router.reload();
+    const confirmation = window.confirm(
+      `Are you sure you want to update the following details?\n\nOrder ID: ${item.orderId}\nAmount: ${item.amount}\nEmail: ${item.email}`
+    );
+  
+    if (!confirmation) {
+      return; // If the user cancels, exit the function
     }
-  }
+  
+    let data = { Orderid: item.orderId, Orderamount: item.amount, Orderemail: item.email };
+  
+    try {
+      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateAdd`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      let res = await a.json();
+  
+      if (res.success) {
+        toast.success(res.success, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        router.reload();
+      } else {
+        toast.error(res.error, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        router.reload();
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      console.error("Error:", error);
+    }
+  };
+  
 
   return (
     <>
