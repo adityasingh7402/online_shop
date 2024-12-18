@@ -118,6 +118,10 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
   }, [])
 
+  const interval = setInterval(() => {
+    setTime(calculateRemainingTime());
+  }, 1000);
+
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
     if (myuser && myuser.token) {
@@ -459,7 +463,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           </div>
           <div className="right">
             <div className="right-items rounded-sm">
-              <p className="text-xl text-white mx-4 py-3 flex-col font-medium flex justify-center items-center font-serif"> Winner Announcement  <span className="text-3xl">-{formatTime(time)}</span></p>
+              <p className="text-xl text-white mx-4 py-3 flex-col font-medium flex justify-center items-center font-serif"> Winner Announced In  <span className="text-3xl"> {formatTime(time)}</span></p>
             </div>
           </div>
         </div>

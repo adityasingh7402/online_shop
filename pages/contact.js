@@ -99,12 +99,12 @@ const Contact = () => {
       <div className="containerr h-screen flex justify-around flex-row flexCol-con py-20 relative">
         {/* {lodingS === false && <span className="fixed flex justify-center items-center text-red-900 text-lg pl-6 top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>} */}
         <div className="left margin-bot">
-          <p className='text-5xl text-white pb-16 textSma'>Contact Us</p>
+          <p className='text-5xl text-white pb-12 textSma'>Contact Us</p>
           <div className="contact flex flex-col">
-            <input value={name} onChange={handleChange} type="text" id="name" name='name' placeholder="Your Name / User Name" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
-            <input value={phone} onChange={handleChange} type="number" id="phone" name="phone" placeholder="Mobile No" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
-            <input value={email} onChange={handleChange} type="text" id="email" name="email" placeholder="Your Email" required className="p-3 outline-none focus:border-red-700 mb-5 input-bck text-gray-600 text-base border border-gray-300" />
-            <textarea value={message} onChange={handleChange} type="text" id="message" name="message" placeholder="Message" required cols="57" rows="5" className="p-3 resize-none outline-none focus:border-red-700 mb-5 input-bck text-gray-600 border text-base border-gray-300" />
+            <input value={name} onChange={handleChange} type="text" id="name" name='name' placeholder="Your Name / User Name" required className="p-3 outline-none focus:border-red-700 mb-3 rounded-sm input-bck text-gray-600 text-base border border-gray-300" />
+            <input value={phone} onChange={handleChange} type="number" id="phone" name="phone" placeholder="Mobile No" required className="p-3 outline-none focus:border-red-700 mb-3 rounded-sm input-bck text-gray-600 text-base border border-gray-300" />
+            <input value={email} onChange={handleChange} type="text" id="email" name="email" placeholder="Your Email" required className="p-3 outline-none focus:border-red-700 mb-3 rounded-sm input-bck text-gray-600 text-base border border-gray-300" />
+            <textarea value={message} onChange={handleChange} type="text" id="message" name="message" placeholder="Message" required cols="45" rows="4" className="p-3 resize-none outline-none focus:border-red-700 mb-3 rounded-sm input-bck text-gray-600 border text-base border-gray-300" />
             <button onClick={submitQuery} disabled={disabled} className='font-medium rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-10 py-4 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'>
               {lodingS === false ? <h6>WAIT</h6> : <h6>SEND MESSAGE</h6>}
             </button>

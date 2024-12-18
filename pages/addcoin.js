@@ -275,11 +275,11 @@ const Addcoin = () => {
                     <div className="collection_with nivpad coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-5 border-2  border-gray-300 py-3 px-10">
                         <div className="refrenceno text-xl mb-2">Ref. Number: <span className='text-2xl font-medium'>{oid}</span></div>
                         <div className="box_bank flex flex-row nincol items-start">
-                            {!qrVisible && (<div className="qrcode relative">
+                            {!qrVisible && (<div className="qrcode w-full relative">
                                 <div className="payment-box w-52 border">
                                     <img src="./payment.jpg" alt="" />
                                 </div>
-                                <div className="click-gene absolute bottom-20 left-5">
+                                <div className="click-gene absolute bottom-20">
                                     <div
                                         className="w-full bg-white text-base text-center text-black py-2 px-2"
                                     >
@@ -288,7 +288,7 @@ const Addcoin = () => {
                                 </div>
                             </div>)}
                             {qrVisible && (
-                                <div className="payment-box flex justify-center items-center flex-col">
+                                <div className="payment-box w-full flex justify-center items-center flex-col">
                                     <div className="boc-forqr flex justify-center items-center">
                                         <QRCode value={qrUrl} size={180} />
                                     </div>
@@ -302,8 +302,8 @@ const Addcoin = () => {
                                 </div>
                             )}
                             <div className="divider w-20"></div>
-                            <div className="detailss flex justify-start items-start flex-col mt-3">
-                                <div className="box_bank flex justify-center flex-col items-start">
+                            <div className="detailss w-full flex justify-start items-start flex-col mt-3">
+                                <div className="box_bank w-full flex justify-center flex-col items-start">
                                     <p className='text-base'>Enter Coins</p>
                                     <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" placeholder='100 or Above' name='amount' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
                                 </div>
@@ -313,7 +313,7 @@ const Addcoin = () => {
                                 >
                                     Generate QR Code
                                 </button>)}
-                                {qrVisible && (<div className="box_bank flex justify-center flex-col items-start">
+                                {qrVisible && (<div className="box_bank w-full flex justify-center flex-col items-start">
                                     <p className='text-base'>Enter Transaction ID</p>
                                     <input value={transId} onChange={handleChange} autoComplete="off" type="number" id="transId" name='transId' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
                                 </div>)}

@@ -119,7 +119,7 @@ const AddCoin = ({ addcoins }) => {
           </div>)
         })}
       </div> */}
-        <div className="tables p-5 w-full containerr">
+        <div className="tables p-5 w-full min-h-screen containerr">
           <table className="mx-auto bg-white p-5">
             <thead>
               <tr>
@@ -129,8 +129,8 @@ const AddCoin = ({ addcoins }) => {
                 <th className='text-left border p-2 border-slate-600'><div className="Coin text-sm font-medium">Mobile</div></th>
                 <th className='text-left border p-2 border-slate-600'><div className="Amount text-sm font-medium">Amount</div></th>
                 <th className='text-left border p-2 border-slate-600'><div className="ifsc text-sm font-medium">Transaction ID</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Payment Info</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Pay Trans ID</div></th>
+                {/* <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Payment Info</div></th>
+                <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Pay Trans ID</div></th> */}
                 <th className='text-left border p-2 border-slate-600'><div className="Win text-sm font-medium">Status</div></th>
                 <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Date on Buy</div></th>
                 <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Paid</div></th>
@@ -146,8 +146,8 @@ const AddCoin = ({ addcoins }) => {
             ">{item.phone}</div></td>
                   <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.amount}</div></td>
                   <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transId}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.paymentInfo}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transactionId}</div></td>
+                  {/* <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.paymentInfo}</div></td>
+                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transactionId}</div></td> */}
                   <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.status}</div></td>
                   <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.createdAt}</div></td>
                   <td className='text-left border p-2 border-slate-600'>{item.status == "Initiated" && <button onClick={() => handlePaidButtonClick(item)} className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Paid</p></button>}</td>
