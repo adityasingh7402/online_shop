@@ -96,7 +96,7 @@ const Login = () => {
           draggable
           pauseOnHover
         />
-        <div className="login flex justify-center border-2 h-min bg-white border-gray-200 shadow-md rounded-sm my-9 mx-auto">
+        <div className="login flex justify-center border-2 min-h-screen bg-white border-gray-200 shadow-md rounded-sm my-9 mx-auto">
           <div className="client-data flex flex-col w-full px-6 py-4">
             <p className="text-3xl pb-3 font-normal">Sign-In</p>
             <form onSubmit={handleSubmit} method="POST">

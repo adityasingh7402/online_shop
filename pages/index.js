@@ -453,8 +453,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           <div className="left">
             <div className="left-item flex flex-row justify-center items-center">
               <div className="leftwinner flex justify-center items-center flex-col">
-                <p className="text-white text-xl font-serif">Last hour's</p>
-                <p className="text-white text-xl font-serif">winning card</p>
+                <p className="text-white text-xl font-serif">Last Bit</p>
+                <p className="text-white text-xl font-serif">Winning Card</p>
               </div>
               <div className="resImg w-16 h-16 ml-3">
                 <img src={`/card/card-${randomNum.wiinerCard}.png`} alt="" />
@@ -463,7 +463,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           </div>
           <div className="right">
             <div className="right-items rounded-sm">
-              <p className="text-xl text-white mx-4 py-3 flex-col font-medium flex justify-center items-center font-serif"> Winner Announced In  <span className="text-3xl"> {formatTime(time)}</span></p>
+              <p className="text-xl text-white mx-4 py-3 flex-col font-medium flex justify-center items-center font-serif"> Winner Announced In  <span className="text-3xl"> {formatTime(time)} <span className="text-base">Hours</span> </span></p>
             </div>
           </div>
         </div>
