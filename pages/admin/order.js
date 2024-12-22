@@ -1,76 +1,103 @@
 import { React, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 import Orderr from "../../modal/Order";
 import mongoose from "mongoose";
-
+import * as XLSX from "xlsx";
 
 const Order = ({ orders }) => {
   const [isHidden, setIsHidden] = useState(true);
-  const router = useRouter()
+  const router = useRouter();
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Intl.DateTimeFormat("en-GB", options).format(date);
+  };
+
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
 
-    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
+    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(",");
 
     if (!myuser || !allowedEmails.includes(myuser.email)) {
-      router.push('/');
+      router.push("/");
     } else {
       setIsHidden(false);
     }
   }, []);
+
   if (isHidden) {
     return null;
   }
+
+  const handleDownload = () => {
+    const data = orders.map((order) => ({
+      "Order Id": order.orderId,
+      Name: order.name,
+      Email: order.email,
+      Mobile: order.phone,
+      Amount: order.amount,
+      Card: `C - ${order.cardno}`,
+      Status: order.winning,
+      "Date on Buy": formatDate(order.createdAt),
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Orders");
+    XLSX.writeFile(workbook, "OrdersData.xlsx");
+  };
 
   return (
     <>
       <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
         Orders - Admin Panel
       </div>
-      {/* <div className="box p-5">
-        {orders.map((item) => {
-          return (<div key={item._id} className="userOrderss border-2 border-gray-200 mt-2 w-full flex flex-col overflow-x-scroll p-5">
-            <p className="font-medium">Order Id : <span className="font-normal">{item.orderId}</span></p>
-            <p className="font-medium">Name : <span className="font-normal">{item.name}</span></p>
-            <p className="font-medium">Email : <span className="font-normal">{item.email}</span></p>
-            <p className="font-medium">Mobile : <span className="font-normal">{item.phone}</span></p>
-            <p className="font-medium">Amount : <span className="font-normal">{item.amount}</span></p>
-            <p className="font-medium">Card : <span className="font-normal">{` Card No - ${item.cardno} , Random No ${item.randomNum}`}</span></p>
-            <p className="font-medium">Status : <span className="font-normal">{item.winning}</span></p>
-            <p className="font-medium">Date on Buy : <span className="font-normal">{item.createdAt}</span></p>
-          </div>)
-        })}
-      </div> */}
+      <div className="flex justify-end p-5">
+        <button
+          onClick={handleDownload}
+          className="rounded bg-blue-500 text-white px-4 py-2 hover:bg-blue-600"
+        >
+          Download Excel
+        </button>
+      </div>
       <div className="tables p-5 w-full">
         <table className="mx-auto">
           <thead>
             <tr>
-              <th className='text-left border p-3 border-slate-600'><div className="Date text-lg font-medium">Order Id</div></th>
-              <th className='text-left border p-3 border-slate-600'><div className="Refrence text-lg font-medium">Name</div></th>
-              <th className='text-left border p-3 border-slate-600'><div className="card text-lg font-medium">Email</div></th>
-              <th className='text-left border p-3 border-slate-600'><div className="Coin text-lg font-medium">Mobile</div></th>
-              <th className='text-left border p-3 border-slate-600'><div className="Status text-lg font-medium">Amount</div></th>
-              <th className='text-left border p-3 border-slate-600'><div className="Pending text-lg font-medium">Card</div></th>
-              <th className='text-left border p-3 border-slate-600'><div className="Win text-lg font-medium">Status</div></th>
-              <th className='text-left border p-3 border-slate-600'><div className="Loss text-lg font-medium">Date on Buy</div></th>
+              <th className="text-left border p-3 border-slate-600">Order Id</th>
+              <th className="text-left border p-3 border-slate-600">Name</th>
+              <th className="text-left border p-3 border-slate-600">Email</th>
+              <th className="text-left border p-3 border-slate-600">Mobile</th>
+              <th className="text-left border p-3 border-slate-600">Amount</th>
+              <th className="text-left border p-3 border-slate-600">Card</th>
+              <th className="text-left border p-3 border-slate-600">Status</th>
+              <th className="text-left border p-3 border-slate-600">Date on Buy</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((item) => {
-              return <tr key={item._id}>
-                <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.name}</div></td>
-                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.email}</div></td>
-                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.phone}</div></td>
-                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.amount}</div></td>
-                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{` C - ${item.cardno}`}</div></td>
-                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.winning}</div></td>
-                <td className='text-left border p-3 border-slate-600'><div className="Refrence">{item.createdAt}</div></td>
+            {orders.map((item) => (
+              <tr key={item._id}>
+                <td className="text-left border p-3 border-slate-600">#{item.orderId}</td>
+                <td className="text-left border p-3 border-slate-600">{item.name}</td>
+                <td className="text-left border p-3 border-slate-600">{item.email}</td>
+                <td className="text-left border p-3 border-slate-600">{item.phone}</td>
+                <td className="text-left border p-3 border-slate-600">{item.amount}</td>
+                <td className="text-left border p-3 border-slate-600">{`C - ${item.cardno}`}</td>
+                <td className="text-left border p-3 border-slate-600">{item.winning}</td>
+                <td className="text-left border p-3 border-slate-600">
+                  {formatDate(item.createdAt)}
+                </td>
               </tr>
-            })}
+            ))}
           </tbody>
         </table>
       </div>
@@ -83,8 +110,7 @@ export async function getServerSideProps(context) {
     await mongoose.connect(process.env.MONGO_URI);
   }
 
-  const orders = await Orderr.find({
-  });
+  const orders = await Orderr.find({});
   return {
     props: { orders: JSON.parse(JSON.stringify(orders)) },
   };

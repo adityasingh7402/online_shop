@@ -299,9 +299,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         <div className="imgphoto w-full h-full overflow-hidden">
           <img src="./homemo.jpg" alt="" />
         </div>
-        <div className="shs absolute -left-28">
+        {/* <div className="shs absolute -left-28">
           <img src="/card-ace.png" alt="" />
-        </div>
+        </div> */}
         {/* <div onClick={handleDownload} className="downloadapk absolute z-50 w-28 cursor-pointer bottom-10 right-5"><img src="downloadmo.png" alt="" /></div> */}
       </div>
     </div>}

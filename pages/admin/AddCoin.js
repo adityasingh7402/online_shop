@@ -1,21 +1,19 @@
 import { React, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Link from "next/link";
-import Head from "next/head";
 import { AiOutlineClose } from "react-icons/ai";
-import addCoin from "../../modal/Addcoin";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import mongoose from "mongoose";
-
+import addCoin from "../../modal/Addcoin";
+import * as XLSX from "xlsx";
 
 const AddCoin = ({ addcoins }) => {
   const [isHidden, setIsHidden] = useState(true);
-  const router = useRouter()
+  const router = useRouter();
+
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-
     const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
 
     if (!myuser || !allowedEmails.includes(myuser.email)) {
@@ -24,135 +22,150 @@ const AddCoin = ({ addcoins }) => {
       setIsHidden(false);
     }
   }, []);
+
   if (isHidden) {
     return null;
   }
+
   const handlePaidButtonClick = async (item) => {
     const confirmation = window.confirm(
       `Are you sure you want to update the following details?\n\nOrder ID: ${item.orderId}\nAmount: ${item.amount}\nEmail: ${item.email}`
     );
-  
+
     if (!confirmation) {
-      return; // If the user cancels, exit the function
+      return;
     }
-  
-    let data = { Orderid: item.orderId, Orderamount: item.amount, Orderemail: item.email };
-  
+
+    const data = { Orderid: item.orderId, Orderamount: item.amount, Orderemail: item.email };
+
     try {
-      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateAdd`, {
-        method: 'POST', // or 'PUT'
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateAdd`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-  
-      let res = await a.json();
-  
+
+      const res = await response.json();
+
       if (res.success) {
-        toast.success(res.success, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success(res.success, { position: "top-center", autoClose: 2000 });
         router.reload();
       } else {
-        toast.error(res.error, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(res.error, { position: "top-center", autoClose: 2000 });
         router.reload();
       }
     } catch (error) {
-      toast.error("An error occurred. Please try again.", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error("An error occurred. Please try again.", { position: "top-center", autoClose: 2000 });
       console.error("Error:", error);
     }
   };
-  
+
+  const downloadCSV = () => {
+    const formattedData = addcoins.map((item) => ({
+      "Order ID": item.orderId,
+      Name: item.name,
+      Email: item.email,
+      Mobile: item.phone,
+      Amount: item.amount,
+      "Transaction ID": item.transId,
+      Status: item.status,
+      "Date on Buy": new Date(item.createdAt).toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      "Update Date": new Date(item.updatedAt).toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "AddCoins");
+    XLSX.writeFile(workbook, "AddCoins.xlsx");
+  };
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <Link href={'/admin'}><div className="gotoHome right-10 top-10 fixed cursor-pointer text-red-900 p-2 bg-white font-bold text-4xl"><AiOutlineClose /></div></Link>
+      <ToastContainer position="top-right" autoClose={3000} />
+      <Link href={'/admin'}>
+        <div className="gotoHome right-10 top-10 fixed cursor-pointer text-red-900 p-2 bg-white font-bold text-4xl">
+          <AiOutlineClose />
+        </div>
+      </Link>
       <div className="containerr p-10 overflow-hidden">
         <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
-          Adding Coins - Admin Panel
+          Withdrawal Coins - Admin Panel
         </div>
-        {/* <div className="box p-5">
-        {orders.map((item) => {
-          return (<div key={item._id} className="userOrderss border-2 border-gray-200 mt-2 w-full flex flex-col overflow-x-scroll p-5">
-            <p className="font-medium">Order Id : <span className="font-normal">{item.orderId}</span></p>
-            <p className="font-medium">Name : <span className="font-normal">{item.name}</span></p>
-            <p className="font-medium">Email : <span className="font-normal">{item.email}</span></p>
-            <p className="font-medium">Mobile : <span className="font-normal">{item.phone}</span></p>
-            <p className="font-medium">Amount : <span className="font-normal">{item.amount}</span></p>
-            <p className="font-medium">Card : <span className="font-normal">{` Card No - ${item.cardno} , Random No ${item.randomNum}`}</span></p>
-            <p className="font-medium">Status : <span className="font-normal">{item.winning}</span></p>
-            <p className="font-medium">Date on Buy : <span className="font-normal">{item.createdAt}</span></p>
-          </div>)
-        })}
-      </div> */}
+        <div className="download-button flex justify-end w-full">
+            <button
+              onClick={downloadCSV}
+              className="rounded-full bg-blue-700 px-6 py-2 text-white hover:bg-blue-500 transition-all">
+              Download CSV
+            </button>
+          </div>
         <div className="tables p-5 w-full min-h-screen containerr">
           <table className="mx-auto bg-white p-5">
             <thead>
               <tr>
-                <th className='text-left border p-2 border-slate-600'><div className="Date text-sm font-medium">Order Id</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="Refrence text-sm font-medium">Name</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="card text-sm font-medium">Email</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="Coin text-sm font-medium">Mobile</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="Amount text-sm font-medium">Amount</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="ifsc text-sm font-medium">Transaction ID</div></th>
-                {/* <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Payment Info</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="bankName text-sm font-medium">Pay Trans ID</div></th> */}
-                <th className='text-left border p-2 border-slate-600'><div className="Win text-sm font-medium">Status</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Date on Buy</div></th>
-                <th className='text-left border p-2 border-slate-600'><div className="Loss text-sm font-medium">Paid</div></th>
+                <th className="text-left border p-2 border-slate-600">Order ID</th>
+                <th className="text-left border p-2 border-slate-600">Name</th>
+                <th className="text-left border p-2 border-slate-600">Email</th>
+                <th className="text-left border p-2 border-slate-600">Mobile</th>
+                <th className="text-left border p-2 border-slate-600">Amount</th>
+                <th className="text-left border p-2 border-slate-600">Transaction ID</th>
+                <th className="text-left border p-2 border-slate-600">Status</th>
+                <th className="text-left border p-2 border-slate-600">Date on Buy</th>
+                <th className="text-left border p-2 border-slate-600">Update Date</th>
+                <th className="text-left border p-2 border-slate-600">Paid</th>
               </tr>
             </thead>
             <tbody>
-              {addcoins.map((item) => {
-                return <tr key={item._id}>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">#{item.orderId}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.name}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.email}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs
-            ">{item.phone}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.amount}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transId}</div></td>
-                  {/* <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.paymentInfo}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.transactionId}</div></td> */}
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.status}</div></td>
-                  <td className='text-left border p-2 border-slate-600'><div className="Refrence text-xs">{item.createdAt}</div></td>
-                  <td className='text-left border p-2 border-slate-600'>{item.status == "Initiated" && <button onClick={() => handlePaidButtonClick(item)} className='rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><p>Paid</p></button>}</td>
+              {addcoins.map((item) => (
+                <tr key={item._id}>
+                  <td className="text-left border p-2 border-slate-600">{item.orderId}</td>
+                  <td className="text-left border p-2 border-slate-600">{item.name}</td>
+                  <td className="text-left border p-2 border-slate-600">{item.email}</td>
+                  <td className="text-left border p-2 border-slate-600">{item.phone}</td>
+                  <td className="text-left border p-2 border-slate-600">{item.amount}</td>
+                  <td className="text-left border p-2 border-slate-600">{item.transId}</td>
+                  <td className="text-left border p-2 border-slate-600">{item.status}</td>
+                  <td className="text-left border p-2 border-slate-600">
+                    {new Date(item.createdAt).toLocaleString('en-GB', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </td>
+                  <td className="text-left border p-2 border-slate-600">
+                    {new Date(item.updatedAt).toLocaleString('en-GB', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </td>
+                  <td className="text-left border p-2 border-slate-600">
+                    {item.status === "Initiated" && (
+                      <button
+                        onClick={() => handlePaidButtonClick(item)}
+                        className="rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700"
+                      >
+                        Paid
+                      </button>
+                    )}
+                  </td>
                 </tr>
-              })}
+              ))}
             </tbody>
           </table>
         </div>
@@ -160,6 +173,7 @@ const AddCoin = ({ addcoins }) => {
     </>
   );
 };
+
 
 export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
