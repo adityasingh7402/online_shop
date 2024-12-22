@@ -101,7 +101,7 @@ const AddCoin = ({ addcoins }) => {
       </Link>
       <div className="containerr p-10 overflow-hidden">
         <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
-          Withdrawal Coins - Admin Panel
+          Add Coins - Admin Panel
         </div>
         <div className="download-button flex justify-end w-full">
             <button
