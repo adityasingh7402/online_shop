@@ -1,117 +1,135 @@
-import { React, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image'
+import Image from 'next/image';
 import Link from 'next/link';
-import Head from "next/head"
-import Script from "next/script"
-import { RiCoinsLine } from "react-icons/ri";
-import { AiOutlineClose } from "react-icons/ai";
+import Head from "next/head";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import QRCode from "react-qr-code";
+import { motion, AnimatePresence } from "framer-motion";
+import { Coins, ArrowLeft, X, CreditCard, Calendar, RefreshCw, Clock, CheckCircle, AlertCircle } from "lucide-react";
 
 const Addcoin = () => {
-    const [wallet, setwallet] = useState(0)
-    const router = useRouter()
-    const [lodingS, setlodingS] = useState(true)
-    const [orders, setorders] = useState([])
-    const [token, settoken] = useState("")
-    const [name, setname] = useState("")
-    const [oid, setoid] = useState("")
-    const [amount, setamount] = useState('')
-    const [transId, settransId] = useState('')
-    const [curdate, setcurdate] = useState('')
-    const [userInfi, setuserInfi] = useState({})
-    const [paymentVer, setpaymentVer] = useState(true)
+    const [wallet, setWallet] = useState(0);
+    const router = useRouter();
+    const [loading, setLoading] = useState(true);
+    const [orders, setOrders] = useState([]);
+    const [token, setToken] = useState("");
+    const [name, setName] = useState("");
+    const [oid, setOid] = useState("");
+    const [amount, setAmount] = useState('');
+    const [transId, setTransId] = useState('');
+    const [curdate, setCurdate] = useState('');
+    const [userInfo, setUserInfo] = useState({});
+    const [paymentVer, setPaymentVer] = useState(true);
     const [qrVisible, setQrVisible] = useState(false);
     const [qrUrl, setQrUrl] = useState("");
     const [timer, setTimer] = useState(null);
+    const [activeTab, setActiveTab] = useState("addCoins");
+
+    // Animation variants
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: { 
+            opacity: 1,
+            transition: { 
+                duration: 0.5,
+                when: "beforeChildren",
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: { 
+            y: 0, 
+            opacity: 1,
+            transition: { duration: 0.3 }
+        }
+    };
+
+    const buttonVariants = {
+        rest: { scale: 1 },
+        hover: { scale: 1.05 },
+        tap: { scale: 0.95 }
+    };
 
     useEffect(() => {
-        const myuser = JSON.parse(localStorage.getItem("myuser"))
+        const myuser = JSON.parse(localStorage.getItem("myuser"));
         if (myuser && myuser.token) {
-            fetchdata(myuser.token)
-            settoken(myuser.token)
+            fetchData(myuser.token);
+            setToken(myuser.token);
         }
         const fetchOrders = async () => {
-            setlodingS(false)
+            setLoading(false);
             let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getaddcoin`, {
-                method: 'POST', // or 'PUT'
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ token: JSON.parse(localStorage.getItem('myuser')).token }),
-            })
-            let res = await a.json()
-            setorders(res.addcoins)
-            setlodingS(true)
-        }
+            });
+            let res = await a.json();
+            setOrders(res.addcoins);
+            setLoading(true);
+        };
+        
         if (!localStorage.getItem('myuser')) {
-            router.push('/')
+            router.push('/');
         }
         else {
-            fetchOrders()
+            fetchOrders();
         }
-        setoid(Math.floor(Math.random() * Date.now()));
+        
+        setOid(Math.floor(Math.random() * Date.now()));
 
         const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
-        const currentDate = new Date().toLocaleDateString(options);
-        setcurdate(currentDate)
-        console.log(currentDate, curdate)
-    }, [])
+        const currentDate = new Date().toLocaleDateString('en-US', options);
+        setCurdate(currentDate);
+    }, [router]);
 
-    const fetchdata = async (token) => {
-        let data = { token: token, wallet }
+    const fetchData = async (token) => {
+        let data = { token: token, wallet };
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
-            method: 'POST', // or 'PUT'
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        })
-        let res = await a.json()
-        setwallet(res.wallet)
-        setname(res.name)
-        setuserInfi(res)
-    }
+        });
+        let res = await a.json();
+        setWallet(res.wallet);
+        setName(res.name);
+        setUserInfo(res);
+    };
+
     const handleChange = async (e) => {
         const { name, value } = e.target;
 
         if (name === 'amount') {
-            setamount(value);
-
+            setAmount(value);
             // Update payment verification based on both conditions
-            if (value >= 500 && transId.trim() !== '') {
-                setpaymentVer(false); // Allow payment verification
+            if (value >= 100 && transId.trim() !== '') {
+                setPaymentVer(false); // Allow payment verification
             } else {
-                setpaymentVer(true); // Block payment verification
+                setPaymentVer(true); // Block payment verification
             }
         } else if (name === 'transId') {
-            settransId(value);
-
+            setTransId(value);
             // Update payment verification based on both conditions
             if (value.trim() !== '' && amount >= 100) {
-                setpaymentVer(false); // Allow payment verification
+                setPaymentVer(false); // Allow payment verification
             } else {
-                setpaymentVer(true); // Block payment verification
+                setPaymentVer(true); // Block payment verification
             }
         }
-    };
-    useEffect(() => {
-        const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
-        const currentDate = new Date().toLocaleDateString("en-US", options);
-        setcurdate(currentDate);
-    }, []);
-
-    const handleAmountChange = (e) => {
-        setamount(e.target.value);
-        setQrVisible(false); // Hide QR when amount changes
     };
 
     const generateQR = () => {
         if (!amount || amount < 1) {
             toast.error("Please enter a valid amount!", {
-                position: "top-left",
+                position: "top-center",
                 autoClose: 3000,
             });
             return;
@@ -128,7 +146,7 @@ const Addcoin = () => {
         const newTimer = setTimeout(() => {
             setQrVisible(false);
             toast.warning("QR code expired. Please generate a new one.", {
-                position: "top-left",
+                position: "top-center",
                 autoClose: 3000,
             });
         }, 600000); // 10 minutes in milliseconds
@@ -136,85 +154,27 @@ const Addcoin = () => {
     };
 
     const clearFields = () => {
-        setamount("");
-        settransId("");
+        setAmount("");
+        setTransId("");
         setQrVisible(false);
         if (timer) clearTimeout(timer);
     };
 
-
-
-
-
-    // const initiatePayment = async () => {
-    //     setlodingS(false)
-    //     let oid = Math.floor(Math.random() * Date.now());
-    //     const data = { email: userInfi.email, name: userInfi.name, phone: userInfi.phone, amount, oid, };
-    //     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addCoin`, {
-    //         method: 'POST', // or 'PUT'
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(data),
-    //     })
-    //     let txnRes = await a.json()
-    //     if (txnRes.success) {
-    //         let txnToken = txnRes.txnToken
-    //         var config = {
-    //             "root": "",
-    //             "flow": "DEFAULT",
-    //             "data": {
-    //                 "orderId": oid, /* update order id */
-    //                 "token": txnToken, /* update token value */
-    //                 "tokenType": "TXN_TOKEN",
-    //                 "amount": amount /* update amount */
-    //             },
-    //             "handler": {
-    //                 "notifyMerchant": function (eventName, data) {
-    //                     console.log("notifyMerchant handler function called");
-    //                     console.log("eventName => ", eventName);
-    //                     console.log("data => ", data);
-    //                 }
-    //             }
-    //         };
-    //         window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
-    //             // after successfully updating configuration, invoke JS Checkout
-    //             window.Paytm.CheckoutJS.invoke();
-    //         }).catch(function onError(error) {
-    //             console.log("error => ", error);
-    //         });
-    //     }
-    //     else {
-    //         if (txnRes.cardClear) {
-    //             clearCart()
-    //         }
-    //         toast.error(txnRes.error, {
-    //             position: "top-left",
-    //             autoClose: 3000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //         });
-    //     }
-    //     setlodingS(true)
-    // }
-    const initiatePaymentdemo = async () => {
-        setlodingS(false)
-        const data = { email: userInfi.email, name: userInfi.name, phone: userInfi.phone, amount, oid, transId };
+    const initiatePaymentDemo = async () => {
+        setLoading(false);
+        const data = { email: userInfo.email, name: userInfo.name, phone: userInfo.phone, amount, oid, transId };
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addCoin`, {
-            method: 'POST', // or 'PUT'
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        })
-        let txnRes = await a.json()
-        setlodingS(true)
+        });
+        let txnRes = await a.json();
+        setLoading(true);
         if (txnRes.success) {
             toast.success(txnRes.success, {
-                position: "top-left",
+                position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -222,152 +182,396 @@ const Addcoin = () => {
                 draggable: true,
                 progress: undefined,
             });
-            setamount('');
-            settransId('');
-            clearFields()
+            clearFields();
         } else {
-            setamount('');
-            settransId('');
-            clearFields()
+            clearFields();
         }
-    }
+    };
+
     const updatedOrders = orders.map((item) => {
         const date = new Date(item.createdAt);
         const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         return {
             ...item,
             time: time
-        }
+        };
     });
+
+    const getStatusColor = (status) => {
+        switch(status.toLowerCase()) {
+            case 'completed':
+                return 'text-green-600';
+            case 'pending':
+                return 'text-yellow-600';
+            case 'failed':
+                return 'text-red-600';
+            default:
+                return 'text-gray-600';
+        }
+    };
+
+    const getStatusIcon = (status) => {
+        switch(status.toLowerCase()) {
+            case 'completed':
+                return <CheckCircle className="inline-block mr-1" size={16} />;
+            case 'pending':
+                return <Clock className="inline-block mr-1" size={16} />;
+            case 'failed':
+                return <AlertCircle className="inline-block mr-1" size={16} />;
+            default:
+                return null;
+        }
+    };
+
     return (
-        <div className='containerr  catoBack flex relative'>
-            <div className="gotoHome right-10 top-10 fixed cursor-pointer font-bold text-4xl">
-            </div>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-8 px-4 sm:px-6 lg:px-8">
             <Head>
                 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
                 <title>Patti Circle - Purchase Coin</title>
                 <meta
                     name="description"
-                    content="Patti Circle win win Game"
+                    content="Patti Circle win win Game - Purchase coins to play more games"
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {/* <Script type="application/javascript" crossorigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`} /> */}
+            
             <ToastContainer
-                position="top-right"
-                autoClose={1000}
+                position="top-center"
+                autoClose={3000}
                 hideProgressBar={false}
-                newestOnTop={false}
+                newestOnTop
                 closeOnClick
                 rtl={false}
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
+                theme="light"
             />
-            {lodingS === false && <span className="fixed flex justify-center items-center text-red-900 text-lg top-1/2 w-full"><Image src={"/loader.gif"} width={50} height={50} /></span>}
-            <div className="checkout-title my-4 mx-5 ninersti w-full flex flex-row">
-                {/* <div className='left-side bg-white w-1/5 mr-5 border border-gray-200 rounded-sm py-5 px-5 shadow-sm h-72'>
-            <div className="subtotal text-3xl text-gray-800 flex justify-start pb-2">Filters</div>
-          </div> */}
-                <div className='right-side nivpad mx-auto justify-center bg-white yourOrderW text-3xl text-gray-800 border border-gray-200 rounded-sm py-3 px-20 shadow-sm'>
-                    <p className='flex justify-center items-center text-4xl py-2 text-gray-700'>Add Coins</p>
-                    <div className="coin flex text-2xl poostioncet cursor-pointer text-yellow-700 pb-4 mt-3"><span className='mr-5'> Your Wallet : </span>  <RiCoinsLine className="mr-1 text-3xl" />  <span className="text-3xl">{wallet}</span></div>
-                    <div className="collection_with nivpad coin_with product flex yourOrderCol justify-center items-center flex-col w-full mb-5 mt-5 border-2  border-gray-300 py-3 px-10">
-                        <div className="refrenceno text-xl mb-2">Ref. Number: <span className='text-2xl font-medium'>{oid}</span></div>
-                        <div className="box_bank flex flex-row nincol items-start">
-                            {!qrVisible && (<div className="qrcode w-full relative">
-                                <div className="payment-box w-52 border">
-                                    <img src="./payment.jpg" alt="" />
-                                </div>
-                                <div className="click-gene absolute bottom-20">
-                                    <div
-                                        className="w-full bg-white text-base text-center text-black py-2 px-2"
-                                    >
-                                         Click on Generate QR Code
+            
+            {!loading && (
+                <motion.div 
+                    className="fixed inset-0 flex justify-center items-center bg-black/30 backdrop-blur-sm z-50"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                >
+                    <motion.div 
+                        initial={{ scale: 0.8 }}
+                        animate={{ scale: 1 }}
+                        className="bg-white rounded-xl p-8 flex flex-col items-center"
+                    >
+                        <RefreshCw className="text-blue-600 animate-spin mb-4" size={36} />
+                        <p className="text-lg font-medium text-gray-700">Processing your request...</p>
+                    </motion.div>
+                </motion.div>
+            )}
+            
+            <motion.div 
+                className="max-w-4xl mx-auto"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+            >
+                <motion.div variants={itemVariants} className="mb-6">
+                    <Link href="./">
+                        <motion.a 
+                            className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                            whileHover={{ x: -5 }}
+                        >
+                            <ArrowLeft size={20} className="mr-2" />
+                            <span className="text-lg cursor-pointer font-medium">Back to Home</span>
+                        </motion.a>
+                    </Link>
+                </motion.div>
+                
+                <motion.div 
+                    variants={itemVariants}
+                    className="bg-white rounded-xl shadow-xl overflow-hidden"
+                >
+                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+                        <h1 className="text-3xl font-bold text-white text-center">Coin Management</h1>
+                    </div>
+                    
+                    <motion.div 
+                        className="p-6 md:p-8 flex items-center justify-between bg-gradient-to-r from-blue-50 to-purple-50 border-b"
+                        variants={itemVariants}
+                    >
+                        <div className="flex items-center">
+                            <Coins className="text-yellow-500 mr-3" size={28} />
+                            <div>
+                                <p className="text-gray-600 text-lg">Your Wallet</p>
+                                <p className="text-3xl font-bold text-gray-800">{wallet} <span className="text-sm font-normal text-gray-500">coins</span></p>
+                            </div>
+                        </div>
+                        <div className="hidden md:block">
+                            <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm">
+                                <span className="text-gray-600">Reference Number: </span>
+                                <span className="text-gray-900 font-medium">{oid}</span>
+                            </div>
+                        </div>
+                    </motion.div>
+                    
+                    <div className="px-6 py-4 border-b">
+                        <div className="flex space-x-2">
+                            <motion.button
+                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "addCoins" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                                onClick={() => setActiveTab("addCoins")}
+                                whileHover={{ y: -2 }}
+                                whileTap={{ y: 0 }}
+                            >
+                                Add Coins
+                            </motion.button>
+                            <motion.button
+                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "history" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                                onClick={() => setActiveTab("history")}
+                                whileHover={{ y: -2 }}
+                                whileTap={{ y: 0 }}
+                            >
+                                Coin History
+                            </motion.button>
+                        </div>
+                    </div>
+
+                    <AnimatePresence mode="wait">
+                        {activeTab === "addCoins" && (
+                            <motion.div
+                                key="addCoins"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.3 }}
+                                className="p-6"
+                            >
+                                <div className="md:hidden mb-4">
+                                    <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm">
+                                        <span className="text-gray-600">Reference Number: </span>
+                                        <span className="text-gray-900 font-medium">{oid}</span>
                                     </div>
                                 </div>
-                            </div>)}
-                            {qrVisible && (
-                                <div className="payment-box w-full flex justify-center items-center flex-col">
-                                    <div className="boc-forqr flex justify-center items-center">
-                                        <QRCode value={qrUrl} size={180} />
+                                
+                                <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        <div className="flex flex-col items-center justify-center">
+                                            <AnimatePresence mode="wait">
+                                                {!qrVisible ? (
+                                                    <motion.div 
+                                                        key="placeholderQR"
+                                                        className="w-full max-w-xs flex flex-col items-center justify-center relative"
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
+                                                    >
+                                                        <div className="border border-gray-300 rounded-lg overflow-hidden bg-white shadow-sm mb-4 p-4 w-48 h-48 flex items-center justify-center">
+                                                            <CreditCard className="text-gray-400" size={64} />
+                                                        </div>
+                                                        <p className="text-sm text-gray-600 text-center">
+                                                            Enter an amount and click "Generate QR Code" to proceed with payment
+                                                        </p>
+                                                    </motion.div>
+                                                ) : (
+                                                    <motion.div 
+                                                        key="actualQR"
+                                                        className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center"
+                                                        initial={{ opacity: 0, scale: 0.9 }}
+                                                        animate={{ opacity: 1, scale: 1 }}
+                                                        exit={{ opacity: 0, scale: 0.9 }}
+                                                    >
+                                                        <QRCode value={qrUrl} size={180} />
+                                                        <p className="text-gray-700 text-lg mt-4 font-medium">Scan to pay ₹{amount}</p>
+                                                        <motion.button
+                                                            className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg flex items-center"
+                                                            onClick={clearFields}
+                                                            whileHover={{ scale: 1.05 }}
+                                                            whileTap={{ scale: 0.95 }}
+                                                        >
+                                                            <X size={16} className="mr-2" />
+                                                            Clear QR
+                                                        </motion.button>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                        
+                                        <div className="flex flex-col">
+                                            <div className="mb-4">
+                                                <label htmlFor="amount" className="block text-gray-700 font-medium mb-2">Enter Coins Amount</label>
+                                                <input 
+                                                    value={amount} 
+                                                    onChange={handleChange} 
+                                                    autoComplete="off" 
+                                                    type="number" 
+                                                    id="amount" 
+                                                    placeholder="100 or above" 
+                                                    name="amount" 
+                                                    required 
+                                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" 
+                                                />
+                                            </div>
+                                            
+                                            {!qrVisible && (
+                                                <motion.button
+                                                    onClick={generateQR}
+                                                    className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium mb-4 flex items-center justify-center"
+                                                    variants={buttonVariants}
+                                                    whileHover="hover"
+                                                    whileTap="tap"
+                                                    disabled={!amount || amount < 1}
+                                                >
+                                                    Generate QR Code
+                                                </motion.button>
+                                            )}
+                                            
+                                            {qrVisible && (
+                                                <div className="mb-4">
+                                                    <label htmlFor="transId" className="block text-gray-700 font-medium mb-2">Enter Transaction ID</label>
+                                                    <input 
+                                                        value={transId} 
+                                                        onChange={handleChange} 
+                                                        autoComplete="off" 
+                                                        type="text" 
+                                                        id="transId" 
+                                                        name="transId" 
+                                                        required 
+                                                        placeholder="Enter your payment reference ID"
+                                                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" 
+                                                    />
+                                                </div>
+                                            )}
+                                            
+                                            <div className="mb-6 flex items-center">
+                                                <Calendar size={20} className="text-gray-600 mr-2" />
+                                                <p className="text-gray-700">Date: {curdate}</p>
+                                            </div>
+                                            
+                                            <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+                                                <Link href="./">
+                                                    <motion.a 
+                                                        className="w-full sm:w-auto px-6 py-3 bg-gray-100 text-gray-800 rounded-lg font-medium flex items-center justify-center hover:bg-gray-200 transition-colors"
+                                                        variants={buttonVariants}
+                                                        whileHover="hover"
+                                                        whileTap="tap"
+                                                    >
+                                                        <ArrowLeft size={18} className="mr-2" />
+                                                        Go Back
+                                                    </motion.a>
+                                                </Link>
+                                                
+                                                <motion.button 
+                                                    disabled={paymentVer} 
+                                                    onClick={initiatePaymentDemo}
+                                                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg font-medium disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
+                                                    variants={buttonVariants}
+                                                    whileHover={!paymentVer ? "hover" : {}}
+                                                    whileTap={!paymentVer ? "tap" : {}}
+                                                >
+                                                    <Coins className="mr-2" size={18} />
+                                                    Purchase Now
+                                                </motion.button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p className="text-gray-600 text-lg mt-2">Scan the QR to pay</p>
-                                    <button
-                                        className="bg-red-500 text-white py-1 px-2 text-lg mx-auto rounded hover:bg-red-600"
-                                        onClick={clearFields}
-                                    >
-                                        Clear
-                                    </button>
                                 </div>
-                            )}
-                            <div className="divider w-20"></div>
-                            <div className="detailss w-full flex justify-start items-start flex-col mt-3">
-                                <div className="box_bank w-full flex justify-center flex-col items-start">
-                                    <p className='text-base'>Enter Coins</p>
-                                    <input value={amount} onChange={handleChange} autoComplete="off" type="number" id="amount" placeholder='100 or Above' name='amount' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
-                                </div>
-                                {!qrVisible && (<button
-                                    onClick={generateQR}
-                                    className="w-full bg-blue-500 text-lg text-white py-2 px-2 rounded mb-4 hover:bg-blue-600"
+                                
+                                <motion.div 
+                                    className="mt-8 bg-white border border-gray-200 rounded-lg p-6"
+                                    variants={itemVariants}
                                 >
-                                    Generate QR Code
-                                </button>)}
-                                {qrVisible && (<div className="box_bank w-full flex justify-center flex-col items-start">
-                                    <p className='text-base'>Enter Transaction ID</p>
-                                    <input value={transId} onChange={handleChange} autoComplete="off" type="number" id="transId" name='transId' required className="p-2 outline-none w-full border-red-700 mb-3 text-gray-600 text-base border" />
-                                </div>)}
-                                <div className="box_bank flex justify-center flex-col items-start">
-                                    <p className='text-base'>Date : {curdate}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="box_button flex justify-around flex-row items-center w-full mt-7">
-                            <div className="botton_bit btnwithf flex justify-between items-center w-1/2">
-                                {/* <button onClick={initiatePayment} className='font-medium text-lg rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-4 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button> */}
-                                <Link href={'./'}><button className='font-medium text-base rounded-full  hover:bg-red-700 w-40 px-2 py-3 bg-white hover:text-white text-gray-800 border transition-all border-red-700'><h6>Go Back</h6></button></Link>
-                                <button disabled={paymentVer} onClick={initiatePaymentdemo} className='font-medium text-base rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-40 px-2 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Purchase Now</h6></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="notes">
-                        <p className='text-lg font-medium'>Note:</p>
-                        <p className='text-base'>1. Scan bar code to Purchase Coins.</p>
-                        <p className='text-base'>2. Fill Transaction ID.</p>
-                        <p className='text-base'>3. Send to us by clicking Purchase Now button.</p>
-                        <p className='text-base'>4. Coins will be added within one working day.</p>
-                    </div>
-                    <div className="products flex flex-col overflow-scroll w-full text-sm mt-8">
-                        <p className='flex justify-center items-center text-4xl py-8 text-gray-700'>Coin History</p>
-                        {/* {orders.length == 0 && <div className="flex justify-center text-4xl text-red-700 py-20 items-center border-t border-b border-gray-200">
-                            Your Order List is Empty....
-                        </div>} */}
-                        <table className=" bg-white p-5">
-                            <thead>
-                                <tr>
-                                    <th className='text-left border p-3 border-slate-600'><div className="Date text-base font-medium">Date</div></th>
-                                    <th className='text-left border p-3 border-slate-600'><div className="Refrence text-base font-medium">Refrence No</div></th>
-                                    <th className='text-left border p-3 border-slate-600'><div className="Coin text-base font-medium">Coin</div></th>
-                                    <th className='text-left border p-3 border-slate-600'><div className="Status text-base font-medium">Status</div></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {updatedOrders.map((item, index) => (
-                                    <tr key={item._id}>
-                                        <td className='text-left border p-3 border-slate-600'><div className="Date">{item.createdAt.substring(0, 10)}, {item.time}</div></td>
-                                        <td className='text-left border p-3 border-slate-600'><div className="Refrence">#{item.orderId}</div></td>
-                                        <td className='text-left border p-3 border-slate-600'><div className="Coin">{item.amount}</div></td>
-                                        <td className='text-left border p-3 border-slate-600'><div className="Status">{item.status}</div></td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">Important Notes:</h3>
+                                    <ul className="space-y-2 text-gray-700">
+                                        <li className="flex items-start">
+                                            <span className="inline-block w-6 text-blue-600 font-bold mr-2">1.</span>
+                                            Scan the QR code to make payment.
+                                        </li>
+                                        <li className="flex items-start">
+                                            <span className="inline-block w-6 text-blue-600 font-bold mr-2">2.</span>
+                                            Fill in the transaction ID received after payment.
+                                        </li>
+                                        <li className="flex items-start">
+                                            <span className="inline-block w-6 text-blue-600 font-bold mr-2">3.</span>
+                                            Submit your purchase by clicking the "Purchase Now" button.
+                                        </li>
+                                        <li className="flex items-start">
+                                            <span className="inline-block w-6 text-blue-600 font-bold mr-2">4.</span>
+                                            Coins will be added to your wallet within one working day.
+                                        </li>
+                                    </ul>
+                                </motion.div>
+                            </motion.div>
+                        )}
+                        
+                        {activeTab === "history" && (
+                            <motion.div
+                                key="history"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.3 }}
+                                className="p-6"
+                            >
+                                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Coin Transaction History</h2>
+                                
+                                {updatedOrders.length === 0 ? (
+                                    <motion.div 
+                                        className="bg-gray-50 rounded-lg p-10 text-center"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                    >
+                                        <Coins className="mx-auto text-gray-400 mb-4" size={48} />
+                                        <p className="text-xl text-gray-600">No transactions yet</p>
+                                        <p className="text-gray-500 mt-2">Your coin purchase history will appear here</p>
+                                    </motion.div>
+                                ) : (
+                                    <motion.div 
+                                        className="overflow-x-auto bg-white rounded-lg border border-gray-200"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                    >
+                                        <table className="min-w-full divide-y divide-gray-200">
+                                            <thead className="bg-gray-50">
+                                                <tr>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 md:uppercase tracking-wider">Date & Time</th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 md:uppercase tracking-wider">Reference No.</th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 md:uppercase tracking-wider">Coins</th>
+                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 md:uppercase tracking-wider">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="bg-white divide-y divide-gray-200">
+                                                {updatedOrders.map((item) => (
+                                                    <motion.tr 
+                                                        key={item._id}
+                                                        whileHover={{ backgroundColor: "#f9fafb" }}
+                                                    >
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                            {item.createdAt.substring(0, 10)}, {item.time}
+                                                        </td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                            #{item.orderId}
+                                                        </td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                            <span className="inline-flex items-center">
+                                                                <Coins size={16} className="text-yellow-500 mr-1" />
+                                                                {item.amount}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                                            <span className={`inline-flex items-center ${getStatusColor(item.status)}`}>
+                                                                {getStatusIcon(item.status)}
+                                                                {item.status}
+                                                            </span>
+                                                        </td>
+                                                    </motion.tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </motion.div>
+                                )}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
+            </motion.div>
         </div>
-    )
-}
+    );
+};
 
-export default Addcoin
+export default Addcoin;

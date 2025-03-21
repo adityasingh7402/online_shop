@@ -562,7 +562,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                       <Link href={'/account'}>
                         <motion.a variants={slideUp}>
                           <motion.li
-                            className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group"
+                            className="flex cursor-pointer items-center px-4 py-3 hover:bg-red-50 transition-all group"
                             whileHover={{ x: 5 }}
                           >
                             <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
@@ -576,7 +576,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                       <Link href={'/yourorder'}>
                         <motion.a variants={slideUp}>
                           <motion.li
-                            className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group"
+                            className="flex cursor-pointer items-center px-4 py-3 hover:bg-red-50 transition-all group"
                             whileHover={{ x: 5 }}
                           >
                             <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
@@ -590,7 +590,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                       <Link href={'/addcoin'}>
                         <motion.a variants={slideUp}>
                           <motion.li
-                            className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group"
+                            className="flex cursor-pointer items-center px-4 py-3 hover:bg-red-50 transition-all group"
                             whileHover={{ x: 5 }}
                           >
                             <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
@@ -604,7 +604,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                       <Link href={'/withdrawal'}>
                         <motion.a variants={slideUp}>
                           <motion.li
-                            className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group"
+                            className="flex cursor-pointer items-center px-4 py-3 hover:bg-red-50 transition-all group"
                             whileHover={{ x: 5 }}
                           >
                             <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
@@ -617,7 +617,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
                       <motion.li
                         onClick={handleDownload}
-                        className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer"
+                        className="flex cursor-pointer items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer"
                         variants={slideUp}
                         whileHover={{ x: 5 }}
                       >
@@ -629,7 +629,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
                       <motion.li
                         onClick={logout}
-                        className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer mt-2 border-t border-red-100"
+                        className="flex cursor-pointer items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer mt-2 border-t border-red-100"
                         variants={slideUp}
                         whileHover={{ x: 5 }}
                       >
