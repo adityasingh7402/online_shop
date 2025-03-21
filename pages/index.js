@@ -3,13 +3,9 @@ import { useEffect, useState } from "react";
 import Image from 'next/image';
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
-import { RiAccountCircleLine, RiCoinsLine } from "react-icons/ri";
 import "react-toastify/dist/ReactToastify.css";
-import { CgLogOff, CgClose } from "react-icons/cg";
-import { BsCashCoin } from "react-icons/bs";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { AiOutlinePlus } from "react-icons/ai";
-import { GiCardAceHearts } from "react-icons/gi";
+import { motion, AnimatePresence } from "framer-motion";
+import { User, Coins, LogOut, Menu, X, Plus, Heart, Download, Trophy } from "lucide-react";
 import mongoose from "mongoose";
 import RandomNSchema from "../modal/randomCard";
 import Orderr from "../modal/Order";
@@ -73,7 +69,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   useEffect(() => {
     const fetchOrders = async () => {
       let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getwinnerinfo`, {
-        method: 'POST', // or 'PUT'
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -167,19 +163,19 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   };
   const fetchdata = async (token) => {
     setlodingS(false);
-  
+
     try {
       let data = { token };
       let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
-        method: 'POST', 
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
-  
+
       let res = await a.json();
-  
+
       if (res.success) {
         // Update state with user data
         setwallet(res.wallet);
@@ -203,7 +199,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
       alert("An error occurred. Please log in again.");
       window.location.reload();
     }
-  
+
     setlodingS(true);
   };
 
@@ -217,7 +213,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         cardno: cart.cardno,
       };
       let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
-        method: 'POST', // or 'PUT'
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -237,7 +233,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         let walletUp = wallet - amount;
         let data2 = { token: token, email, walletUp }
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateWallet`, {
-          method: 'POST', // or 'PUT'
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -267,250 +263,650 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     }
   }
 
+  // Framer Motion variants
+  const fadeIn = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } }
+  };
+
+  const slideUp = {
+    hidden: { y: 50, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } }
+  };
+
+  const popIn = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 200 } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
 
   return (<>
     {/* {isLoading && <Preloader />} */}
-    {!imageload && !isSmallScreen && <div className="imageloadd containerr">
-      <Head>
-        <title>Patti Circle- Win Win Game</title>
-        <meta
-          name="description"
-          content="Patti Circle win win Game"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="imagess h-screen w-full overflow-hidden relative">
-        <div className="logo w-40 absolute left-36 top-7">
-          <img src="/logopn.png" alt="" />
-        </div>
-        <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-7 pl-8 cursor-pointer justify-center items-start"><img src="StartGame.png" alt="" /></div>
-        <div onClick={handleDownload} className="downloadapk absolute z-50 w-40 cursor-pointer top-10 right-10"><img src="downloadmo.png" alt="" /></div>
-        <div className="imgphoto w-full h-full overflow-hidden">
-          <img src="./frontpage1.jpg" alt="" />
-        </div>
-      </div>
-    </div>}
-    {!imageload && isSmallScreen && <div className="imageloadd">
-      <div className="imagess hightspage w-full overflow-hidden relative">
-        {/* <div className="logo w-40 absolute left-36 top-7">
-            <img src="/logo.gif" alt="" />
-          </div> */}
-        <div onClick={() => setimageload(true)} className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"></div>
-        <div className="imgphoto w-full h-full overflow-hidden">
-          <img src="./homemo.jpg" alt="" />
-        </div>
-        {/* <div className="shs absolute -left-28">
-          <img src="/card-ace.png" alt="" />
-        </div> */}
-        {/* <div onClick={handleDownload} className="downloadapk absolute z-50 w-28 cursor-pointer bottom-10 right-5"><img src="downloadmo.png" alt="" /></div> */}
-      </div>
-    </div>}
-    {imageload && <div>
-      <Head>
-        <title>Patti Circle- Win Win Game</title>
-        <meta
-          name="description"
-          content="Patti Circle win win Game"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <ToastContainer
-        position="top-right"
-        autoClose={false}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <div className="containerr relative w-full h-screen screnfulln overflow-hidden">
-      {lodingS === false && <span className="fixed flex justify-center z-50 items-center text-red-900 text-lg h-screen w-full"><Image src={"/loader.gif"} width={100} height={100} /></span>}
-        {closeScr == true && <div className="bittingPop w-full absolute h-screen sabmainb z-40">
-          <div className="batInfo bg-white h-72 rounded-2xl top-1/4 mx-auto mt-16 shadow-md">
-            <div className="information_bit p-8">
-              <div className="top_bit flex justify-between items-center w-full text-lg pb-8">
-                <div className="left_bit uppercase text-2xl">Start</div>
-                <div className="right_bit">Selected Card - <span className="text-3xl">{cart.cardno}</span></div>
-              </div>
-              <div className="bottom_pay_bit">
-                <div className="head_bit text-lg pb-2">Enter Coins</div>
-                <div className="amount_bit">
-                  <input value={amount} onChange={handleChange} type="Number" id="amount" autoComplete="off" name='amount' required className="p-3 outline-none rounded-3xl pl-5 w-full border-red-700 mb-5  text-gray-600 text-base border " />
-                </div>
-              </div>
-              <div className="botton_bit flex justify-between items-center">
-                <button onClick={() => { clearCart; setcloseScr(false) }} className='font-medium mr-10 rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Cancel</h6></button>
-                <button onClick={initiatePayment} disabled={paymentVer} className='font-medium rounded-full disabled:bg-red-500 hover:disabled:text-white disabled:cursor-default bg-red-700 w-52 px-5 py-3 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700'><h6>Bit</h6></button>
-              </div>
-            </div>
-          </div>
-        </div>}
-        {/* <div className="cooming text-6xl h-28 bg-red-900 border absolute bottom-48 left-0 right-0 flex justify-center items-center text-white z-10 menuBar shadow-lg border-b border-red-800">Coming soon...</div> */}
-        <div className="navbar flex justify-between items-center pr-20 pl-20 pt-4">
-          <div className="logo w-28">
+    {!imageload && !isSmallScreen && (
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+        className="imageloadd containerr"
+      >
+        <Head>
+          <title>Patti Circle- Win Win Game</title>
+          <meta
+            name="description"
+            content="Patti Circle win win Game"
+          />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <div className="imagess h-screen w-full overflow-hidden relative">
+          <motion.div
+            className="logo w-40 absolute left-36 top-7"
+            variants={slideUp}
+          >
             <img src="/logopn.png" alt="" />
-          </div>
-          <div className="uppercase text-5xl font-semibold margingr displayno text-white py-5 px-20">
-            <div className="clasimg font-serif animate-charcter m-auto">
+          </motion.div>
+          <motion.div
+            onClick={() => setimageload(true)}
+            className="title-logo absolute flex w-full h-full mt-7 pl-8 cursor-pointer justify-center items-start"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <img src="StartGame.png" alt="" />
+          </motion.div>
+          <motion.div
+            onClick={handleDownload}
+            className="downloadapk absolute z-50 w-40 cursor-pointer top-10 right-10"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <img src="downloadmo.png" alt="" />
+          </motion.div>
+          <motion.div
+            className="imgphoto w-full h-full overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <img src="./frontpage1.jpg" alt="" />
+          </motion.div>
+        </div>
+      </motion.div>
+    )}
+
+    {!imageload && isSmallScreen && (
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+        className="imageloadd"
+      >
+        <div className="imagess hightspage w-full overflow-hidden relative">
+          <motion.div
+            onClick={() => setimageload(true)}
+            className="title-logo absolute flex w-full h-full mt-14 pl-10 cursor-pointer justify-center items-start"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+          </motion.div>
+          <motion.div
+            className="imgphoto w-full h-full overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <img src="./homemo.jpg" alt="" />
+          </motion.div>
+        </div>
+      </motion.div>
+    )}
+
+    {imageload && (
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+      >
+        <Head>
+          <title>Patti Circle- Win Win Game</title>
+          <meta
+            name="description"
+            content="Patti Circle win win Game"
+          />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <ToastContainer
+          position="top-right"
+          autoClose={false}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <div className="containerr h-screen relative w-full screnfulln overflow-hidden">
+          {lodingS === false && (
+            <motion.span
+              className="fixed flex justify-center z-50 items-center text-red-900 text-lg w-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Image src={"/loader.gif"} width={100} height={100} />
+            </motion.span>
+          )}
+
+          <AnimatePresence>
+            {closeScr === true && (
+              <motion.div
+                className="betting-popup fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm z-40 p-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <motion.div
+                  className="betting-card w-full max-w-md bg-gradient-to-br from-red-800 to-red-950 rounded-3xl overflow-hidden shadow-2xl"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 200 }}
+                >
+                  <div className="card-header bg-red-900 p-4 text-white">
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-2xl font-bold tracking-wide">PLACE YOUR BET</h2>
+                      <div className="relative">
+                        <motion.span
+                          className="absolute -top-1 -left-2 w-6 h-6 bg-yellow-400 rounded-full"
+                          animate={{ scale: [1, 1.1, 1] }}
+                          transition={{ repeat: Infinity, duration: 1.5 }}
+                        ></motion.span>
+                        <span className="relative text-3xl font-extrabold">{cart.cardno}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="card-body p-6">
+                    <motion.div
+                      className="card-decoration flex justify-center -mt-2 mb-4"
+                      initial={{ y: -20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <img width={'100px'} src={`/card/card-${cart.randomNum}.png`} alt="" />
+                    </motion.div>
+
+                    <motion.div
+                      className="amount-section mb-6"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <label htmlFor="amount" className="block text-white text-lg font-medium mb-2">Enter Coins</label>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-yellow-500 text-xl">₹</span>
+                        <input
+                          value={amount}
+                          onChange={handleChange}
+                          type="number"
+                          id="amount"
+                          name="amount"
+                          autoComplete="off"
+                          required
+                          className="p-4 pl-10 outline-none rounded-full w-full border-2 border-yellow-500 bg-red-900/50 text-white text-xl placeholder-red-300 focus:ring-2 focus:ring-yellow-400 transition-all"
+                          placeholder="Minimum 50"
+                        />
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      className="button-group flex flex-col sm:flex-row justify-between gap-4"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      <motion.button
+                        onClick={() => { clearCart(); setcloseScr(false); }}
+                        className="order-2 sm:order-1 rounded-full bg-white/10 border-2 border-white text-white hover:bg-white hover:text-red-900 font-bold py-3 w-full sm:w-1/2 transition-all duration-300"
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                      >
+                        CANCEL
+                      </motion.button>
+
+                      <motion.button
+                        onClick={initiatePayment}
+                        disabled={paymentVer}
+                        className="order-1 sm:order-2 rounded-full bg-yellow-500 text-red-900 hover:bg-yellow-400 font-bold py-3 w-full sm:w-1/2 disabled:bg-gray-500 disabled:text-gray-300 disabled:cursor-not-allowed transition-all duration-300 shadow-lg"
+                        whileHover={{ scale: 1.05, boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.2)" }}
+                        whileTap={{ scale: 0.97 }}
+                      >
+                        PLACE BET
+                      </motion.button>
+                    </motion.div>
+                  </div>
+
+                  <motion.div
+                    className="card-footer p-3 bg-red-950/50 text-center text-xs text-yellow-200"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    Good luck! May the cards be in your favor
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <motion.div
+            className="navbar flex justify-between items-center pr-20 pl-20 pt-4"
+            variants={fadeIn}
+          >
+            <motion.div
+              className="logo w-28"
+              variants={slideUp}
+            >
+              <img src="/logopn.png" alt="" />
+            </motion.div>
+            <motion.div
+              className="uppercase text-5xl font-semibold margingr displayno text-white py-5 px-20"
+              variants={slideUp}
+            >
+              <div className="clasimg font-serif animate-charcter m-auto">
+                Choose Your Card
+              </div>
+            </motion.div>
+            <motion.div
+              className="user_name absluser relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg"
+              variants={popIn}
+            >
+              {user && user.value && (
+                <motion.div
+                  onClick={() => setdropdown(!dropdown)}
+                  className="name pr-5 paddingph cursor-pointer hover:text-red-100 flex items-center"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="mr-2">{name}</span>
+                </motion.div>
+              )}
+
+              <AnimatePresence>
+                {dropdown && (
+                  <motion.div
+                    className="dropdown absolute right-0 top-14 w-64 rounded-xl bg-white z-50 shadow-xl overflow-hidden border border-red-900"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                  >
+                    <div className="dropdown-header bg-gradient-to-r from-red-700 to-red-900 p-3">
+                      <div className="text-white text-center font-bold">PLAYER MENU</div>
+                    </div>
+
+                    <motion.ul
+                      className="py-2"
+                      variants={staggerContainer}
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      <Link href={'/account'}>
+                        <motion.a variants={slideUp}>
+                          <motion.li
+                            className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group"
+                            whileHover={{ x: 5 }}
+                          >
+                            <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
+                              <User className="text-red-700 group-hover:text-red-600" size={20} />
+                            </div>
+                            <span className="text-gray-800 font-medium group-hover:text-red-700">My Profile</span>
+                          </motion.li>
+                        </motion.a>
+                      </Link>
+
+                      <Link href={'/yourorder'}>
+                        <motion.a variants={slideUp}>
+                          <motion.li
+                            className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group"
+                            whileHover={{ x: 5 }}
+                          >
+                            <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
+                              <Coins className="text-red-700 group-hover:text-red-600" size={20} />
+                            </div>
+                            <span className="text-gray-800 font-medium group-hover:text-red-700">Game History</span>
+                          </motion.li>
+                        </motion.a>
+                      </Link>
+
+                      <Link href={'/addcoin'}>
+                        <motion.a variants={slideUp}>
+                          <motion.li
+                            className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group"
+                            whileHover={{ x: 5 }}
+                          >
+                            <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
+                              <Coins className="text-red-700 group-hover:text-red-600" size={20} />
+                            </div>
+                            <span className="text-gray-800 font-medium group-hover:text-red-700">Add Coins</span>
+                          </motion.li>
+                        </motion.a>
+                      </Link>
+
+                      <Link href={'/withdrawal'}>
+                        <motion.a variants={slideUp}>
+                          <motion.li
+                            className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group"
+                            whileHover={{ x: 5 }}
+                          >
+                            <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
+                              <Coins className="text-red-700 group-hover:text-red-600" size={20} />
+                            </div>
+                            <span className="text-gray-800 font-medium group-hover:text-red-700">Withdraw Coins</span>
+                          </motion.li>
+                        </motion.a>
+                      </Link>
+
+                      <motion.li
+                        onClick={handleDownload}
+                        className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer"
+                        variants={slideUp}
+                        whileHover={{ x: 5 }}
+                      >
+                        <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
+                          <Download className="text-red-700 group-hover:text-red-600" size={20} />
+                        </div>
+                        <span className="text-gray-800 font-medium group-hover:text-red-700">Download App</span>
+                      </motion.li>
+
+                      <motion.li
+                        onClick={logout}
+                        className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer mt-2 border-t border-red-100"
+                        variants={slideUp}
+                        whileHover={{ x: 5 }}
+                      >
+                        <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center group-hover:bg-red-200 mr-3">
+                          <LogOut className="text-red-700 group-hover:text-red-600" size={20} />
+                        </div>
+                        <span className="text-gray-800 font-medium group-hover:text-red-700">Logout</span>
+                      </motion.li>
+                    </motion.ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {user && !user.value && (
+                <Link href={"/login"}>
+                  <motion.a
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <button className="text-xl btn-login flex items-center px-4 rounded-md bg-red-900 cursor-pointer text-slate-50 hover:text-red-200 transition-all">Login</button>
+                  </motion.a>
+                </Link>
+              )}
+
+              {user && user.value && (
+                <motion.div
+                  onClick={() => setdropdown(!dropdown)}
+                  className="pr-4 paddingph text-lg cursor-pointer hover:text-red-100"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  {dropdown ? <X size={24} /> : <Menu size={24} />}
+                </motion.div>
+              )}
+
+              {user && user.value && <div className="saprator"></div>}
+
+              {user && user.value && (
+                <Link href={'./addcoin'}>
+                  <motion.div
+                    className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Coins size={20} className="mr-1" /> <span className="text-2xl">{wallet}</span>
+                  </motion.div>
+                </Link>
+              )}
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            className="uppercasem text-3xl hidden displaout font-semibold text-white py-5 px-20"
+            variants={slideUp}
+          >
+            <div className="clasimg font-serif flex justify-center animate-charcter">
               Choose Your Card
             </div>
-          </div>
-          <div className="user_name absluser relative flex justify-between items-center text-white z-20 bg-red-900 p-4 px-7 rounded-lg">
-            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="name pr-5 paddingph cursor-pointer hover:text-red-100">{name}</div>}
-            {dropdown && <div className="dropdown absolute -left-10 top-11 w-48 px-3 rounded-sm bg-white z-50 shadow-lg" onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }}>
-              <ul>
-                <Link href={'/account'}><a><li className="text-base flex flex-row items-center border-red-300 text-red-700 py-2 hover:text-red-500"><RiAccountCircleLine className="mx-2 text-lg" /><span>My Profile</span></li></a></Link>
-                <Link href={'/yourorder'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>History</span></li></a></Link>
-                <Link href={'/addcoin'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><RiCoinsLine className="mx-2 text-lg" /><span>Add Coins</span></li></a></Link>
-                <Link href={'/withdrawal'}><a><li className="text-base flex flex-row items-center border-t border-red-300 text-red-700 py-2 hover:text-red-500"><BsCashCoin className="mx-2 text-lg" /><span>Withdraw Coins</span></li></a></Link>
-                <li onClick={handleDownload} className="text-base border-t flex flex-row items-center cursor-pointer border-red-300 text-red-700 py-2 hover:text-red-500"><GiCardAceHearts className="mx-2 text-lg" /><span>Download App</span></li>
-                <li onClick={logout} className="text-base border-t flex flex-row items-center cursor-pointer border-red-300 text-red-700 py-2 hover:text-red-500"><CgLogOff className="mx-2 text-lg" /><span>Logout</span></li>
-              </ul>
-            </div>}
-            {user && !user.value && <Link href={"/login"}><a>
-              <button className="text-xl btn-login flex items-center px-4 rounded-md bg-red-900 cursor-pointer text-slate-50 hover:text-red-200 transition-all">Login</button>
-            </a></Link>}
-            {user && user.value && <div onMouseOver={() => { setdropdown(true) }} onMouseLeave={() => { setdropdown(false) }} className="pr-4 paddingph text-lg"><GiHamburgerMenu /></div>}
-            {user && user.value && <div className="saprator"></div>}
-            {user && user.value && <Link href={'./addcoin'}><div className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"><RiCoinsLine className="mr-1" /> <span className="text-2xl">{wallet}</span></div></Link>}
-          </div>
-        </div>
-        <div className="uppercasem text-3xl hidden displaout font-semibold text-white py-5 px-20">
-          <div className="clasimg font-serif flex justify-center animate-charcter">
-            Choose Your Card
-          </div>
-        </div>
-        <div className="welc flex flexdis paddisp justify-between items-center text-white px-14 mt-10">
-          {/* <div className="welc_text text-xl flex padingbtn flexdis justify-center items-center flex-row">
-            <p className="paditex">Today&rsquo;s Lucky Number :</p>
-            <div className="card_no_det ml-2  border font-bold rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-              {randomNum.card1}
-            </div>
-          </div> */}
-          {/* <div className="random_no flex justify-between flexdis items-center text-xl">
-            <div className="text pr-2">Today Numbers :  </div>
-            <div className="R_number">
-              <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  {randomNum.card1}
-                </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  {randomNum.card2}
-                </div>
-                <div className="card_no_det border rounded-full w-9 h-9 flex justify-center text-red-800 items-center p-5 mr-1 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  {randomNum.card3}
-                </div>
-              </div>
-            </div>
-          </div> */}
-        </div>
-        <div className="card hidexontet relative cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-9">
-          <div className="card_no flex justify-around items-center w-4/6 flexcolh">
-            <div onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_first h-min">
-              <div className="upperBody overflow-hidden relative">
-                {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
-                  1
-                </div> */}
-                <img src={`/card/card-${randomNum.card1}.png`} alt="" />
-              </div>
-              <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  Select
-                </button>
-              </div>
-            </div>
-            <div onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_second h-min">
-              <div className="upperBody overflow-hidden relative">
-                {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white"> /
-                  2
-                </div> */}
-                <img src={`/card/card-${randomNum.card2}.png`} alt="" />
-              </div>
-              <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  Select
-                </button>
-              </div>
-            </div>
-            <div onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }} disabled={timeBit} className="cursor-pointer paddispace card card_third h-min">
-              <div className="upperBody overflow-hidden relative">
-                {/* <div className="cardNo absolute text-7xl left-11 top-12 text-white">
-                  3
-                </div> */}
-                <img src={`/card/card-${randomNum.card3}.png`} alt="" />
-              </div>
-              <div className="lowerBody flex justify-around mt-3 items-center font-bold">
-                <button onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }} disabled={timeBit} className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer">
-                  Select
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="winnershow w-full flex justify-between items-center px-8 -mt-20">
-          <div className="left">
-            <div className="left-item flex flex-row justify-center items-center">
-              <div className="leftwinner flex justify-center items-center flex-col">
-                <p className="text-white text-xl font-serif">Last Bit</p>
-                <p className="text-white text-xl font-serif">Winning Card</p>
-              </div>
-              <div className="resImg w-16 h-16 ml-3">
-                <img src={`/card/card-${randomNum.wiinerCard}.png`} alt="" />
-              </div>
-            </div>
-          </div>
-          <div className="right">
-            <div className="right-items rounded-sm">
-              <p className="text-xl text-white mx-4 py-3 flex-col font-medium flex justify-center items-center font-serif"> Winner Announced In  <span className="text-3xl"> {formatTime(time)} <span className="text-base">Hours</span> </span></p>
-            </div>
-          </div>
-        </div>
-        <div className="foooter w-full flex  flex-col absolute bottom-0 left-0 justify-between">
-          <div className="ending uppercase text-lg mt-5 flex flexdis justify-end px-10 items-center bg-white text-red-900 font-bold p-2 text-center ">
+          </motion.div>
 
-            <marquee direction="left" scrollamount="10">
-              <ol className="flex flex-row">
-                {orders
-                  .filter((order) => order.winning === 'Win') // Filter orders with winning == 'Win'
-                  .map((order, index) => (
-                    <li className="mr-40 text-base font-serif" key={index}>
-                      {order.name} - ₹{order.amount * 2 - 0.2 * order.amount}
-                    </li>
-                  ))}
-              </ol>
-            </marquee>
+          <motion.div
+            className="welc flex flexdis paddisp justify-between items-center text-white px-14 mt-10"
+            variants={fadeIn}
+          >
+          </motion.div>
+
+          <motion.div
+            className="card hidexontet relative cardmrhon text-red-900 flex justify-center items-center p-5 text-lg mt-9"
+            variants={staggerContainer}
+          >
+            <div className="card_no flex justify-around items-center w-4/6 flexcolh">
+              <motion.div
+                onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }}
+                disabled={timeBit}
+                className="cursor-pointer paddispace card card_first h-min"
+                variants={popIn}
+                whileHover={{ scale: 1.05, y: -10 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="upperBody overflow-hidden relative">
+                  <img src={`/card/card-${randomNum.card1}.png`} alt="" />
+                </div>
+                <div className="lowerBody flex justify-around mt-3 items-center font-bold">
+                  <motion.button
+                    onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }}
+                    disabled={timeBit}
+                    className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    Select
+                  </motion.button>
+                </div>
+              </motion.div>
+
+              <motion.div
+                onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }}
+                disabled={timeBit}
+                className="cursor-pointer paddispace card card_second h-min"
+                variants={popIn}
+                whileHover={{ scale: 1.05, y: -10 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="upperBody overflow-hidden relative">
+                  <img src={`/card/card-${randomNum.card2}.png`} alt="" />
+                </div>
+                <div className="lowerBody flex justify-around mt-3 items-center font-bold">
+                  <motion.button
+                    onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }}
+                    disabled={timeBit}
+                    className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    Select
+                  </motion.button>
+                </div>
+              </motion.div>
+
+              <motion.div
+                onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }}
+                disabled={timeBit}
+                className="cursor-pointer paddispace card card_third h-min"
+                variants={popIn}
+                whileHover={{ scale: 1.05, y: -10 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="upperBody overflow-hidden relative">
+                  <img src={`/card/card-${randomNum.card3}.png`} alt="" />
+                </div>
+                <div className="lowerBody flex justify-around mt-3 items-center font-bold">
+                  <motion.button
+                    onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }}
+                    disabled={timeBit}
+                    className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    Select
+                  </motion.button>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          <div className="grab-winner flex justify-between items-center px-28 mb-40 md:mb-10">
+            <div className=" md:w-1/2 flex ">
+              <motion.div
+                className="remaining-time flexdia text-center text-white"
+                variants={slideUp}
+              >
+                <motion.div
+                  className="time-container flex items-center flex-col h-full w-48 p-4 border border-red-700 rounded-lg bg-red-900/50 shadow-lg"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <p className="text-white text-xl font-serif">Last Bit</p>
+                  <p className="text-white text-xl font-serif">Winning Card</p>
+                  <div className="resImg w-24">
+                    <img src={`/card/card-${randomNum.wiinerCard}.png`} alt="" />
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+            <div className="wiiner w-full mx-auto md:w-1/2 flex justify-end">
+              <motion.div
+                className="remaining-time flexdia text-center text-white"
+                variants={slideUp}
+              >
+                <motion.div
+                  className="time-container p-4 border border-red-700 rounded-lg bg-red-900/50 shadow-lg w-full max-w-sm"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="time-label mb-1 text-yellow-300 font-medium">Winner Announced In</div>
+                  <div className="time-display text-3xl font-bold">{formatTime(time)}</div>
+                </motion.div>
+              </motion.div>
+            </div>
           </div>
-          <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
-            <div className="webname">patticircle.com &#169;</div>
-            <Link href={'./howtoplay'}><div className="term cursor-pointer">How to Play</div></Link>
-            <Link href={'./terms'}><div className="term cursor-pointer">Terms & Conditions</div></Link>
-            <Link href={'./faq'}><div className="term cursor-pointer">FAQ</div></Link>
-            <Link href={'./contact'}><div className="term cursor-pointer">Contact us</div></Link>
-          </div>
+
+          <footer className="footer text-center py-3 text-white w-full bg-red-950/50 relative md:absolute md:bottom-0">
+            <div className="foooter w-full flex flex-col absolute bottom-0 left-0 justify-between">
+              <div className="ending uppercase text-lg mt-5 flex flexdis justify-end px-10 items-center bg-white text-red-900 font-bold p-2 text-center">
+                <marquee direction="left" scrollamount="10">
+                  <ol className="flex flex-row">
+                    {orders
+                      .filter((order) => order.winning === 'Win')
+                      .map((order, index) => (
+                        <motion.li
+                          className="mr-40 text-base font-serif"
+                          key={index}
+                          initial="hidden"
+                          animate="visible"
+                          variants={slideUp}
+                          custom={index} // This allows for staggered animations
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          {order.name} - ₹{order.amount * 2 - 0.2 * order.amount}
+                        </motion.li>
+                      ))}
+                  </ol>
+                </marquee>
+              </div>
+              <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
+                <motion.div
+                  className="webname"
+                  initial="hidden"
+                  animate="visible"
+                  variants={slideUp}
+                >
+                  patticircle.com &#169;
+                </motion.div>
+
+                <Link href={'./howtoplay'}>
+                  <motion.div
+                    className="term cursor-pointer"
+                    initial="hidden"
+                    animate="visible"
+                    variants={slideUp}
+                  >
+                    How to Play
+                  </motion.div>
+                </Link>
+
+                <Link href={'./terms'}>
+                  <motion.div
+                    className="term cursor-pointer"
+                    initial="hidden"
+                    animate="visible"
+                    variants={slideUp}
+                  >
+                    Terms & Conditions
+                  </motion.div>
+                </Link>
+
+                <Link href={'./faq'}>
+                  <motion.div
+                    className="term cursor-pointer"
+                    initial="hidden"
+                    animate="visible"
+                    variants={slideUp}
+                  >
+                    FAQ
+                  </motion.div>
+                </Link>
+
+                <Link href={'./contact'}>
+                  <motion.div
+                    className="term cursor-pointer"
+                    initial="hidden"
+                    animate="visible"
+                    variants={slideUp}
+                  >
+                    Contact us
+                  </motion.div>
+                </Link>
+              </div>
+            </div>
+          </footer>
         </div>
-      </div>
-    </div>}
-  </>
-  );
+      </motion.div >
+    )
+    }
+  </>);
 }
 
 export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  const startOfToday = moment().startOf('day'); // Midnight today
-  const endOfToday = moment().endOf('day');
 
   let randomNum = await RandomNSchema.findOne();
-  const orders = await Orderr.find({
-    winner: "Win", updatedAt: {
-      $gte: startOfToday.toDate(),
-      $lt: endOfToday.toDate()
-    }
-  });
+  let orders = await Orderr.find({});
+
   return {
-    props: { randomNum: JSON.parse(JSON.stringify(randomNum)), orders: JSON.parse(JSON.stringify(orders)) },
+    props: {
+      randomNum: JSON.parse(JSON.stringify(randomNum)),
+      orders: JSON.parse(JSON.stringify(orders)),
+    },
   };
 }
