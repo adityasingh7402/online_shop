@@ -224,7 +224,7 @@ const Addcoin = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-br from-red-50 to-purple-50 py-8 px-4 sm:px-6 lg:px-8">
             <Head>
                 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
                 <title>Patti Circle - Purchase Coin</title>
@@ -260,7 +260,7 @@ const Addcoin = () => {
                         animate={{ scale: 1 }}
                         className="bg-white rounded-xl p-8 flex flex-col items-center"
                     >
-                        <RefreshCw className="text-blue-600 animate-spin mb-4" size={36} />
+                        <RefreshCw className="text-red-600 animate-spin mb-4" size={36} />
                         <p className="text-lg font-medium text-gray-700">Processing your request...</p>
                     </motion.div>
                 </motion.div>
@@ -275,7 +275,7 @@ const Addcoin = () => {
                 <motion.div variants={itemVariants} className="mb-6">
                     <Link href="./">
                         <motion.a 
-                            className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                            className="inline-flex items-center text-red-600 hover:text-red-800 transition-colors"
                             whileHover={{ x: -5 }}
                         >
                             <ArrowLeft size={20} className="mr-2" />
@@ -288,12 +288,12 @@ const Addcoin = () => {
                     variants={itemVariants}
                     className="bg-white rounded-xl shadow-xl overflow-hidden"
                 >
-                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+                    <div className="bg-gradient-to-r from-red-600 to-purple-600 px-6 py-4">
                         <h1 className="text-3xl font-bold text-white text-center">Coin Management</h1>
                     </div>
                     
                     <motion.div 
-                        className="p-6 md:p-8 flex items-center justify-between bg-gradient-to-r from-blue-50 to-purple-50 border-b"
+                        className="p-6 md:p-8 flex items-center justify-between bg-gradient-to-r from-red-50 to-purple-50 border-b"
                         variants={itemVariants}
                     >
                         <div className="flex items-center">
@@ -314,7 +314,7 @@ const Addcoin = () => {
                     <div className="px-6 py-4 border-b">
                         <div className="flex space-x-2">
                             <motion.button
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "addCoins" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "addCoins" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
                                 onClick={() => setActiveTab("addCoins")}
                                 whileHover={{ y: -2 }}
                                 whileTap={{ y: 0 }}
@@ -322,7 +322,7 @@ const Addcoin = () => {
                                 Add Coins
                             </motion.button>
                             <motion.button
-                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "history" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
+                                className={`px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === "history" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
                                 onClick={() => setActiveTab("history")}
                                 whileHover={{ y: -2 }}
                                 whileTap={{ y: 0 }}
@@ -404,14 +404,14 @@ const Addcoin = () => {
                                                     placeholder="100 or above" 
                                                     name="amount" 
                                                     required 
-                                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" 
+                                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all" 
                                                 />
                                             </div>
                                             
                                             {!qrVisible && (
                                                 <motion.button
                                                     onClick={generateQR}
-                                                    className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium mb-4 flex items-center justify-center"
+                                                    className="w-full bg-red-600 text-white py-3 px-4 rounded-lg font-medium mb-4 flex items-center justify-center"
                                                     variants={buttonVariants}
                                                     whileHover="hover"
                                                     whileTap="tap"
@@ -433,7 +433,7 @@ const Addcoin = () => {
                                                         name="transId" 
                                                         required 
                                                         placeholder="Enter your payment reference ID"
-                                                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" 
+                                                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all" 
                                                     />
                                                 </div>
                                             )}
@@ -459,7 +459,7 @@ const Addcoin = () => {
                                                 <motion.button 
                                                     disabled={paymentVer} 
                                                     onClick={initiatePaymentDemo}
-                                                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg font-medium disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
+                                                    className="w-full sm:w-auto px-6 py-3 bg-red-600 text-white rounded-lg font-medium disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
                                                     variants={buttonVariants}
                                                     whileHover={!paymentVer ? "hover" : {}}
                                                     whileTap={!paymentVer ? "tap" : {}}
@@ -479,19 +479,19 @@ const Addcoin = () => {
                                     <h3 className="text-xl font-bold text-gray-800 mb-4">Important Notes:</h3>
                                     <ul className="space-y-2 text-gray-700">
                                         <li className="flex items-start">
-                                            <span className="inline-block w-6 text-blue-600 font-bold mr-2">1.</span>
+                                            <span className="inline-block w-6 text-red-600 font-bold mr-2">1.</span>
                                             Scan the QR code to make payment.
                                         </li>
                                         <li className="flex items-start">
-                                            <span className="inline-block w-6 text-blue-600 font-bold mr-2">2.</span>
+                                            <span className="inline-block w-6 text-red-600 font-bold mr-2">2.</span>
                                             Fill in the transaction ID received after payment.
                                         </li>
                                         <li className="flex items-start">
-                                            <span className="inline-block w-6 text-blue-600 font-bold mr-2">3.</span>
+                                            <span className="inline-block w-6 text-red-600 font-bold mr-2">3.</span>
                                             Submit your purchase by clicking the "Purchase Now" button.
                                         </li>
                                         <li className="flex items-start">
-                                            <span className="inline-block w-6 text-blue-600 font-bold mr-2">4.</span>
+                                            <span className="inline-block w-6 text-red-600 font-bold mr-2">4.</span>
                                             Coins will be added to your wallet within one working day.
                                         </li>
                                     </ul>
@@ -529,10 +529,10 @@ const Addcoin = () => {
                                         <table className="min-w-full divide-y divide-gray-200">
                                             <thead className="bg-gray-50">
                                                 <tr>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 md:uppercase tracking-wider">Date & Time</th>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 md:uppercase tracking-wider">Reference No.</th>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 md:uppercase tracking-wider">Coins</th>
-                                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 md:uppercase tracking-wider">Status</th>
+                                                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 md:uppercase tracking-wider">Date & Time</th>
+                                                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 md:uppercase tracking-wider">Reference No.</th>
+                                                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 md:uppercase tracking-wider">Coins</th>
+                                                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 md:uppercase tracking-wider">Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
