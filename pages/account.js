@@ -10,7 +10,7 @@ import {
   User,
   Mail,
   Phone,
-  Bank,
+  Landmark,
   Briefcase,
   CreditCard,
   Key,
@@ -343,7 +343,7 @@ const Account = () => {
                   <motion.button
                     whileHover={{ x: 5 }}
                     onClick={() => setActiveTab("personal")}
-                    className={`w-full flex items-center p-3 rounded-md text-left transition-colors ${activeTab === "personal"
+                    className={`w-full flex items-center cursor-pointer p-3 rounded-md text-left transition-colors ${activeTab === "personal"
                         ? "bg-red-50 text-red-700"
                         : "hover:bg-gray-50"
                       }`}
@@ -355,7 +355,7 @@ const Account = () => {
                   <motion.button
                     whileHover={{ x: 5 }}
                     onClick={() => setActiveTab("password")}
-                    className={`w-full flex items-center p-3 rounded-md text-left transition-colors ${activeTab === "password"
+                    className={`w-full flex items-center p-3 cursor-pointer rounded-md text-left transition-colors ${activeTab === "password"
                         ? "bg-red-50 text-red-700"
                         : "hover:bg-gray-50"
                       }`}
@@ -367,7 +367,7 @@ const Account = () => {
                   <Link href="/" passHref>
                     <motion.div
                       whileHover={{ x: 5 }}
-                      className="w-full flex items-center p-3 rounded-md text-left transition-colors hover:bg-gray-50"
+                      className="w-full flex cursor-pointer items-center p-3 rounded-md text-left transition-colors hover:bg-gray-50"
                     >
                       <Home className="mr-3 h-5 w-5" />
                       <span className="font-medium">Home Page</span>
@@ -454,8 +454,8 @@ const Account = () => {
                               <Mail className="h-5 w-5 text-gray-400" />
                             </div>
                             <input
-                              value={user && user.token ? user.email : email}
-                              readOnly={!!(user && user.token)}
+                              value={email}
+                              readOnly={email}
                               onChange={handleChange}
                               type="email"
                               name="email"
@@ -470,7 +470,7 @@ const Account = () => {
                           <label htmlFor="bankName" className="block text-sm font-medium text-gray-700">Bank Name</label>
                           <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                              <Bank className="h-5 w-5 text-gray-400" />
+                              <Landmark className="h-5 w-5 text-gray-400" />
                             </div>
                             <input
                               value={bankName}
@@ -572,7 +572,7 @@ const Account = () => {
                               placeholder="Enter your UPI ID (optional)"
                             />
                           </div>
-                        </div>
+                        </div> 
                       </div>
 
                       <div className="mt-8 flex justify-center">
@@ -583,7 +583,7 @@ const Account = () => {
                             variants={btnHover}
                             onClick={handleUserSubmit}
                             disabled={!mobilevalid || !lodingS}
-                            className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-full shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed transform transition-all duration-200 flex items-center"
+                            className="px-8 py-3 bg-gradient-to-r from-red-600 cursor-pointer to-red-700 text-white font-medium rounded-full shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed transform transition-all duration-200 flex items-center"
                           >
                             {!lodingS ? (
                               <>
@@ -603,7 +603,7 @@ const Account = () => {
                               whileHover="hover"
                               whileTap={{ scale: 0.95 }}
                               variants={btnHover}
-                              className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-full shadow-md hover:shadow-lg transform transition-all duration-200"
+                              className="px-8 py-3 bg-gradient-to-r cursor-pointer from-red-600 to-red-700 text-white font-medium rounded-full shadow-md hover:shadow-lg transform transition-all duration-200"
                             >
                               Contact For Updates
                             </motion.a>
@@ -705,7 +705,7 @@ const Account = () => {
                           variants={btnHover}
                           onClick={handlePasswordSubmit}
                           disabled={!lodingSS}
-                          className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-medium rounded-full shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed transform transition-all duration-200 flex items-center"
+                          className="px-8 py-3 bg-gradient-to-r from-red-600 cursor-pointer to-red-700 text-white font-medium rounded-full shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed transform transition-all duration-200 flex items-center"
                         >
                           {!lodingSS ? (
                             <>
@@ -721,7 +721,7 @@ const Account = () => {
                         </motion.button>
                       </div>
 
-                      <div className="mt-6 flex justify-center">
+                      <div className="mt-6 flex justify-center cursor-pointer">
                         <Link href="/">
                           <motion.a
                             whileHover="hover"
