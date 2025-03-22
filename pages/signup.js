@@ -62,12 +62,7 @@ const Signup = () => {
     if (ageVerified) {
       setLoadingS(false);
       const data = { name, email, phone, password, ageVerified, state };
-      
-      // This would usually fetch from your API
       try {
-        // Mocked API call for example purposes
-        // In actual implementation, uncomment the fetch code
-        /*
         let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
           method: 'POST',
           headers: {
@@ -76,18 +71,7 @@ const Signup = () => {
           body: JSON.stringify(data),
         });
         let response = await res.json();
-        */
-        
-        // Mock success response for example
-        const response = { success: true };
 
-        setName('');
-        setEmail('');
-        setState('');
-        setPhone('');
-        setPassword('');
-        setLoadingS(true);
-        
         if (response.success) {
           toast.success('Your account has been created', {
             position: "top-center",
@@ -101,6 +85,12 @@ const Signup = () => {
           setTimeout(() => {
             router.push('/login');
           }, 2000);
+          setName('');
+          setEmail('');
+          setState('');
+          setPhone('');
+          setPassword('');
+          setLoadingS(true);
         } else {
           toast.error(response.error, {
             position: "top-center",
@@ -125,9 +115,9 @@ const Signup = () => {
   // Animation variants like login page
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { 
+      transition: {
         duration: 0.5,
         when: "beforeChildren",
         staggerChildren: 0.2
@@ -137,8 +127,8 @@ const Signup = () => {
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
       transition: { duration: 0.5 }
     }
@@ -154,7 +144,7 @@ const Signup = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -166,9 +156,9 @@ const Signup = () => {
         draggable
         pauseOnHover
       />
-      
+
       {/* Navigation button */}
-      <motion.div 
+      <motion.div
         className="fixed top-4 left-4 md:top-8 md:left-8 z-10"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -181,7 +171,7 @@ const Signup = () => {
           </a>
         </Link>
       </motion.div>
-      
+
       {/* Loading indicator */}
       {loadingS === false && (
         <div className="fixed inset-0 bg-white/70 flex justify-center items-center z-40">
@@ -190,7 +180,7 @@ const Signup = () => {
           </div>
         </div>
       )}
-      
+
       <div className="container mx-auto px-4 py-16 md:py-24 relative z-0 flex justify-center items-center">
         {/* Main Card */}
         <motion.div
@@ -205,17 +195,17 @@ const Signup = () => {
           >
             {/* Adding the red background header like the login page */}
             <div className="bg-red-700 py-6">
-              <motion.h2 
+              <motion.h2
                 className="text-center text-3xl font-extrabold text-white"
                 variants={itemVariants}
               >
                 Create Account
               </motion.h2>
             </div>
-            
+
             <div className="px-8 py-8">
               <form onSubmit={handleSubmit} method="POST">
-                <motion.div 
+                <motion.div
                   className="space-y-4"
                   variants={itemVariants}
                 >
@@ -223,19 +213,19 @@ const Signup = () => {
                     <label htmlFor="name" className="text-sm font-medium text-gray-700 mb-1">
                       Your name
                     </label>
-                    <input 
-                      value={name} 
-                      onChange={handleChange} 
-                      type="text" 
-                      name="name" 
-                      id="name" 
-                      required 
-                      autoComplete="name" 
-                      placeholder="First and last name" 
-                      className="p-2.5 shadow-sm text-gray-600 text-base border rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700 border-gray-300" 
+                    <input
+                      value={name}
+                      onChange={handleChange}
+                      type="text"
+                      name="name"
+                      id="name"
+                      required
+                      autoComplete="name"
+                      placeholder="First and last name"
+                      className="p-2.5 shadow-sm text-gray-600 text-base border rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700 border-gray-300"
                     />
                   </div>
-                  
+
                   <div className="flex flex-col">
                     <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">
                       Email
@@ -244,34 +234,34 @@ const Signup = () => {
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <Mail className="h-5 w-5 text-gray-400" />
                       </div>
-                      <input 
-                        value={email} 
-                        onChange={handleChange} 
-                        type="email" 
-                        name="email" 
-                        id="email" 
-                        required 
-                        autoComplete="email" 
-                        placeholder="Email" 
-                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700" 
+                      <input
+                        value={email}
+                        onChange={handleChange}
+                        type="email"
+                        name="email"
+                        id="email"
+                        required
+                        autoComplete="email"
+                        placeholder="Email"
+                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700"
                       />
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col relative">
                     <label htmlFor="phone" className="text-sm font-medium text-gray-700 mb-1">
                       Mobile phone
                     </label>
-                    <input 
-                      value={phone} 
-                      onChange={handleChange} 
-                      type="number" 
-                      name="phone" 
-                      id="phone" 
-                      required 
-                      autoComplete="phone" 
-                      placeholder="Mobile phone" 
-                      className="p-2.5 shadow-sm text-gray-600 text-base border rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700 border-gray-300" 
+                    <input
+                      value={phone}
+                      onChange={handleChange}
+                      type="number"
+                      name="phone"
+                      id="phone"
+                      required
+                      autoComplete="phone"
+                      placeholder="Mobile phone"
+                      className="p-2.5 shadow-sm text-gray-600 text-base border rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700 border-gray-300"
                     />
                     {mobileValid && (
                       <span className="text-red-700 text-sm absolute -bottom-5 right-0">
@@ -279,24 +269,24 @@ const Signup = () => {
                       </span>
                     )}
                   </div>
-                  
+
                   <div className="flex flex-col pt-2">
                     <label htmlFor="state" className="text-sm font-medium text-gray-700 mb-1">
                       State
                     </label>
-                    <input 
-                      value={state} 
-                      onChange={handleChange} 
-                      type="text" 
-                      name="state" 
-                      id="state" 
-                      required 
-                      autoComplete="state" 
-                      placeholder="State" 
-                      className="p-2.5 shadow-sm text-gray-600 text-base border rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700 border-gray-300" 
+                    <input
+                      value={state}
+                      onChange={handleChange}
+                      type="text"
+                      name="state"
+                      id="state"
+                      required
+                      autoComplete="state"
+                      placeholder="State"
+                      className="p-2.5 shadow-sm text-gray-600 text-base border rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700 border-gray-300"
                     />
                   </div>
-                  
+
                   <div className="flex flex-col">
                     <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1">
                       Password
@@ -305,45 +295,45 @@ const Signup = () => {
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <Lock className="h-5 w-5 text-gray-400" />
                       </div>
-                      <input 
-                        value={password} 
-                        onChange={handleChange} 
-                        type="password" 
-                        name="password" 
-                        id="password" 
-                        required 
-                        autoComplete="new-password" 
-                        placeholder="At least 6 characters" 
-                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700" 
+                      <input
+                        value={password}
+                        onChange={handleChange}
+                        type="password"
+                        name="password"
+                        id="password"
+                        required
+                        autoComplete="new-password"
+                        placeholder="At least 6 characters"
+                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-red-600 focus:border-red-700"
                       />
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center pt-2">
-                    <input 
-                      type="checkbox" 
-                      name="ageVerification" 
-                      className="w-4 h-4 border-gray-300 rounded text-red-700 focus:ring-red-600" 
-                      id="ageVerification" 
-                      checked={ageVerified} 
+                    <input
+                      type="checkbox"
+                      name="ageVerification"
+                      className="w-4 h-4 border-gray-300 rounded text-red-700 focus:ring-red-600"
+                      id="ageVerification"
+                      checked={ageVerified}
                       onChange={handleCheckboxChange}
                     />
-                    <label 
-                      htmlFor="ageVerification" 
+                    <label
+                      htmlFor="ageVerification"
                       className={`${!ageFalse ? 'font-bold text-red-700' : 'font-normal text-gray-700'} pl-2 text-sm`}
                     >
                       Please confirm that you are 21+ years old
                     </label>
                   </div>
                 </motion.div>
-                
-                <motion.div 
+
+                <motion.div
                   className="mt-6"
                   variants={itemVariants}
                 >
-                  <button 
-                    type="submit" 
-                    disabled={mobileValid} 
+                  <button
+                    type="submit"
+                    disabled={mobileValid}
                     className="group relative w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 disabled:bg-red-500 disabled:hover:text-white disabled:hover:bg-red-500"
                   >
                     {loadingS === false ? 'WAIT' : 'CONTINUE'}
@@ -353,8 +343,8 @@ const Signup = () => {
                   </button>
                 </motion.div>
               </form>
-              
-              <motion.div 
+
+              <motion.div
                 className="mt-6 text-center"
                 variants={itemVariants}
               >
@@ -368,7 +358,7 @@ const Signup = () => {
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="mt-4">
                   <Link href="/login">
                     <a className="text-red-700 hover:text-red-800 font-medium transition-colors">
@@ -381,9 +371,9 @@ const Signup = () => {
           </motion.div>
         </motion.div>
       </div>
-      
+
       {/* Footer */}
-      <motion.div 
+      <motion.div
         className="text-center text-sm text-gray-400 py-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
