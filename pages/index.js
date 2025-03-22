@@ -407,7 +407,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 className="bg-white rounded-xl p-8 flex flex-col items-center"
               >
                 <RefreshCw className="text-red-600 animate-spin mb-4" size={36} />
-                <p className="text-lg font-medium text-gray-700">Processing your request...</p>
+                <p className="text-lg font-medium text-gray-700">Processing wait...</p>
               </motion.div>
             </motion.div>
           )}
@@ -522,6 +522,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               className="logo w-28"
               variants={slideUp}
             >
+              <img src="/logopn.png" alt="" />
             </motion.div>
             <motion.div
               className="uppercase text-5xl font-semibold margingr displayno text-white py-5 px-20"
