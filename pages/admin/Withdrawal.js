@@ -34,16 +34,17 @@ const Withdrawal = ({ withdrawals }) => {
       setFilteredWithdrawals(withdrawals || []);
       return;
     }
-    
-    const filtered = withdrawals.filter(item => 
-      item.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.phone.toLowerCase().includes(searchTerm.toLowerCase())
+  
+    const filtered = (withdrawals || []).filter(item =>
+      (typeof item.orderId === 'string' || typeof item.orderId === 'number') && item.orderId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (typeof item.name === 'string' && item.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (typeof item.email === 'string' && item.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (typeof item.phone === 'string' || typeof item.phone === 'number') && item.phone.toString().toLowerCase().includes(searchTerm.toLowerCase())
     );
-    
+  
     setFilteredWithdrawals(filtered);
   }, [searchTerm, withdrawals]);
+  
 
   const formatDate = (date) => {
     return new Intl.DateTimeFormat('en-US', {

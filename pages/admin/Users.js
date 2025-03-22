@@ -42,13 +42,14 @@ const Users = ({ userss }) => {
     if (userss) {
       setFilteredUsers(
         userss.filter(user =>
-          user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.phone?.includes(searchTerm)
+          (typeof user.name === 'string' && user.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          (typeof user.email === 'string' && user.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          (typeof user.phone === 'string' && user.phone.includes(searchTerm))
         )
       );
     }
   }, [searchTerm, userss]);
+
 
   if (isHidden) {
     return null;

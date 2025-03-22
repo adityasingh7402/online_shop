@@ -61,14 +61,14 @@ const Order = ({ orders }) => {
   };
 
   // Filter orders based on search term
-  const filteredOrders = orders.filter(
-    (order) =>
-      order.orderId?.toString().includes(searchTerm) ||
-      order.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.phone?.toString().includes(searchTerm) ||
-      order.cardno?.toString().includes(searchTerm)
+  const filteredOrders = orders.filter(order =>
+    (typeof order.orderId === 'string' || typeof order.orderId === 'number') && order.orderId.toString().includes(searchTerm) ||
+    (typeof order.name === 'string' && order.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (typeof order.email === 'string' && order.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (typeof order.phone === 'string' || typeof order.phone === 'number') && order.phone.toString().includes(searchTerm) ||
+    (typeof order.cardno === 'string' || typeof order.cardno === 'number') && order.cardno.toString().includes(searchTerm)
   );
+
 
   // Get current orders for pagination
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -187,13 +187,12 @@ const Order = ({ orders }) => {
                         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.amount}</td>
                         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{`C - ${item.cardno}`}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                            item.winning === "Winning" 
-                              ? "bg-green-100 text-green-800" 
-                              : item.winning === "Pending" 
-                              ? "bg-yellow-100 text-yellow-800" 
-                              : "bg-red-100 text-red-800"
-                          }`}>
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${item.winning === "Winning"
+                              ? "bg-green-100 text-green-800"
+                              : item.winning === "Pending"
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
+                            }`}>
                             {item.winning}
                           </span>
                         </td>
@@ -227,39 +226,36 @@ const Order = ({ orders }) => {
               <button
                 onClick={() => paginate(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className={`px-3 py-1 rounded-md ${
-                  currentPage === 1
+                className={`px-3 py-1 rounded-md ${currentPage === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
+                  }`}
               >
                 Prev
               </button>
-              
+
               {pageNumbers.map(number => (
                 <motion.button
                   key={number}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => paginate(number)}
-                  className={`px-3 py-1 rounded-md ${
-                    currentPage === number
+                  className={`px-3 py-1 rounded-md ${currentPage === number
                       ? "bg-red-800 text-white"
                       : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                    }`}
                 >
                   {number}
                 </motion.button>
               ))}
-              
+
               <button
                 onClick={() => paginate(Math.min(pageNumbers.length, currentPage + 1))}
                 disabled={currentPage === pageNumbers.length}
-                className={`px-3 py-1 rounded-md ${
-                  currentPage === pageNumbers.length
+                className={`px-3 py-1 rounded-md ${currentPage === pageNumbers.length
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
+                  }`}
               >
                 Next
               </button>

@@ -36,11 +36,11 @@ const AddCoin = ({ addcoins }) => {
       setFilteredCoins(
         addcoins.filter((item) => {
           return (
-            item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.orderId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.transId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.phone?.includes(searchTerm)
+            (typeof item.name === 'string' && item.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (typeof item.email === 'string' && item.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (typeof item.orderId === 'string' && item.orderId.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (typeof item.transId === 'string' && item.transId.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (typeof item.phone === 'string' && item.phone.includes(searchTerm))
           );
         })
       );
