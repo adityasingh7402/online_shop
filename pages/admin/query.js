@@ -304,15 +304,6 @@ const Query = ({ Querys }) => {
                           <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="text-xs flex items-center text-blue-800 hover:text-blue-700 px-3 py-1 border border-blue-100 rounded-md bg-blue-50 hover:bg-blue-100 transition-colors duration-200"
-                          >
-                            <Mail size={12} className="mr-1" />
-                            Reply
-                          </motion.button>
-                          
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
                             onClick={() => deleteQuery(item._id)}
                             className="text-xs flex items-center text-gray-600 hover:text-gray-700 px-3 py-1 border border-gray-100 rounded-md bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
                           >
