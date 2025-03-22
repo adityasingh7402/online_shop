@@ -1,285 +1,346 @@
-import { React, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Head from "next/head";
-import Orderr from "../../modal/Order";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import mongoose from "mongoose";
+import addCoin from "../../modal/Addcoin";
 import * as XLSX from "xlsx";
-import { motion, AnimatePresence } from "framer-motion";
-import { FileDown, ArrowLeft, Search, Filter } from "lucide-react";
+import { motion } from "framer-motion";
+import { X, Download, Check, AlertTriangle, FileDown } from "lucide-react";
 
-const Order = ({ orders }) => {
+const AddCoin = ({ addcoins }) => {
   const [isHidden, setIsHidden] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [ordersPerPage] = useState(10);
+  const [filteredCoins, setFilteredCoins] = useState([]);
+  const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return new Intl.DateTimeFormat("en-GB", options).format(date);
-  };
-
   useEffect(() => {
+    setMounted(true);
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(",");
+    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
 
-    if (!myuser || !allowedEmails?.includes(myuser.email)) {
-      router.push("/");
+    if (!myuser || !allowedEmails.includes(myuser.email)) {
+      router.push('/');
     } else {
       setIsHidden(false);
     }
-  }, []);
+    
+    setFilteredCoins(addcoins);
+  }, [addcoins, router]);
 
-  if (isHidden) {
+  useEffect(() => {
+    if (addcoins) {
+      setFilteredCoins(
+        addcoins.filter((item) => {
+          return (
+            item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.orderId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.transId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.phone?.includes(searchTerm)
+          );
+        })
+      );
+    }
+  }, [searchTerm, addcoins]);
+
+  if (isHidden || !mounted) {
     return null;
   }
 
-  const handleDownload = () => {
-    const data = orders.map((order) => ({
-      "Order Id": order.orderId,
-      Name: order.name,
-      Email: order.email,
-      Mobile: order.phone,
-      Amount: order.amount,
-      Card: `C - ${order.cardno}`,
-      Status: order.winning,
-      "Date on Buy": formatDate(order.createdAt),
-    }));
+  const handlePaidButtonClick = async (item) => {
+    const confirmation = window.confirm(
+      `Are you sure you want to update the following details?\n\nOrder ID: ${item.orderId}\nAmount: ${item.amount}\nEmail: ${item.email}`
+    );
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Orders");
-    XLSX.writeFile(workbook, "OrdersData.xlsx");
+    if (!confirmation) {
+      return;
+    }
+
+    setIsProcessing(true);
+    const data = { Orderid: item.orderId, Orderamount: item.amount, Orderemail: item.email };
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateAdd`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const res = await response.json();
+
+      if (res.success) {
+        toast.success(res.success, { position: "top-center", autoClose: 2000 });
+        setTimeout(() => {
+          router.reload();
+        }, 2000);
+      } else {
+        toast.error(res.error, { position: "top-center", autoClose: 2000 });
+        setIsProcessing(false);
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.", { position: "top-center", autoClose: 2000 });
+      console.error("Error:", error);
+      setIsProcessing(false);
+    }
   };
 
-  // Filter orders based on search term
-  const filteredOrders = orders.filter(
-    (order) =>
-      order.orderId?.toString().includes(searchTerm) ||
-      order.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.phone?.toString().includes(searchTerm) ||
-      order.cardno?.toString().includes(searchTerm)
-  );
+  const downloadCSV = () => {
+    const formattedData = addcoins.map((item) => ({
+      "Order ID": item.orderId,
+      Name: item.name,
+      Email: item.email,
+      Mobile: item.phone,
+      Amount: item.amount,
+      "Transaction ID": item.transId,
+      Status: item.status,
+      "Date on Buy": new Date(item.createdAt).toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      "Update Date": new Date(item.updatedAt).toLocaleString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    }));
 
-  // Get current orders for pagination
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "AddCoins");
+    XLSX.writeFile(workbook, "AddCoins.xlsx");
+    
+    toast.success("File downloaded successfully!", { position: "top-center", autoClose: 2000 });
+  };
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(filteredOrders.length / ordersPerPage); i++) {
-    pageNumbers.push(i);
-  }
-
-  const tableContainer = {
+  // Animation variants
+  const containerVariants = {
     hidden: { opacity: 0 },
-    show: {
+    visible: { 
       opacity: 1,
-      transition: {
-        staggerChildren: 0.05
+      transition: { 
+        duration: 0.5,
+        when: "beforeChildren",
+        staggerChildren: 0.1
       }
     }
   };
 
-  const tableRow = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { duration: 0.3 }
+    }
+  };
+
+  const tableRowVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (i) => ({ 
+      opacity: 1, 
+      x: 0,
+      transition: { 
+        delay: i * 0.05,
+        duration: 0.3 
+      }
+    })
+  };
+
+  const buttonVariants = {
+    rest: { scale: 1 },
+    hover: { 
+      scale: 1.05, 
+      boxShadow: "0px 5px 10px rgba(220, 38, 38, 0.2)",
+      transition: { duration: 0.2 }
+    },
+    tap: { scale: 0.95 }
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-10">
-      <Head>
-        <title>Orders - Patti Circle Admin</title>
-        <meta name="description" content="Orders management for Patti Circle" />
-      </Head>
-
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="container mx-auto px-4 py-6"
+    <>
+      <ToastContainer position="top-right" autoClose={3000} />
+      
+      <motion.div 
+        className="fixed top-6 right-6 z-10"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
       >
-        <div className="flex justify-between items-center mb-6">
-          <Link href="/admin">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center text-red-800 hover:text-red-600 cursor-pointer"
-            >
-              <ArrowLeft size={20} className="mr-2" />
-              <span className="font-medium">Back to Dashboard</span>
-            </motion.div>
-          </Link>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="bg-red-800 text-white text-center py-4 rounded-lg shadow-lg mb-6"
+        <Link href={'/admin'}>
+          <motion.div 
+            className="flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-lg cursor-pointer text-red-700 hover:bg-red-50 transition-all"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <X size={24} />
+          </motion.div>
+        </Link>
+      </motion.div>
+      
+      <motion.div 
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        <motion.div 
+          className="text-center mb-8"
+          variants={itemVariants}
         >
-          <h1 className="text-2xl md:text-3xl font-bold">Orders - Admin Panel</h1>
+          <motion.h1 
+            className="text-3xl font-bold text-red-700 bg-white inline-block px-8 py-3 rounded-lg shadow-md"
+            whileHover={{ y: -3, transition: { duration: 0.2 } }}
+          >
+            Add Coins - Admin Panel
+          </motion.h1>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="bg-white rounded-lg shadow-md p-6 mb-6"
+        
+        <motion.div 
+          className="mb-6 flex flex-col md:flex-row justify-between items-center gap-4"
+          variants={itemVariants}
         >
-          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-            <div className="relative w-full md:w-64 mb-4 md:mb-0">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              <input
-                type="text"
-                placeholder="Search orders..."
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              />
-            </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleDownload}
-              className="flex items-center bg-red-800 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors duration-200"
-            >
-              <FileDown size={18} className="mr-2" />
-              <span>Download Excel</span>
-            </motion.button>
-          </div>
-
+          <motion.div 
+            className="relative w-full md:w-64"
+            variants={itemVariants}
+          >
+            <input
+              type="text"
+              placeholder="Search by name, email, ID..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            />
+          </motion.div>
+          
+          <motion.button
+            onClick={downloadCSV}
+            className="flex items-center gap-2 bg-red-700 text-white px-6 py-2 rounded-md shadow-sm hover:bg-red-800 transition-all"
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+          >
+            <FileDown size={18} />
+            <span>Download Excel</span>
+          </motion.button>
+        </motion.div>
+        
+        <motion.div 
+          className="bg-white rounded-lg shadow-xl overflow-hidden"
+          variants={itemVariants}
+        >
           <div className="overflow-x-auto">
-            <motion.table
-              variants={tableContainer}
-              initial="hidden"
-              animate="show"
-              className="min-w-full divide-y divide-gray-200"
-            >
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-red-700 text-white">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Order Id</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Name</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Email</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Mobile</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Amount</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Card</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Status</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Date on Buy</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Order ID</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Name</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Email</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Mobile</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Amount</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Transaction ID</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Status</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Date on Buy</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Update Date</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium tracking-wider">Action</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                <AnimatePresence>
-                  {currentOrders.length > 0 ? (
-                    currentOrders.map((item) => (
-                      <motion.tr
-                        key={item._id}
-                        variants={tableRow}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="hover:bg-gray-50"
-                      >
-                        <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">#{item.orderId}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.name}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.email}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.phone}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.amount}</td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{`C - ${item.cardno}`}</td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                            item.winning === "Winning" 
-                              ? "bg-green-100 text-green-800" 
-                              : item.winning === "Pending" 
-                              ? "bg-yellow-100 text-yellow-800" 
-                              : "bg-red-100 text-red-800"
-                          }`}>
-                            {item.winning}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{formatDate(item.createdAt)}</td>
-                      </motion.tr>
-                    ))
-                  ) : (
-                    <motion.tr
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
+                {filteredCoins.length > 0 ? (
+                  filteredCoins.map((item, index) => (
+                    <motion.tr 
+                      key={item._id}
+                      custom={index}
+                      variants={tableRowVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                      whileHover={{ backgroundColor: "rgba(254, 226, 226, 0.5)" }}
                     >
-                      <td colSpan="8" className="px-4 py-8 text-center text-gray-500">
-                        No orders found matching your search.
+                      <td className="px-4 py-3 text-sm text-gray-900">{item.orderId}</td>
+                      <td className="px-4 py-3 text-sm text-gray-900">{item.name}</td>
+                      <td className="px-4 py-3 text-sm text-gray-900">{item.email}</td>
+                      <td className="px-4 py-3 text-sm text-gray-900">{item.phone}</td>
+                      <td className="px-4 py-3 text-sm font-medium text-gray-900">₹{item.amount}</td>
+                      <td className="px-4 py-3 text-sm text-gray-900">{item.transId}</td>
+                      <td className="px-4 py-3 text-sm">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          item.status === "Initiated" 
+                            ? "bg-yellow-100 text-yellow-800" 
+                            : "bg-green-100 text-green-800"
+                        }`}>
+                          {item.status === "Initiated" ? (
+                            <><AlertTriangle size={12} className="mr-1" /> {item.status}</>
+                          ) : (
+                            <><Check size={12} className="mr-1" /> {item.status}</>
+                          )}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-900">
+                        {new Date(item.createdAt).toLocaleString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: '2-digit',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-900">
+                        {new Date(item.updatedAt).toLocaleString('en-GB', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: '2-digit',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-900">
+                        {item.status === "Initiated" && (
+                          <motion.button
+                            onClick={() => handlePaidButtonClick(item)}
+                            className={`inline-flex items-center px-3 py-1 border border-red-700 text-sm font-medium rounded-md 
+                              ${isProcessing ? 'bg-gray-300 text-gray-600' : 'bg-red-700 text-white hover:bg-white hover:text-red-700'} 
+                              transition-colors duration-200`}
+                            variants={buttonVariants}
+                            whileHover={!isProcessing && "hover"}
+                            whileTap={!isProcessing && "tap"}
+                            disabled={isProcessing}
+                          >
+                            <Check size={16} className="mr-1" />
+                            {isProcessing ? "Processing..." : "Mark Paid"}
+                          </motion.button>
+                        )}
                       </td>
                     </motion.tr>
-                  )}
-                </AnimatePresence>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="10" className="px-4 py-8 text-center text-gray-500">
+                      No records found
+                    </td>
+                  </tr>
+                )}
               </tbody>
-            </motion.table>
+            </table>
           </div>
-
-          {/* Pagination */}
-          {pageNumbers.length > 1 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="flex justify-center items-center space-x-1 mt-6"
-            >
-              <button
-                onClick={() => paginate(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className={`px-3 py-1 rounded-md ${
-                  currentPage === 1
-                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                Prev
-              </button>
-              
-              {pageNumbers.map(number => (
-                <motion.button
-                  key={number}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => paginate(number)}
-                  className={`px-3 py-1 rounded-md ${
-                    currentPage === number
-                      ? "bg-red-800 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
-                >
-                  {number}
-                </motion.button>
-              ))}
-              
-              <button
-                onClick={() => paginate(Math.min(pageNumbers.length, currentPage + 1))}
-                disabled={currentPage === pageNumbers.length}
-                className={`px-3 py-1 rounded-md ${
-                  currentPage === pageNumbers.length
-                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                Next
-              </button>
-            </motion.div>
-          )}
+        </motion.div>
+        
+        <motion.div 
+          className="mt-6 text-center text-sm text-gray-500"
+          variants={itemVariants}
+        >
+          Showing {filteredCoins.length} of {addcoins.length} records
         </motion.div>
       </motion.div>
-    </div>
+    </>
   );
 };
 
@@ -287,11 +348,10 @@ export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-
-  const orders = await Orderr.find({}).sort({ createdAt: -1 });
+  const addcoins = await addCoin.find();
   return {
-    props: { orders: JSON.parse(JSON.stringify(orders)) },
+    props: { addcoins: JSON.parse(JSON.stringify(addcoins)) },
   };
 }
 
-export default Order;
+export default AddCoin;
