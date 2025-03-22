@@ -1,23 +1,38 @@
 import { React, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { AiOutlineClose } from "react-icons/ai";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Head from "next/head";
+import Orderr from "../../modal/Order";
 import mongoose from "mongoose";
-import addCoin from "../../modal/Addcoin";
 import * as XLSX from "xlsx";
+import { motion, AnimatePresence } from "framer-motion";
+import { FileDown, ArrowLeft, Search, Filter } from "lucide-react";
 
-const AddCoin = ({ addcoins }) => {
+const Order = ({ orders }) => {
   const [isHidden, setIsHidden] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [ordersPerPage] = useState(10);
   const router = useRouter();
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Intl.DateTimeFormat("en-GB", options).format(date);
+  };
 
   useEffect(() => {
     const myuser = JSON.parse(localStorage.getItem("myuser"));
-    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(',');
+    const allowedEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(",");
 
-    if (!myuser || !allowedEmails.includes(myuser.email)) {
-      router.push('/');
+    if (!myuser || !allowedEmails?.includes(myuser.email)) {
+      router.push("/");
     } else {
       setIsHidden(false);
     }
@@ -27,162 +42,256 @@ const AddCoin = ({ addcoins }) => {
     return null;
   }
 
-  const handlePaidButtonClick = async (item) => {
-    const confirmation = window.confirm(
-      `Are you sure you want to update the following details?\n\nOrder ID: ${item.orderId}\nAmount: ${item.amount}\nEmail: ${item.email}`
-    );
+  const handleDownload = () => {
+    const data = orders.map((order) => ({
+      "Order Id": order.orderId,
+      Name: order.name,
+      Email: order.email,
+      Mobile: order.phone,
+      Amount: order.amount,
+      Card: `C - ${order.cardno}`,
+      Status: order.winning,
+      "Date on Buy": formatDate(order.createdAt),
+    }));
 
-    if (!confirmation) {
-      return;
-    }
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Orders");
+    XLSX.writeFile(workbook, "OrdersData.xlsx");
+  };
 
-    const data = { Orderid: item.orderId, Orderamount: item.amount, Orderemail: item.email };
+  // Filter orders based on search term
+  const filteredOrders = orders.filter(
+    (order) =>
+      order.orderId?.toString().includes(searchTerm) ||
+      order.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.phone?.toString().includes(searchTerm) ||
+      order.cardno?.toString().includes(searchTerm)
+  );
 
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateAdd`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+  // Get current orders for pagination
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
 
-      const res = await response.json();
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filteredOrders.length / ordersPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
-      if (res.success) {
-        toast.success(res.success, { position: "top-center", autoClose: 2000 });
-        router.reload();
-      } else {
-        toast.error(res.error, { position: "top-center", autoClose: 2000 });
-        router.reload();
+  const tableContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05
       }
-    } catch (error) {
-      toast.error("An error occurred. Please try again.", { position: "top-center", autoClose: 2000 });
-      console.error("Error:", error);
     }
   };
 
-  const downloadCSV = () => {
-    const formattedData = addcoins.map((item) => ({
-      "Order ID": item.orderId,
-      Name: item.name,
-      Email: item.email,
-      Mobile: item.phone,
-      Amount: item.amount,
-      "Transaction ID": item.transId,
-      Status: item.status,
-      "Date on Buy": new Date(item.createdAt).toLocaleString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-      "Update Date": new Date(item.updatedAt).toLocaleString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(formattedData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "AddCoins");
-    XLSX.writeFile(workbook, "AddCoins.xlsx");
+  const tableRow = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
   };
 
   return (
-    <>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <Link href={'/admin'}>
-        <div className="gotoHome right-10 top-10 fixed cursor-pointer text-red-900 p-2 bg-white font-bold text-4xl">
-          <AiOutlineClose />
+    <div className="bg-gray-50 min-h-screen pb-10">
+      <Head>
+        <title>Orders - Patti Circle Admin</title>
+        <meta name="description" content="Orders management for Patti Circle" />
+      </Head>
+
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="container mx-auto px-4 py-6"
+      >
+        <div className="flex justify-between items-center mb-6">
+          <Link href="/admin">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center text-red-800 hover:text-red-600 cursor-pointer"
+            >
+              <ArrowLeft size={20} className="mr-2" />
+              <span className="font-medium">Back to Dashboard</span>
+            </motion.div>
+          </Link>
         </div>
-      </Link>
-      <div className="containerr p-10 overflow-hidden">
-        <div className="shop-title w-max shadow-md shopCat text-center px-8 py-3 m-auto background text-white text-3xl rounded-sm">
-          Add Coins - Admin Panel
-        </div>
-        <div className="download-button flex justify-end w-full">
-            <button
-              onClick={downloadCSV}
-              className="rounded-full bg-blue-700 px-6 py-2 text-white hover:bg-blue-500 transition-all">
-              Download CSV
-            </button>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="bg-red-800 text-white text-center py-4 rounded-lg shadow-lg mb-6"
+        >
+          <h1 className="text-2xl md:text-3xl font-bold">Orders - Admin Panel</h1>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="bg-white rounded-lg shadow-md p-6 mb-6"
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+            <div className="relative w-full md:w-64 mb-4 md:mb-0">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <input
+                type="text"
+                placeholder="Search orders..."
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              />
+            </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleDownload}
+              className="flex items-center bg-red-800 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors duration-200"
+            >
+              <FileDown size={18} className="mr-2" />
+              <span>Download Excel</span>
+            </motion.button>
           </div>
-        <div className="tables p-5 w-full min-h-screen containerr">
-          <table className="mx-auto bg-white p-5">
-            <thead>
-              <tr>
-                <th className="text-left border p-2 border-slate-600">Order ID</th>
-                <th className="text-left border p-2 border-slate-600">Name</th>
-                <th className="text-left border p-2 border-slate-600">Email</th>
-                <th className="text-left border p-2 border-slate-600">Mobile</th>
-                <th className="text-left border p-2 border-slate-600">Amount</th>
-                <th className="text-left border p-2 border-slate-600">Transaction ID</th>
-                <th className="text-left border p-2 border-slate-600">Status</th>
-                <th className="text-left border p-2 border-slate-600">Date on Buy</th>
-                <th className="text-left border p-2 border-slate-600">Update Date</th>
-                <th className="text-left border p-2 border-slate-600">Paid</th>
-              </tr>
-            </thead>
-            <tbody>
-              {addcoins.map((item) => (
-                <tr key={item._id}>
-                  <td className="text-left border p-2 border-slate-600">{item.orderId}</td>
-                  <td className="text-left border p-2 border-slate-600">{item.name}</td>
-                  <td className="text-left border p-2 border-slate-600">{item.email}</td>
-                  <td className="text-left border p-2 border-slate-600">{item.phone}</td>
-                  <td className="text-left border p-2 border-slate-600">{item.amount}</td>
-                  <td className="text-left border p-2 border-slate-600">{item.transId}</td>
-                  <td className="text-left border p-2 border-slate-600">{item.status}</td>
-                  <td className="text-left border p-2 border-slate-600">
-                    {new Date(item.createdAt).toLocaleString('en-GB', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: '2-digit',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </td>
-                  <td className="text-left border p-2 border-slate-600">
-                    {new Date(item.updatedAt).toLocaleString('en-GB', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: '2-digit',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </td>
-                  <td className="text-left border p-2 border-slate-600">
-                    {item.status === "Initiated" && (
-                      <button
-                        onClick={() => handlePaidButtonClick(item)}
-                        className="rounded-full bg-red-700 text-sm px-4 py-1 hover:bg-white text-white hover:text-gray-800 border transition-all border-red-700"
-                      >
-                        Paid
-                      </button>
-                    )}
-                  </td>
+
+          <div className="overflow-x-auto">
+            <motion.table
+              variants={tableContainer}
+              initial="hidden"
+              animate="show"
+              className="min-w-full divide-y divide-gray-200"
+            >
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Order Id</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Name</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Email</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Mobile</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Amount</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Card</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Status</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 tracking-wider">Date on Buy</th>
                 </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                <AnimatePresence>
+                  {currentOrders.length > 0 ? (
+                    currentOrders.map((item) => (
+                      <motion.tr
+                        key={item._id}
+                        variants={tableRow}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="hover:bg-gray-50"
+                      >
+                        <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">#{item.orderId}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.name}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.email}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.phone}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{item.amount}</td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{`C - ${item.cardno}`}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                            item.winning === "Winning" 
+                              ? "bg-green-100 text-green-800" 
+                              : item.winning === "Pending" 
+                              ? "bg-yellow-100 text-yellow-800" 
+                              : "bg-red-100 text-red-800"
+                          }`}>
+                            {item.winning}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{formatDate(item.createdAt)}</td>
+                      </motion.tr>
+                    ))
+                  ) : (
+                    <motion.tr
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <td colSpan="8" className="px-4 py-8 text-center text-gray-500">
+                        No orders found matching your search.
+                      </td>
+                    </motion.tr>
+                  )}
+                </AnimatePresence>
+              </tbody>
+            </motion.table>
+          </div>
+
+          {/* Pagination */}
+          {pageNumbers.length > 1 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex justify-center items-center space-x-1 mt-6"
+            >
+              <button
+                onClick={() => paginate(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className={`px-3 py-1 rounded-md ${
+                  currentPage === 1
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
+              >
+                Prev
+              </button>
+              
+              {pageNumbers.map(number => (
+                <motion.button
+                  key={number}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => paginate(number)}
+                  className={`px-3 py-1 rounded-md ${
+                    currentPage === number
+                      ? "bg-red-800 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  }`}
+                >
+                  {number}
+                </motion.button>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </>
+              
+              <button
+                onClick={() => paginate(Math.min(pageNumbers.length, currentPage + 1))}
+                disabled={currentPage === pageNumbers.length}
+                className={`px-3 py-1 rounded-md ${
+                  currentPage === pageNumbers.length
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
+              >
+                Next
+              </button>
+            </motion.div>
+          )}
+        </motion.div>
+      </motion.div>
+    </div>
   );
 };
-
 
 export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
-  const addcoins = await addCoin.find();
+
+  const orders = await Orderr.find({}).sort({ createdAt: -1 });
   return {
-    props: { addcoins: JSON.parse(JSON.stringify(addcoins)) },
+    props: { orders: JSON.parse(JSON.stringify(orders)) },
   };
 }
 
-export default AddCoin;
+export default Order;

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Coins, LogOut, Menu, X, Plus, Heart, Download, Trophy } from "lucide-react";
+import { User, Coins, LogOut, Menu, X, RefreshCw, Download } from "lucide-react";
 import mongoose from "mongoose";
 import RandomNSchema from "../modal/randomCard";
 import Orderr from "../modal/Order";
@@ -394,15 +394,22 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           pauseOnHover
         />
         <div className="containerr h-screen relative w-full screnfulln overflow-hidden">
-          {lodingS === false && (
-            <motion.span
-              className="fixed flex justify-center z-50 items-center text-red-900 text-lg w-full"
+          {!lodingS && (
+            <motion.div
+              className="fixed inset-0 flex justify-center items-center bg-black/30 backdrop-blur-sm z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <Image src={"/loader.gif"} width={100} height={100} />
-            </motion.span>
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                className="bg-white rounded-xl p-8 flex flex-col items-center"
+              >
+                <RefreshCw className="text-red-600 animate-spin mb-4" size={36} />
+                <p className="text-lg font-medium text-gray-700">Processing your request...</p>
+              </motion.div>
+            </motion.div>
           )}
 
           <AnimatePresence>
@@ -515,7 +522,6 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               className="logo w-28"
               variants={slideUp}
             >
-              <img src="/logopn.png" alt="" />
             </motion.div>
             <motion.div
               className="uppercase text-5xl font-semibold margingr displayno text-white py-5 px-20"
@@ -617,7 +623,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
                       <motion.li
                         onClick={handleDownload}
-                        className="flex cursor-pointer items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer"
+                        className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer"
                         variants={slideUp}
                         whileHover={{ x: 5 }}
                       >
@@ -629,7 +635,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
                       <motion.li
                         onClick={logout}
-                        className="flex cursor-pointer items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer mt-2 border-t border-red-100"
+                        className="flex items-center px-4 py-3 hover:bg-red-50 transition-all group cursor-pointer mt-2 border-t border-red-100"
                         variants={slideUp}
                         whileHover={{ x: 5 }}
                       >
