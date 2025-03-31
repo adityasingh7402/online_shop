@@ -25,6 +25,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   const [paymentVer, setpaymentVer] = useState(true)
   const [imageload, setimageload] = useState(false)
   const [token, settoken] = useState("")
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [isLaptop, setIsLaptop] = useState(false);
   var [closeScr, setcloseScr] = useState(false)
   var [loginout, setloginout] = useState(false)
   const [wallet, setwallet] = useState(0)
@@ -136,11 +139,19 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     } else {
       settimeBit(true);
     }
+
+    // Enhanced responsive handling
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 600);
+      const width = window.innerWidth;
+      setIsMobile(width < 640);
+      setIsTablet(width >= 640 && width < 1024);
+      setIsLaptop(width >= 1024);
+      setIsSmallScreen(width <= 600);
     };
+
     window.addEventListener('resize', handleResize);
-    handleResize();
+    handleResize(); // Call once on mount
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -373,6 +384,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
         initial="hidden"
         animate="visible"
         variants={fadeIn}
+        className="min-h-screen flex flex-col"
       >
         <Head>
           <title>Patti Circle- Win Win Game</title>
@@ -381,6 +393,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             content="Patti Circle win win Game"
           />
           <link rel="icon" href="/favicon.ico" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </Head>
         <ToastContainer
           position="top-right"
