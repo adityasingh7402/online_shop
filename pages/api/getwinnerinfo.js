@@ -1,5 +1,6 @@
 import connectDb from "../../middleware/mongoose";
 import Order from "../../modal/Order";
+import GameResult from "../../modal/GameResult";
 import jsonwebtoken from "jsonwebtoken";
 
 const handler = async (req, res) => {
@@ -16,9 +17,15 @@ const handler = async (req, res) => {
       email: data.email,
       updatedAt: { $gte: startOfDay, $lte: endOfDay },
     });
+    
+    // Fetch game result for today
+    let GameResultInfo = await GameResult.findOne({
+      gameDate: startOfDay
+    });
 
-    // console.log(Orders);
-    res.status(200).json({ OrdersInfo });
+    console.log('OrdersInfo:', OrdersInfo);
+    console.log('GameResultInfo:', GameResultInfo);
+    res.status(200).json({ OrdersInfo, GameResultInfo });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

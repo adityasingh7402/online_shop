@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import WinnerPopup from "./componenat/WinnerPopup";
+import { trackBet } from "../utils/betTracker";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, Coins, LogOut, Menu, X, RefreshCw, Download } from "lucide-react";
 import mongoose from "mongoose";
@@ -69,52 +71,11 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
   };
 
+// Note: Win/loss toast notifications are now handled by WinnerPopup component
   useEffect(() => {
-    const fetchOrders = async () => {
-      let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getwinnerinfo`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: JSON.parse(localStorage.getItem('myuser')).token }),
-      })
-      let res = await a.json()
-
-      res.OrdersInfo.forEach(item => {
-        if (item.winning === 'Win') {
-          toast.success(`You Win ${2 * item.amount - 0.2 * item.amount} Coins`, {
-            position: "top-right",
-            autoClose: false,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-
-        if (item.winning === 'Loss') {
-          toast.error(`You Loss ${item.amount} Coins`, {
-            position: "top-right",
-            autoClose: false,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-      });
-    }
     if (!localStorage.getItem('myuser')) {
       router.push('/')
     }
-    else {
-      fetchOrders()
-    }
-
   }, [])
 
   const interval = setInterval(() => {
@@ -241,6 +202,16 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           draggable: true,
           progress: undefined,
         });
+        
+        // Track the bet in localStorage for winner popup
+        trackBet({
+          orderId: oid,
+          randomNum: cart.randomNum,
+          cardno: cart.cardno,
+          amount: amount
+        });
+        
+        // Update wallet
         let walletUp = wallet - amount;
         let data2 = { token: token, email, walletUp }
         let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateWallet`, {
@@ -301,6 +272,8 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   };
 
   return (<>
+    {/* Winner Announcement Popup */}
+    <WinnerPopup randomNum={randomNum} />
     {/* {isLoading && <Preloader />} */}
     {!imageload && !isSmallScreen && (
       <motion.div

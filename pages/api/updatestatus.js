@@ -1,6 +1,8 @@
 import { modelNames } from "mongoose"
 import Order from "../../modal/Order"
 import User from "../../modal/User"
+import GameResult from "../../modal/GameResult"
+import randomCard from "../../modal/randomCard"
 import connectDb from "../../middleware/mongoose"
 
 const handler = async (req, res) => {
@@ -43,6 +45,45 @@ const handler = async (req, res) => {
                 console.log(totalAmount)
             }
 
+            // Save game result after processing all winners
+            const currentDate = new Date();
+            const startOfDay = new Date(currentDate);
+            startOfDay.setHours(0, 0, 0, 0);
+            
+            // Get current day's cards from randomCard collection
+            const todaysCards = await randomCard.findOne().sort({ createdAt: -1 });
+            
+            if (todaysCards) {
+                // Determine winning position based on winning card
+                let winningPosition = 1;
+                if (req.body.randomNum == todaysCards.card2) winningPosition = 2;
+                else if (req.body.randomNum == todaysCards.card3) winningPosition = 3;
+                
+                // Save the game result
+                try {
+                    await GameResult.findOneAndUpdate(
+                        { gameDate: startOfDay },
+                        {
+                            gameDate: startOfDay,
+                            card1: todaysCards.card1,
+                            card2: todaysCards.card2,
+                            card3: todaysCards.card3,
+                            winningCard: parseInt(req.body.randomNum),
+                            winningPosition: winningPosition
+                        },
+                        { upsert: true, new: true }
+                    );
+                    console.log('Game result saved:', {
+                        gameDate: startOfDay,
+                        cards: [todaysCards.card1, todaysCards.card2, todaysCards.card3],
+                        winningCard: req.body.randomNum,
+                        winningPosition
+                    });
+                } catch (gameResultError) {
+                    console.error('Error saving game result:', gameResultError);
+                }
+            }
+            
             res.status(200).json({ success: true });
         } catch (error) {
             console.error(error);
