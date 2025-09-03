@@ -494,7 +494,35 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                       transition={{ delay: 0.4 }}
                     >
                       <motion.button
-                        onClick={() => { clearCart(); setcloseScr(false); }}
+                        onClick={() => { 
+                          clearCart(); 
+                          setcloseScr(false); 
+                          
+                          // Multiple approaches to dismiss toasts
+                          toast.dismiss();
+                          
+                          // Use setTimeout to ensure it runs after current event loop
+                          setTimeout(() => {
+                            toast.dismiss();
+                            // Force dismiss all active toasts with different selectors
+                            const selectors = [
+                              '.Toastify__toast',
+                              '.Toastify__toast-container',
+                              '[class*="Toastify__toast"]'
+                            ];
+                            
+                            selectors.forEach(selector => {
+                              const elements = document.querySelectorAll(selector);
+                              elements.forEach(el => {
+                                try {
+                                  el.remove();
+                                } catch (e) {
+                                  // Ignore errors
+                                }
+                              });
+                            });
+                          }, 100);
+                        }}
                         className="order-2 sm:order-1 rounded-full bg-white/10 border-2 border-white text-white hover:bg-white hover:text-red-900 font-bold py-3 w-full sm:w-1/2 transition-all duration-300"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
@@ -805,7 +833,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                   className="time-container flex items-center flex-col h-full w-48 p-4 border border-red-700 rounded-lg bg-red-900/50 shadow-lg"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <p className="text-white text-xl font-serif">Last Bit</p>
+                  <p className="text-white text-xl font-serif">Last Bet</p>
                   <p className="text-white text-xl font-serif">Winning Card</p>
                   <div className="resImg w-24">
                     <img src={`/card/card-${randomNum.wiinerCard}.png`} alt="" />

@@ -23,10 +23,10 @@ const handler = async (req, res) => {
                 amount: req.body.amount,
             })
             await p.save()
-            res.status(200).json({ success: "Bit success" })
+            res.status(200).json({ success: "Bet success" })
         }
         else {
-            res.status(400).json({ error: "Bit failed" })
+            res.status(400).json({ error: "Bet failed" })
         }
     }
 }
