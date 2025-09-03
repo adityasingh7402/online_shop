@@ -23,7 +23,7 @@ const FAQ = () => {
       question: "Why Patti Circle is Better than Others Games",
       answer: "Games have their own unique features and appeal to different audiences. Reasons why some people prefer Patti Circle over all:",
       listItems: [
-        { title: "Skill-based:", content: "Patti Circle is considered to be a more skill-based game than others. Patti Circle provides players with a platform to understand strategy well and make decisions based on the cards they are dealt." },
+        { title: "Skill-based:", content: "Patti Circle is considered to be a more skill-based game than other. Patti Circle provides players with a platform to understand strategy well and make decisions based on the cards they are dealt." },
         { title: "More Widely Played:", content: "Patti Circle is a more widely played game than others, particularly in India because of its simple & easy given task. Everybody can play easily this and no need of any kind of special tricks." },
         { title: "How do you play Patti Circle game online?", content: "You can play Patti Circle game online with a Patti Circle mobile app and on your laptop also. The game begins with three cards. You have to choose your lucky card. Once you choose your number, wait for the result from Patti Circle. If you win, the winning coins will be credited in your Patti Circle's account." },
         { title: "Can I play Patti Circle for real cash?", content: "Yes, you can play Patti Circle for real cash online by purchasing its coins. You should learn the game rules well before playing for cash. Learn all the tricks of the game to excel in Patti Circle online." },
