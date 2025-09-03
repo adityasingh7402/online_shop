@@ -832,14 +832,14 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
           <footer className="footer text-center py-3 text-white w-full bg-red-950/50 relative md:absolute md:bottom-0">
             <div className="foooter w-full flex flex-col absolute bottom-0 left-0 justify-between">
-              <div className="ending uppercase text-lg mt-5 flex flexdis justify-end px-10 items-center bg-white text-red-900 font-bold p-2 text-center">
-                <marquee direction="left" scrollamount="10">
-                  <ol className="flex flex-row">
+              <div className="ending uppercase text-lg mt-5 flex flexdis justify-end px-10 items-center bg-white text-red-900 font-bold p-2 text-center overflow-hidden">
+                <div className="animate-scroll whitespace-nowrap">
+                  <ol className="flex flex-row inline-flex">
                     {orders
                       .filter((order) => order.winning === 'Win')
                       .map((order, index) => (
                         <motion.li
-                          className="mr-40 text-base font-serif"
+                          className="mr-40 text-base font-serif flex-shrink-0"
                           key={index}
                           initial="hidden"
                           animate="visible"
@@ -851,7 +851,7 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                         </motion.li>
                       ))}
                   </ol>
-                </marquee>
+                </div>
               </div>
               <div className="footer w-full flex didgrid justify-between items-center bg-red-900 text-white font-bold p-3 text-center pl-12 pr-12">
                 <motion.div
