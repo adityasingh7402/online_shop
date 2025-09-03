@@ -70,7 +70,6 @@ const Account = () => {
         body: JSON.stringify(data),
       });
       let res = await a.json();
-      console.log("API Response:", res); // Log the API response
       setphone(res.phone || "");
       setaccountHN(res.accountHN || "");
       setbranch(res.branch || "");
@@ -81,7 +80,6 @@ const Account = () => {
       setupdated(res.updated || false);
       setaccno(res.accno || "");
     } catch (error) {
-      console.error("Error fetching user data:", error); // Log the error
       toast.error("Failed to fetch user data", {
         position: "top-center",
         autoClose: 2000,
@@ -124,7 +122,6 @@ const Account = () => {
       });
 
       let res = await a.json();
-      console.log("Update User Response:", res); // Log the response
 
       if (res.success) {
         toast.success("Successfully Updated Details", {
@@ -138,7 +135,6 @@ const Account = () => {
         });
       }
     } catch (error) {
-      console.error("Error updating user details:", error); // Log the error
       toast.error("Failed to update details", {
         position: "top-center",
         autoClose: 2000,
@@ -178,7 +174,6 @@ const Account = () => {
       });
 
       let res = await a.json();
-      console.log("Update Password Response:", res); // Log the response
 
       if (res.success) {
         toast.success("Successfully Updated Password", {
@@ -195,7 +190,6 @@ const Account = () => {
         });
       }
     } catch (error) {
-      console.error("Error updating password:", error); // Log the error
       toast.error("Failed to update password", {
         position: "top-center",
         autoClose: 2000,

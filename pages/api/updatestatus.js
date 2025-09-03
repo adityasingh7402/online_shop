@@ -42,7 +42,6 @@ const handler = async (req, res) => {
                 // const roundedAmount = Math.floor(totalAmount);
                 const roundedAmount = Math.floor(totalAmount);
                 await User.updateOne({ email }, { $inc: { wallet: roundedAmount } });
-                console.log(totalAmount)
             }
 
             // Save game result after processing all winners
@@ -73,12 +72,6 @@ const handler = async (req, res) => {
                         },
                         { upsert: true, new: true }
                     );
-                    console.log('Game result saved:', {
-                        gameDate: startOfDay,
-                        cards: [todaysCards.card1, todaysCards.card2, todaysCards.card3],
-                        winningCard: req.body.randomNum,
-                        winningPosition
-                    });
                 } catch (gameResultError) {
                     console.error('Error saving game result:', gameResultError);
                 }
@@ -115,7 +108,6 @@ const handler = async (req, res) => {
                 winning: "Win",
             }
         )
-        console.log(dbuser)
     } else {
         res.status(500).json({ error: "Invalid request method." });
     }

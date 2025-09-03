@@ -14,31 +14,23 @@ const WinnerPopup = ({ randomNum, onClose }) => {
   useEffect(() => {
     const checkForResults = async () => {
       try {
-        console.log('🔍 Checking for results...');
-        
         // Check localStorage for pending bets
         const stored = localStorage.getItem('pendingBets');
-        console.log('📦 Stored pending bets:', stored);
         if (!stored) {
-          console.log('❌ No stored pending bets found');
           return;
         }
 
         const pendingData = JSON.parse(stored);
-        console.log('📊 Pending data:', pendingData);
         if (pendingData.hasShownResult) {
-          console.log('✅ Result already shown, skipping');
           return;
         }
 
         // Fetch user's recent orders to check results
         const token = JSON.parse(localStorage.getItem('myuser'))?.token;
         if (!token) {
-          console.log('❌ No user token found');
           return;
         }
 
-        console.log('🌐 Fetching winner info from API...');
         const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getwinnerinfo`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -46,22 +38,17 @@ const WinnerPopup = ({ randomNum, onClose }) => {
         });
 
         const data = await response.json();
-        console.log('📡 API Response:', data);
         const orders = data.OrdersInfo;
         const gameResult = data.GameResultInfo;
-        console.log('📋 Orders received:', orders);
-        console.log('🎮 Game Result:', gameResult);
 
         // Check if any orders have been resolved (not pending)
         const resolvedOrders = orders.filter(order => order.winning !== 'Pending');
         if (resolvedOrders.length === 0) {
-          console.log('❌ No resolved orders found');
           return;
         }
 
         // Check if we have game result data
         if (!gameResult) {
-          console.log('❌ No game result found for today');
           return;
         }
 
@@ -75,10 +62,6 @@ const WinnerPopup = ({ randomNum, onClose }) => {
         const winningCardNum = gameResult.winningCard;
         
         setOldCards(finalCards);
-        
-        console.log('✅ Game result cards:', finalCards);
-        console.log('🏆 Winning card:', winningCardNum);
-        console.log('📍 Winning position:', gameResult.winningPosition);
 
         // Calculate user results
         const userWins = resolvedOrders.filter(order => order.winning === 'Win');
@@ -253,7 +236,6 @@ const WinnerPopup = ({ randomNum, onClose }) => {
                       alt="Card 1" 
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        console.error('Failed to load card image:', `/card/card-${oldCards.card1}.png`);
                         e.target.src = '/card/card-1.png'; // fallback image
                       }}
                     />
@@ -288,7 +270,6 @@ const WinnerPopup = ({ randomNum, onClose }) => {
                       alt="Card 2" 
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        console.error('Failed to load card image:', `/card/card-${oldCards.card2}.png`);
                         e.target.src = '/card/card-2.png'; // fallback image
                       }}
                     />
@@ -323,7 +304,6 @@ const WinnerPopup = ({ randomNum, onClose }) => {
                       alt="Card 3" 
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        console.error('Failed to load card image:', `/card/card-${oldCards.card3}.png`);
                         e.target.src = '/card/card-3.png'; // fallback image
                       }}
                     />

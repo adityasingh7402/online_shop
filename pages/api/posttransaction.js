@@ -4,7 +4,6 @@ import PaytmChecksum from "paytmchecksum";
 
 
 const handler = async (req, res) => {
-  console.log("Heeadiing")
   let Order;
 
   var paytmChecksum = "";
@@ -39,7 +38,6 @@ const handler = async (req, res) => {
   // res.redirect('/order?clearCart=1&id=' + order._id, 200)
   // res.status(200).json({ body: req.body })
 }
-console.log("ened")
 
 export default connectDb(handler);
 // export default function handler(req, res) {

@@ -22,9 +22,7 @@ const handler = async (req, res) => {
     let GameResultInfo = await GameResult.findOne({
       gameDate: startOfDay
     });
-
-    console.log('OrdersInfo:', OrdersInfo);
-    console.log('GameResultInfo:', GameResultInfo);
+    
     res.status(200).json({ OrdersInfo, GameResultInfo });
   } catch (error) {
     console.error(error);
