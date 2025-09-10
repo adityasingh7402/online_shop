@@ -24,6 +24,7 @@ import Usersss from "../../modal/User";
 import addCoin from "../../modal/Addcoin";
 import Query from "../../modal/Query";
 import WinnerSelect from "./winnerSelect";
+import TimerSettings from "./timerSettings";
 import Order from "../../modal/Order";
 import mongoose from "mongoose";
 import { useRouter } from "next/router";
@@ -55,6 +56,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
     { id: "Order", label: "Orders", icon: <ClipboardList size={20} /> },
     { id: "ChangeNum", label: "Change Card No", icon: <CreditCard size={20} /> },
     { id: "WinnerSelect", label: "Winner Select", icon: <Award size={20} /> },
+    { id: "TimerSettings", label: "Timer Settings", icon: <Send size={20} /> },
     { id: "withdrawal", label: "Withdrawal Coins", icon: <Wallet size={20} />, link: "/admin/Withdrawal" },
     { id: "addcoin", label: "Adding Coins", icon: <PlusCircle size={20} />, link: "/admin/AddCoin" },
     { id: "Queryy", label: "Query", icon: <HelpCircle size={20} /> },
@@ -294,6 +296,19 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
                   selectUser={selectUser} 
                   selectUsers={selectUsers} 
                 />
+              </motion.div>
+            )}
+            
+            {active === "TimerSettings" && (
+              <motion.div
+                key="timer-settings"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="p-4"
+              >
+                <TimerSettings />
               </motion.div>
             )}
           </AnimatePresence>

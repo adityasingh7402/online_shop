@@ -10,12 +10,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { User, Coins, LogOut, Menu, X, RefreshCw, Download } from "lucide-react";
 import mongoose from "mongoose";
 import RandomNSchema from "../modal/randomCard";
+import TimerSettings from "../modal/TimerSettings";
 import Orderr from "../modal/Order";
 import { useRouter } from 'next/router';
 import moment from 'moment';
 // import Preloader from '../pages/componenat/Preloader';
 
-export default function Home({ logout, user, buyNow, randomNum, cart, clearCart, orders }) {
+export default function Home({ logout, user, buyNow, randomNum, cart, clearCart, orders, timerSettings }) {
   const router = useRouter()
   const [dropdown, setdropdown] = useState(false)
   const [name, setname] = useState("")
@@ -41,9 +42,24 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   const [time, setTime] = useState(calculateRemainingTime());
 
   function calculateRemainingTime() {
+    if (!timerSettings || !timerSettings.nextAnnouncementTime) {
+      // Fallback to 24-hour cycle if no timer settings
+      const now = new Date();
+      const secondsUntilNextDay = 24 * 60 * 60 - (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds());
+      return secondsUntilNextDay;
+    }
+    
     const now = new Date();
-    const secondsUntilNextDay = 24 * 60 * 60 - (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds());
-    return secondsUntilNextDay;
+    const nextAnnouncement = new Date(timerSettings.nextAnnouncementTime);
+    const timeDifference = nextAnnouncement.getTime() - now.getTime();
+    
+    // If the announcement time has passed, return 0
+    if (timeDifference <= 0) {
+      return 0;
+    }
+    
+    // Convert milliseconds to seconds
+    return Math.floor(timeDifference / 1000);
   }
 
   // useEffect(() => {
@@ -923,11 +939,28 @@ export async function getServerSideProps(context) {
 
   let randomNum = await RandomNSchema.findOne();
   let orders = await Orderr.find({});
+  
+  // Fetch timer settings
+  let timerSettings = await TimerSettings.findOne().sort({ createdAt: -1 });
+  
+  // If no settings exist, create default settings
+  if (!timerSettings) {
+    const now = new Date();
+    const nextMidnight = new Date(now);
+    nextMidnight.setHours(24, 0, 0, 0);
+    
+    timerSettings = new TimerSettings({
+      durationInMinutes: 1440, // 24 hours
+      nextAnnouncementTime: nextMidnight
+    });
+    await timerSettings.save();
+  }
 
   return {
     props: {
       randomNum: JSON.parse(JSON.stringify(randomNum)),
       orders: JSON.parse(JSON.stringify(orders)),
+      timerSettings: JSON.parse(JSON.stringify(timerSettings)),
     },
   };
 }
