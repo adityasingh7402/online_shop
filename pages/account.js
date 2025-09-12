@@ -18,6 +18,7 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import SiteWideRestrictionGuard from "./componenat/SiteWideRestrictionGuard";
 
 const Account = () => {
   const [name, setname] = useState("");
@@ -270,7 +271,7 @@ const Account = () => {
   }
 
   return (
-    <>
+    <SiteWideRestrictionGuard>
       <Head>
         <title>Patti Circle - Account</title>
         <meta
@@ -734,7 +735,7 @@ const Account = () => {
           </div>
         </motion.div>
       </div>
-    </>
+    </SiteWideRestrictionGuard>
   );
 };
 

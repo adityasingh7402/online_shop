@@ -25,6 +25,7 @@ import addCoin from "../../modal/Addcoin";
 import Query from "../../modal/Query";
 import WinnerSelect from "./winnerSelect";
 import TimerSettings from "./timerSettings";
+import BettingRestrictions from "./bettingRestrictions";
 import Order from "../../modal/Order";
 import mongoose from "mongoose";
 import { useRouter } from "next/router";
@@ -57,6 +58,7 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
     { id: "ChangeNum", label: "Change Card No", icon: <CreditCard size={20} /> },
     { id: "WinnerSelect", label: "Winner Select", icon: <Award size={20} /> },
     { id: "TimerSettings", label: "Timer Settings", icon: <Send size={20} /> },
+    { id: "BettingRestrictions", label: "Betting Restrictions", icon: <PieChart size={20} /> },
     { id: "withdrawal", label: "Withdrawal Coins", icon: <Wallet size={20} />, link: "/admin/Withdrawal" },
     { id: "addcoin", label: "Adding Coins", icon: <PlusCircle size={20} />, link: "/admin/AddCoin" },
     { id: "Queryy", label: "Query", icon: <HelpCircle size={20} /> },
@@ -309,6 +311,19 @@ export default function Home({ orders, randomNum, selectUser, selectUsers, winnO
                 className="p-4"
               >
                 <TimerSettings />
+              </motion.div>
+            )}
+            
+            {active === "BettingRestrictions" && (
+              <motion.div
+                key="betting-restrictions"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="p-4"
+              >
+                <BettingRestrictions />
               </motion.div>
             )}
           </AnimatePresence>

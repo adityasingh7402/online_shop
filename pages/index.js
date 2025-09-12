@@ -5,18 +5,21 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WinnerPopup from "./componenat/WinnerPopup";
+import BettingRestrictedOverlay from "./componenat/BettingRestrictedOverlay";
+import BettingOnlyMessage from "./componenat/BettingOnlyMessage";
 import { trackBet } from "../utils/betTracker";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, Coins, LogOut, Menu, X, RefreshCw, Download } from "lucide-react";
 import mongoose from "mongoose";
 import RandomNSchema from "../modal/randomCard";
 import TimerSettings from "../modal/TimerSettings";
+import BettingRestriction from "../modal/BettingRestriction";
 import Orderr from "../modal/Order";
 import { useRouter } from 'next/router';
 import moment from 'moment';
 // import Preloader from '../pages/componenat/Preloader';
 
-export default function Home({ logout, user, buyNow, randomNum, cart, clearCart, orders, timerSettings }) {
+export default function Home({ logout, user, buyNow, randomNum, cart, clearCart, orders, timerSettings, bettingRestriction }) {
   const router = useRouter()
   const [dropdown, setdropdown] = useState(false)
   const [name, setname] = useState("")
@@ -38,6 +41,10 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   // const [isLoading, setIsLoading] = useState(true);
   const [ordersIn, setordersIn] = useState([])
+  const [isBettingRestricted, setIsBettingRestricted] = useState(false)
+  const [isSiteWideRestricted, setIsSiteWideRestricted] = useState(false)
+  const [currentRestriction, setCurrentRestriction] = useState(null)
+  const [showBettingOnlyMessage, setShowBettingOnlyMessage] = useState(false)
 
   const [time, setTime] = useState(calculateRemainingTime());
 
@@ -107,6 +114,9 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
       settoken(myuser.token)
       setimageload(true);
     }
+    
+    // Check betting restriction status
+    checkBettingRestriction();
     const now = new Date();
     const hours = now.getHours();
 
@@ -133,6 +143,45 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
       window.removeEventListener('resize', handleResize);
     };
   }, [])
+
+  // Check if betting is currently restricted
+  const checkBettingRestriction = () => {
+    if (bettingRestriction) {
+      const now = new Date();
+      const start = new Date(bettingRestriction.startTime);
+      const end = new Date(bettingRestriction.endTime);
+      
+      const isCurrentlyRestricted = bettingRestriction.isActive && now >= start && now <= end;
+      const isSiteWide = isCurrentlyRestricted && bettingRestriction.restrictionType === 'site_wide';
+      const isBettingOnly = isCurrentlyRestricted && bettingRestriction.restrictionType === 'betting_only';
+      
+      setIsBettingRestricted(isBettingOnly || isSiteWide);
+      setIsSiteWideRestricted(isSiteWide);
+      setCurrentRestriction(isCurrentlyRestricted ? bettingRestriction : null);
+    } else {
+      setIsBettingRestricted(false);
+      setIsSiteWideRestricted(false);
+      setCurrentRestriction(null);
+    }
+  };
+  
+  // Handle betting attempt when betting is restricted
+  const handleBettingAttempt = () => {
+    if (isBettingRestricted && currentRestriction && currentRestriction.restrictionType === 'betting_only') {
+      setShowBettingOnlyMessage(true);
+      return false; // Prevent betting
+    }
+    return true; // Allow betting
+  };
+
+  // Update betting restriction check every minute
+  useEffect(() => {
+    const restrictionInterval = setInterval(() => {
+      checkBettingRestriction();
+    }, 60000); // Check every minute
+
+    return () => clearInterval(restrictionInterval);
+  }, [bettingRestriction]);
 
   const handleChange = async (e) => {
     if (e.target.name == 'amount') {
@@ -290,6 +339,22 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
   return (<>
     {/* Winner Announcement Popup */}
     <WinnerPopup randomNum={randomNum} />
+    
+    {/* Site-Wide Betting Restriction Overlay */}
+    <AnimatePresence>
+      {isSiteWideRestricted && currentRestriction && (
+        <BettingRestrictedOverlay 
+          restriction={currentRestriction} 
+        />
+      )}
+    </AnimatePresence>
+    
+    {/* Betting Only Message Modal */}
+    <BettingOnlyMessage 
+      restriction={currentRestriction}
+      isVisible={showBettingOnlyMessage}
+      onClose={() => setShowBettingOnlyMessage(false)}
+    />
     {/* {isLoading && <Preloader />} */}
     {!imageload && !isSmallScreen && (
       <motion.div
@@ -568,17 +633,21 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
             >
               {user && user.value && (
                 <motion.div
-                  onClick={() => setdropdown(!dropdown)}
-                  className="name pr-5 paddingph cursor-pointer hover:text-red-100 flex items-center"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  onClick={() => !isSiteWideRestricted && setdropdown(!dropdown)}
+                  className={`name pr-5 paddingph flex items-center ${
+                    isSiteWideRestricted 
+                      ? 'cursor-not-allowed opacity-50' 
+                      : 'cursor-pointer hover:text-red-100'
+                  }`}
+                  whileHover={!isSiteWideRestricted ? { scale: 1.05 } : {}}
+                  whileTap={!isSiteWideRestricted ? { scale: 0.95 } : {}}
                 >
                   <span className="mr-2">{name}</span>
                 </motion.div>
               )}
 
               <AnimatePresence>
-                {dropdown && (
+                {dropdown && !isSiteWideRestricted && (
                   <motion.div
                     className="dropdown absolute right-0 top-14 w-64 rounded-xl bg-white z-50 shadow-xl overflow-hidden border border-red-900"
                     initial={{ opacity: 0, y: -10 }}
@@ -693,10 +762,14 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
 
               {user && user.value && (
                 <motion.div
-                  onClick={() => setdropdown(!dropdown)}
-                  className="pr-4 paddingph text-lg cursor-pointer hover:text-red-100"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  onClick={() => !isSiteWideRestricted && setdropdown(!dropdown)}
+                  className={`pr-4 paddingph text-lg ${
+                    isSiteWideRestricted 
+                      ? 'cursor-not-allowed opacity-50' 
+                      : 'cursor-pointer hover:text-red-100'
+                  }`}
+                  whileHover={!isSiteWideRestricted ? { scale: 1.1 } : {}}
+                  whileTap={!isSiteWideRestricted ? { scale: 0.9 } : {}}
                 >
                   {dropdown ? <X size={24} /> : <Menu size={24} />}
                 </motion.div>
@@ -705,15 +778,25 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               {user && user.value && <div className="saprator"></div>}
 
               {user && user.value && (
-                <Link href={'./addcoin'}>
-                  <motion.div
-                    className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Coins size={20} className="mr-1" /> <span className="text-2xl">{wallet}</span>
-                  </motion.div>
-                </Link>
+                <div className={isSiteWideRestricted ? 'cursor-not-allowed opacity-50' : ''}>
+                  {isSiteWideRestricted ? (
+                    <motion.div
+                      className="coin flex justify-center items-center text-lg cursor-not-allowed text-yellow-200"
+                    >
+                      <Coins size={20} className="mr-1" /> <span className="text-2xl">{wallet}</span>
+                    </motion.div>
+                  ) : (
+                    <Link href={'./addcoin'}>
+                      <motion.div
+                        className="coin flex justify-center items-center text-lg cursor-pointer text-yellow-200 hover:text-yellow-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Coins size={20} className="mr-1" /> <span className="text-2xl">{wallet}</span>
+                      </motion.div>
+                    </Link>
+                  )}
+                </div>
               )}
             </motion.div>
           </motion.div>
@@ -739,9 +822,18 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           >
             <div className="card_no flex justify-around items-center w-4/6 flexcolh">
               <motion.div
-                onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }}
-                disabled={timeBit}
-                className="cursor-pointer paddispace card card_first h-min"
+                onClick={() => { 
+                  if (isBettingRestricted && currentRestriction?.restrictionType === 'betting_only') {
+                    handleBettingAttempt();
+                  } else if (!isBettingRestricted || currentRestriction?.restrictionType !== 'site_wide') {
+                    buyNow(randomNum.card1, 1); 
+                    setcloseScr(true);
+                  }
+                }}
+                disabled={timeBit || (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide')}
+                className={`paddispace card card_first h-min ${
+                  (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide') ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                }`}
                 variants={popIn}
                 whileHover={{ scale: 1.05, y: -10 }}
                 whileTap={{ scale: 0.95 }}
@@ -751,9 +843,18 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 </div>
                 <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                   <motion.button
-                    onClick={() => { buyNow(randomNum.card1, 1); setcloseScr(true) }}
-                    disabled={timeBit}
-                    className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer"
+                    onClick={() => { 
+                      if (isBettingRestricted && currentRestriction?.restrictionType === 'betting_only') {
+                        handleBettingAttempt();
+                      } else if (!isBettingRestricted || currentRestriction?.restrictionType !== 'site_wide') {
+                        buyNow(randomNum.card1, 1); 
+                        setcloseScr(true);
+                      }
+                    }}
+                    disabled={timeBit || (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide')}
+                    className={`card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 ${
+                      (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide') ? 'cursor-not-allowed opacity-50' : 'hover:bg-red-200 cursor-pointer'
+                    }`}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -763,9 +864,18 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               </motion.div>
 
               <motion.div
-                onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }}
-                disabled={timeBit}
-                className="cursor-pointer paddispace card card_second h-min"
+                onClick={() => { 
+                  if (isBettingRestricted && currentRestriction?.restrictionType === 'betting_only') {
+                    handleBettingAttempt();
+                  } else if (!isBettingRestricted || currentRestriction?.restrictionType !== 'site_wide') {
+                    buyNow(randomNum.card2, 2); 
+                    setcloseScr(true);
+                  }
+                }}
+                disabled={timeBit || (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide')}
+                className={`paddispace card card_second h-min ${
+                  (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide') ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                }`}
                 variants={popIn}
                 whileHover={{ scale: 1.05, y: -10 }}
                 whileTap={{ scale: 0.95 }}
@@ -775,9 +885,18 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 </div>
                 <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                   <motion.button
-                    onClick={() => { buyNow(randomNum.card2, 2); setcloseScr(true) }}
-                    disabled={timeBit}
-                    className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer"
+                    onClick={() => { 
+                      if (isBettingRestricted && currentRestriction?.restrictionType === 'betting_only') {
+                        handleBettingAttempt();
+                      } else if (!isBettingRestricted || currentRestriction?.restrictionType !== 'site_wide') {
+                        buyNow(randomNum.card2, 2); 
+                        setcloseScr(true);
+                      }
+                    }}
+                    disabled={timeBit || (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide')}
+                    className={`card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 ${
+                      (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide') ? 'cursor-not-allowed opacity-50' : 'hover:bg-red-200 cursor-pointer'
+                    }`}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -787,9 +906,18 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
               </motion.div>
 
               <motion.div
-                onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }}
-                disabled={timeBit}
-                className="cursor-pointer paddispace card card_third h-min"
+                onClick={() => { 
+                  if (isBettingRestricted && currentRestriction?.restrictionType === 'betting_only') {
+                    handleBettingAttempt();
+                  } else if (!isBettingRestricted || currentRestriction?.restrictionType !== 'site_wide') {
+                    buyNow(randomNum.card3, 3); 
+                    setcloseScr(true);
+                  }
+                }}
+                disabled={timeBit || (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide')}
+                className={`paddispace card card_third h-min ${
+                  (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide') ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                }`}
                 variants={popIn}
                 whileHover={{ scale: 1.05, y: -10 }}
                 whileTap={{ scale: 0.95 }}
@@ -799,9 +927,18 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
                 </div>
                 <div className="lowerBody flex justify-around mt-3 items-center font-bold">
                   <motion.button
-                    onClick={() => { buyNow(randomNum.card3, 3); setcloseScr(true) }}
-                    disabled={timeBit}
-                    className="card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 hover:bg-red-200 cursor-pointer"
+                    onClick={() => { 
+                      if (isBettingRestricted && currentRestriction?.restrictionType === 'betting_only') {
+                        handleBettingAttempt();
+                      } else if (!isBettingRestricted || currentRestriction?.restrictionType !== 'site_wide') {
+                        buyNow(randomNum.card3, 3); 
+                        setcloseScr(true);
+                      }
+                    }}
+                    disabled={timeBit || (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide')}
+                    className={`card_no_det border rounded-3xl h-9 flex justify-center items-center p-5 text-lg bg-white border-red-900 ${
+                      (isBettingRestricted && currentRestriction?.restrictionType === 'site_wide') ? 'cursor-not-allowed opacity-50' : 'hover:bg-red-200 cursor-pointer'
+                    }`}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -955,12 +1092,16 @@ export async function getServerSideProps(context) {
     });
     await timerSettings.save();
   }
+  
+  // Fetch current active betting restriction
+  let bettingRestriction = await BettingRestriction.getCurrentRestriction();
 
   return {
     props: {
       randomNum: JSON.parse(JSON.stringify(randomNum)),
       orders: JSON.parse(JSON.stringify(orders)),
       timerSettings: JSON.parse(JSON.stringify(timerSettings)),
+      bettingRestriction: bettingRestriction ? JSON.parse(JSON.stringify(bettingRestriction)) : null,
     },
   };
 }
