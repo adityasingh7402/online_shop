@@ -268,12 +268,13 @@ export default function Home({ logout, user, buyNow, randomNum, cart, clearCart,
           progress: undefined,
         });
         
-        // Track the bet in localStorage for winner popup
-        trackBet({
+        // Track the bet in database for winner popup
+        await trackBet({
           orderId: oid,
           randomNum: cart.randomNum,
           cardno: cart.cardno,
-          amount: amount
+          amount: amount,
+          email: email
         });
         
         // Update wallet

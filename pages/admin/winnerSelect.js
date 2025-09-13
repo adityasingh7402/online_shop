@@ -115,6 +115,26 @@ const WinnerSelect = ({ winnOrder, randomNum, selectUsers, selectUser }) => {
           body: JSON.stringify(data2),
         });
         
+        // Reset timer after winner selection
+        try {
+          const timerResponse = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/resetTimer`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          
+          const timerResult = await timerResponse.json();
+          
+          if (timerResult.success) {
+            console.log('Timer reset successfully:', timerResult.message);
+          } else {
+            console.warn('Failed to reset timer:', timerResult.error);
+          }
+        } catch (timerError) {
+          console.error('Error resetting timer:', timerError);
+        }
+        
         // Refresh page after successful update
         setTimeout(() => {
           router.reload();

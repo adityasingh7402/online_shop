@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trophy, Heart, Star } from 'lucide-react';
+import { markResultsAsShown } from '../../utils/betTracker';
 
 const WinnerPopup = ({ randomNum, onClose }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -10,49 +11,65 @@ const WinnerPopup = ({ randomNum, onClose }) => {
   const [winningCard, setWinningCard] = useState(null);
   const [totalWinnings, setTotalWinnings] = useState(0);
   const [oldCards, setOldCards] = useState({ card1: null, card2: null, card3: null });
+  const [currentNotification, setCurrentNotification] = useState(null);
+  const [userToken, setUserToken] = useState(null);
 
   useEffect(() => {
+    let hasTriggeredPopup = false;
+    
     const checkForResults = async () => {
       try {
-        // Check localStorage for pending bets
-        const stored = localStorage.getItem('pendingBets');
-        if (!stored) {
+        // Prevent multiple triggers
+        if (hasTriggeredPopup || showPopup) {
           return;
         }
-
-        const pendingData = JSON.parse(stored);
-        if (pendingData.hasShownResult) {
+        
+        // Check sessionStorage to prevent repeated animations in same session
+        const sessionKey = `winnerShown_${new Date().toDateString()}`;
+        if (sessionStorage.getItem(sessionKey)) {
+          console.log('Winner animation already shown today (sessionStorage)');
           return;
         }
-
-        // Fetch user's recent orders to check results
+        
+        // Get user token
         const token = JSON.parse(localStorage.getItem('myuser'))?.token;
         if (!token) {
           return;
         }
+        
+        setUserToken(token);
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getwinnerinfo`, {
+        // Check for pending winner notification
+        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getPendingWinnerNotification`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token })
         });
 
+        if (!response.ok) {
+          console.error('Failed to fetch pending notification');
+          return;
+        }
+
         const data = await response.json();
-        const orders = data.OrdersInfo;
-        const gameResult = data.GameResultInfo;
-
-        // Check if any orders have been resolved (not pending)
-        const resolvedOrders = orders.filter(order => order.winning !== 'Pending');
-        if (resolvedOrders.length === 0) {
+        console.log('Winner notification check:', data);
+        
+        if (!data.hasPendingNotification || !data.notification) {
+          console.log('No pending notification found');
           return;
         }
 
-        // Check if we have game result data
+        const notification = data.notification;
+        console.log('Found pending notification:', notification._id);
+        setCurrentNotification(notification);
+
+        // Set up game result data
+        const gameResult = notification.gameResult;
         if (!gameResult) {
+          console.log('No game result data found');
           return;
         }
 
-        // Use game result data for accurate card information
         const finalCards = {
           card1: gameResult.card1,
           card2: gameResult.card2,
@@ -62,33 +79,40 @@ const WinnerPopup = ({ randomNum, onClose }) => {
         const winningCardNum = gameResult.winningCard;
         
         setOldCards(finalCards);
-
-        // Calculate user results
-        const userWins = resolvedOrders.filter(order => order.winning === 'Win');
-        const totalWin = userWins.reduce((sum, order) => sum + (order.amount * 2 - order.amount * 0.2), 0);
-
-        setPendingBets(resolvedOrders);
         setWinningCard(winningCardNum);
-        setTotalWinnings(Math.floor(totalWin));
-        setUserResult(userWins.length > 0 ? 'win' : 'loss');
+        setTotalWinnings(notification.totalWinnings);
+        setPendingBets(notification.orders);
+        setUserResult(notification.winningBets > 0 ? 'win' : 'loss');
+        
+        // Mark as triggered to prevent repeats
+        hasTriggeredPopup = true;
+        console.log('Triggering winner popup animation');
+        
+        // Mark in sessionStorage immediately
+        sessionStorage.setItem(sessionKey, 'true');
         
         // Show popup after 2 seconds
         setTimeout(() => {
+          console.log('Showing winner popup');
           setShowPopup(true);
           startAnimationSequence();
         }, 2000);
-
-        // Mark as shown
-        const updatedPending = { ...pendingData, hasShownResult: true };
-        localStorage.setItem('pendingBets', JSON.stringify(updatedPending));
 
       } catch (error) {
         console.error('Error checking results:', error);
       }
     };
 
+    // Initial check
     checkForResults();
-  }, []);
+    
+    // Check again after 5 seconds (in case initial check was too early)
+    const delayedCheck = setTimeout(checkForResults, 5000);
+    
+    return () => {
+      clearTimeout(delayedCheck);
+    };
+  }, [showPopup]);
 
   const startAnimationSequence = () => {
     // Phase 1: Show cards with glow
@@ -105,7 +129,21 @@ const WinnerPopup = ({ randomNum, onClose }) => {
     }, 6000); // Increased from 5000 to 6000 (5s -> 6s)
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    try {
+      // Mark animation as shown in database
+      if (currentNotification && userToken) {
+        await markResultsAsShown(userToken, currentNotification._id);
+      }
+      
+      // Also mark in sessionStorage to prevent showing again in this session
+      const sessionKey = `winnerShown_${new Date().toDateString()}`;
+      sessionStorage.setItem(sessionKey, 'true');
+      
+    } catch (error) {
+      console.error('Error marking animation as shown:', error);
+    }
+    
     setShowPopup(false);
     if (onClose) onClose();
   };
